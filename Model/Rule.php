@@ -145,6 +145,30 @@ class Rule extends \Magento\Framework\Model\AbstractModel implements \Magefan\Au
     }
 
     /**
+     * @return int
+     */
+    public function getIsFromOneCategory() : int
+    {
+        return (int)$this->getData('from_one_category_only');
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsOnlyWithHigherPrice() : int
+    {
+        return (int)$this->getData('only_with_higher_price');
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsOnlyWithLowerPrice() : int
+    {
+        return (int)$this->getData('only_with_lower_price');
+    }
+
+    /**
      * @return false|string|string[]|null
      */
     public function getStoreIds()
@@ -175,14 +199,6 @@ class Rule extends \Magento\Framework\Model\AbstractModel implements \Magefan\Au
     public function getDisplayContainer()
     {
         return $this->getData('block_position');
-    }
-
-    /**
-     * @return array|mixed|null
-     */
-    public function getDisplayMode()
-    {
-        return $this->getData('display_mode');
     }
 
     /**
@@ -234,8 +250,9 @@ class Rule extends \Magento\Framework\Model\AbstractModel implements \Magefan\Au
     {
         $indentifire = $this->getBlockPosition();
 
-        if ('none' != $this->getDisplayMode() && 'custom' != $this->getBlockPosition()) {
-            $indentifire .= '_' . $this->getDisplayMode();
+        if ((0 !== $this->getIsFromOneCategory() || 0 !== $this->getIsOnlyWithHigherPrice()) && 'custom' != $this->getBlockPosition()) {
+            $indentifire .= '_' . '1';
+
         }
         if ($this->getId()) {
             $indentifire .= '_' . $this->getId();

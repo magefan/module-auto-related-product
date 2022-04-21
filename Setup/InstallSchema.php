@@ -87,11 +87,25 @@ class InstallSchema implements InstallSchemaInterface
                 'Type Of Merge Related Products'
             )
             ->addColumn(
-                'display_mode',
-                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                10,
-                [],
-                'Display Mode'
+                'from_one_category_only',
+                Table::TYPE_SMALLINT,
+                null,
+                ['nullable' => false, 'default' => '0'],
+                'From One Category Only'
+            )
+            ->addColumn(
+                'only_with_higher_price',
+                Table::TYPE_SMALLINT,
+                null,
+                ['nullable' => false, 'default' => '0'],
+                'Only With Higher Price'
+            )
+            ->addColumn(
+                'only_with_lower_price',
+                Table::TYPE_SMALLINT,
+                null,
+                ['nullable' => false, 'default' => '0'],
+                'Only With Lower Price'
             )
             ->addColumn(
                 'conditions_serialized',

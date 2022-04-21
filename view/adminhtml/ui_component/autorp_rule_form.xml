@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+ -->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">autorp_rule_form.autorp_rule_form_data_source</item>
+            <item name="deps" xsi:type="string">autorp_rule_form.autorp_rule_form_data_source</item>
+            <item name="namespace" xsi:type="string">autorp_rule_form</item>
+        </item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Magefan\Community\Block\Adminhtml\Edit\BackButton</item>
+            <item name="delete" xsi:type="string">Magefan\Community\Block\Adminhtml\Edit\DeleteButton</item>
+            <item name="reset" xsi:type="string">Magefan\Community\Block\Adminhtml\Edit\ResetButton</item>
+            <item name="save" xsi:type="string">Magefan\Community\Block\Adminhtml\Edit\SaveButton</item>
+            <item name="save_and_continue" xsi:type="string">Magefan\Community\Block\Adminhtml\Edit\SaveAndContinueButton</item>
+        </item>
+
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">autorp_rule_form</item>
+        </item>
+    </argument>
+    <dataSource name="autorp_rule_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magefan\AutoRelatedProduct\UI\DataProvider\Rule\Form\RuleDataProvider</argument>
+            <argument name="name" xsi:type="string">autorp_rule_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="*/*/save"/>
+                    <!-- <item name="data" xsi:type="array" /> -->
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="what_to_display_product">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <!-- <item name="collapsible" xsi:type="boolean">true</item> -->
+                <item name="label" xsi:type="string">Rule Information</item>
+            </item>
+        </argument>
+        <field name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="dataScope" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </field>
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Enable Rule</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataScope" xsi:type="string">status</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+        </field>
+        <field name="name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Rule Name</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="dataScope" xsi:type="string">name</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">Description</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="wysiwyg" xsi:type="boolean">true</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="dataScope" xsi:type="string">description</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+        </field>
+        <field name="priority">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Priority</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="sortOrder" xsi:type="number">35</item>
+                    <item name="dataScope" xsi:type="string">priority</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="notice" xsi:type="string" translate="true">The greater the number, the later rule will be processed.</item>
+                    <item name="default" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </field>
+        <field name="store_ids">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Cms\Ui\Component\Listing\Column\Cms\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">Store View</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="wysiwyg" xsi:type="boolean">true</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="dataScope" xsi:type="string">store_ids</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="where_to_display_product">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string">Where/When To Display</item>
+            </item>
+        </argument>
+        <field name="block_position">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magefan\AutoRelatedProduct\Api\PositionsInterface</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magefan_AutoRelatedProduct/js/form/element/is-product-conditions</item>
+                    <item name="label" xsi:type="string" translate="true">Block Position</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="dataScope" xsi:type="string">block_position</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="merge_type">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magefan\AutoRelatedProduct\Model\Config\Source\MergeType</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Merge Type</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="dataScope" xsi:type="string">merge_type</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </field>
+        <!--C1 -->
+        <container name="actions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">90</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <block name="actions_apply_to" class="Magefan\AutoRelatedProduct\Block\Adminhtml\Rule\Edit\WhereConditions" />
+            </htmlContent>
+        </container>
+    </fieldset>
+    <fieldset name="what_to_display">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string">What To Display (Products To Display)</item>
+            </item>
+        </argument>
+        <!-- C2 -->
+        <container name="conditions" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">130</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <block name="conditions_apply_to"  class="Magefan\AutoRelatedProduct\Block\Adminhtml\Rule\Edit\WhatConditions" />
+            </htmlContent>
+        </container>
+        <field name="display_mode">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">\Magefan\AutoRelatedProduct\Model\Config\Source\DisplayMode</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Display Mode</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="sortOrder" xsi:type="number">150</item>
+                    <item name="source" xsi:type="string">category</item>
+                    <item name="dataScope" xsi:type="string">display_mode</item>
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+            <settings>
+                <tooltip>
+                    <description>
+                        <![CDATA[
+                             Works only on product page!
+                            ]]>
+                    </description>
+                </tooltip>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="display_settings">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string">Display Settings</item>
+            </item>
+        </argument>
+        <field name="block_title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Block Title</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataScope" xsi:type="string">block_title</item>
+                    <item name="source" xsi:type="string">rule</item>
+                </item>
+            </argument>
+        </field>
+        <field name="sort_by">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magefan\AutoRelatedProduct\Model\Config\Source\SortBy</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Sort By</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="dataScope" xsi:type="string">sort_by</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </field>
+        <field name="display_add_to_cart">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Display "Add To Cart"</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="dataScope" xsi:type="string">display_add_to_cart</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+        </field>
+        <field name="number_of_products">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Number for Products To Display</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="dataScope" xsi:type="string">number_of_products</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="default" xsi:type="string">6</item>
+                </item>
+            </argument>
+        </field>
+        <field name="display_out_of_stock">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Display "Out Of Stock" Products</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="dataScope" xsi:type="string">display_out_of_stock</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>
+
+

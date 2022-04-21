@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Magefan_AutoRelatedProduct::elements" title="Automatic Related Products" module="Magefan_AutoRelatedProduct" parent="Magento_Backend::marketing" sortOrder="10"  resource="Magefan_AutoRelatedProduct::elements"/>
+        <add id="Magefan_AutoRelatedProduct::rule" title="Rules" module="Magefan_AutoRelatedProduct" parent="Magefan_AutoRelatedProduct::elements" sortOrder="10" action="autorp/rule/" resource="Magefan_AutoRelatedProduct::rule"/>
+        <add id="Magefan_AutoRelatedProduct::config" title="Configuration" module="Magefan_AutoRelatedProduct" parent="Magefan_AutoRelatedProduct::elements" sortOrder="20" action="adminhtml/system_config/edit/section/autorp" resource="Magefan_AutoRelatedProduct::config"/>
+    </menu>
+</config>

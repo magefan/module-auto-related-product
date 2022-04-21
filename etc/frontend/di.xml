@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Result\Layout">
+        <plugin name="magefan_auto_related_product_plugin_view_plugin" type="Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\Framework\View\Result\Layout" sortOrder="1" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\ProductList\Related">
+        <plugin name="Magefan_AutoRelatedProduct_Plugin_Frontend_Magento_Catalog_Block_Product_ProductList_Related" type="Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\Catalog\Block\Product\ProductList\Related" sortOrder="10" disabled="false"/>
+    </type>
+    <type name="Magento\Catalog\Block\Product\ProductList\Upsell">
+        <plugin name="Magefan_AutoRelatedProduct_Plugin_Frontend_Magento_Catalog_Block_Product_ProductList_Upsell" type="Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\Catalog\Block\Product\ProductList\Upsell" sortOrder="10" disabled="false"/>
+    </type>
+    <type name="Magento\Catalog\Block\Product\View\Details">
+        <plugin name="Magefan_AutoRelatedProduct_Plugin_Frontend_Magento_Catalog_Block_Product_View_Details" type="Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\Catalog\Block\Product\View\Details" sortOrder="10" disabled="false"/>
+    </type>
+</config>

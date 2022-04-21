@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magefan\AutoRelatedProduct\Api\RuleRepositoryInterface" type="Magefan\AutoRelatedProduct\Model\RuleRepository"/>
+    <preference for="Magefan\AutoRelatedProduct\Api\RelatedResourceModelInterface" type="Magefan\AutoRelatedProduct\Model\ResourceModel\Rule"/>
+    <preference for="Magefan\AutoRelatedProduct\Api\RelatedCollectionInterface" type="Magefan\AutoRelatedProduct\Model\ResourceModel\Rule\Collection"/>
+    <preference for="Magefan\AutoRelatedProduct\Api\Data\RuleInterface" type="Magefan\AutoRelatedProduct\Model\Rule"/>
+    <preference for="Magefan\AutoRelatedProduct\Api\Data\RuleSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Magefan\AutoRelatedProduct\Api\RelatedItemsProcessorInterface" type="Magefan\AutoRelatedProduct\Model\RelatedItemsProcessor"/>
+    <preference for="Magefan\AutoRelatedProduct\Api\PositionsInterface" type="Magefan\AutoRelatedProduct\Model\Config\Source\Positions"/>
+    <preference for="Magefan\AutoRelatedProduct\Api\ConfigInterface" type="Magefan\AutoRelatedProduct\Model\Config"/>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="autorp_listing_data_source" xsi:type="string">Magefan\AutoRelatedProduct\UI\DataProvider\Rule\Rule</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\SalesRule\Model\Rule\Condition\Combine">
+        <plugin name="magefan_autorp_catalog_rule_model_condition_combine_plugin"
+                type="Magefan\AutoRelatedProduct\Plugin\Magento\SalesRule\Model\Rule\Condition\Combine" sortOrder="10"/>
+    </type>
+    <type name="Magento\SalesRule\Model\Rule\Condition\Product\Combine">
+        <plugin name="magefan_autorp_catalog_rule_model_condition_product_combine_plugin"
+                type="Magefan\AutoRelatedProduct\Plugin\Magento\SalesRule\Model\Rule\Condition\Product\Combine" sortOrder="10"/>
+    </type>
+    <type name="Magefan\AutoRelatedProduct\Api\PositionsInterface">
+         <arguments>
+             <argument name="options" xsi:type="array">
+                 <item name="none" xsi:type="array">
+                     <item name="label" xsi:type="string">-- Please Select --</item>
+                     <item name="value" xsi:type="string"></item>
+                 </item>
+                 <item name="product_page" xsi:type="array">
+                     <item name="label" xsi:type="string">Product Page</item>
+                     <item name="value" xsi:type="array">
+                         <item name="product_before_related" xsi:type="array">
+                             <item name="label" xsi:type="string">Before Native Related Block</item>
+                             <item name="value" xsi:type="string">product_before_related</item>
+                             <item name="parent" xsi:type="string">catalog.product.related</item>
+                         </item>
+                         <item name="product_after_related" xsi:type="array">
+                             <item name="label" xsi:type="string">After Native Related Block</item>
+                             <item name="value" xsi:type="string">product_after_related</item>
+                             <item name="parent" xsi:type="string">catalog.product.related</item>
+                         </item>
+                         <item name="product_into_related" xsi:type="array">
+                             <item name="label" xsi:type="string">Add into Native Related Block</item>
+                             <item name="value" xsi:type="string">product_into_related</item>
+                         </item>
+                         <item name="product_before_upsell" xsi:type="array">
+                             <item name="label" xsi:type="string">Before Native Up-sells Block</item>
+                             <item name="value" xsi:type="string">product_before_upsell</item>
+                             <item name="parent" xsi:type="string">product.info.upsell</item>
+                         </item>
+                         <item name="product_after_upsell" xsi:type="array">
+                             <item name="label" xsi:type="string">After Native Up-sells Block</item>
+                             <item name="value" xsi:type="string">product_after_upsell</item>
+                             <item name="parent" xsi:type="string">product.info.upsell</item>
+                         </item>
+                         <item name="product_into_upsell" xsi:type="array">
+                             <item name="label" xsi:type="string">Add into Native Up-sells Block</item>
+                             <item name="value" xsi:type="string">product_into_upsell</item>
+                         </item>
+                         <item name="6" xsi:type="array">
+                             <item name="label" xsi:type="string">Into Native Tab Block</item>
+                             <item name="value" xsi:type="string">product_content_tab</item>
+                         </item>
+                         <item name="product_before_tab" xsi:type="array">
+                             <item name="label" xsi:type="string">Before Native Tab Block</item>
+                             <item name="value" xsi:type="string">product_before_tab</item>
+                             <item name="parent" xsi:type="string">product.info.details</item>
+                         </item>
+                         <item name="product_content_top" xsi:type="array">
+                             <item name="label" xsi:type="string">Content Top</item>
+                             <item name="value" xsi:type="string">product_content_top</item>
+                             <item name="parent" xsi:type="string">content.top</item>
+                         </item>
+                         <item name="product_content_bottom" xsi:type="array">
+                             <item name="label" xsi:type="string">Content Bottom</item>
+                             <item name="value" xsi:type="string">product_content_bottom</item>
+                             <item name="parent" xsi:type="string">content.bottom</item>
+                         </item>
+                         <item name="product_sidebar_top" xsi:type="array">
+                             <item name="label" xsi:type="string">Sidebar Top</item>
+                             <item name="value" xsi:type="string">product_sidebar_top</item>
+                             <item name="parent" xsi:type="string">catalog.compare.sidebar</item>
+                         </item>
+                         <item name="product_sidebar_bottom" xsi:type="array">
+                             <item name="label" xsi:type="string">Sidebar Bottom</item>
+                             <item name="value" xsi:type="string">product_sidebar_bottom</item>
+                             <item name="parent" xsi:type="string">catalog.compare.sidebar</item>
+                         </item>
+                     </item>
+                 </item>
+                 <item name="category_page" xsi:type="array">
+                     <item name="label" xsi:type="string">Category Page</item>
+                     <item name="value" xsi:type="array">
+                         <item name="category_content_top" xsi:type="array">
+                             <item name="label" xsi:type="string">Content Top</item>
+                             <item name="value" xsi:type="string">category_content_top</item>
+                             <item name="parent" xsi:type="string">content.top</item>
+                         </item>
+                         <item name="category_content_bottom" xsi:type="array">
+                             <item name="label" xsi:type="string">Content Bottom</item>
+                             <item name="value" xsi:type="string">category_content_bottom</item>
+                             <item name="parent" xsi:type="string">content.bottom</item>
+                         </item>
+                         <item name="category_sidebar_top" xsi:type="array">
+                             <item name="label" xsi:type="string">Sidebar Top</item>
+                             <item name="value" xsi:type="string">category_sidebar_top</item>
+                             <item name="parent" xsi:type="string">catalog.compare.sidebar</item>
+                         </item>
+                         <item name="category_sidebar_bottom" xsi:type="array">
+                             <item name="label" xsi:type="string">Sidebar Bottom</item>
+                             <item name="value" xsi:type="string">category_sidebar_bottom</item>
+                             <item name="parent" xsi:type="string">catalog.compare.sidebar</item>
+                         </item>
+                     </item>
+                 </item>
+             </argument>
+         </arguments>
+    </type>
+</config>

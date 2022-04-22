@@ -217,7 +217,7 @@ class RelatedProductList extends AbstractProduct
                 if (is_array($price)) {
                     $price = array_shift($price);
                 }
-                $where = $higher ? "price_index.final_price > ?" :  "price_index.final_price < ?";;
+                $where = $higher ? "price_index.final_price > ?" :  "price_index.final_price < ?";
                 $this->_itemCollection->getSelect()->where($where, $price);
             }
         }

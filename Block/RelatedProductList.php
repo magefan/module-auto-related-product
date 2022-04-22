@@ -11,7 +11,6 @@ use Magento\Catalog\Block\Product\Context;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magefan\AutoRelatedProduct\Api\ConfigInterface as Config;
 use Magefan\AutoRelatedProduct\Model\ActionValidator;
-use Magefan\AutoRelatedProduct\Model\Config\Source\DisplayMode;
 use Magefan\AutoRelatedProduct\Model\Config\Source\SortBy;
 use Magefan\AutoRelatedProduct\Model\RuleRepository;
 use Magento\Catalog\Block\Product\AbstractProduct;

@@ -209,17 +209,17 @@ class RelatedProductList extends AbstractProduct
 
         if ($product = $this->getProduct()) {
             $this->_itemCollection->addFieldToFilter('entity_id', ['neq' => $product->getId()]);
-            if ($this->getRule()->getIsFromOneCategory()){
+            if ($this->getRule()->getIsFromOneCategory()) {
                 $this->_itemCollection->addCategoriesFilter(['in' => $product->getCategoryIds() ?: [-1]]);
             }
-            if (($higher = $this->getRule()->getIsOnlyWithHigherPrice()) || ($lower = $this->getRule()->getIsOnlyWithLowerPrice)){
+            if (($higher = $this->getRule()->getIsOnlyWithHigherPrice()) || $this->getRule()->getIsOnlyWithLowerPrice()){
                 $price = $product->getFinalPrice();
 
                 if (is_array($price)) {
                     $price = array_shift($price);
                 }
-
-                $this->_itemCollection->getSelect()->where("price_index.final_price > ?", $price);
+                $where = $higher ? "price_index.final_price > ?" :  "price_index.final_price < ?";;
+                $this->_itemCollection->getSelect()->where($where, $price);
             }
         }
 

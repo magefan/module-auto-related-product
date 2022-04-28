@@ -1,4 +1,4 @@
-# [Magento 2 Automatic Related Products](https://magefan.com/magento-2-automatic-related-products) by Magefan
+# [Magento 2 Auto-Related Products Free](https://magefan.com/magento-2-automatic-related-products) by Magefan
 
 <img width="150" height="100" src="https://magefan.com/media/wysiwyg/made_in_ukraine.jpg">
 

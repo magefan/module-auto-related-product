@@ -1,5 +1,9 @@
 # [Magento 2 Auto-Related Products Free](https://magefan.com/magento-2-automatic-related-products) by Magefan
 
+[![Total Downloads](https://poser.pugx.org/magefan/module-auto-related-product/downloads)](https://packagist.org/packages/magefan/module-auto-related-product)
+[![Latest Stable Version](https://poser.pugx.org/magefan/module-auto-related-product/v/stable)](https://packagist.org/packages/magefan/module-auto-related-product)
+
+
 <img width="150" height="100" src="https://magefan.com/media/wysiwyg/made_in_ukraine.jpg">
 
 

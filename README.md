@@ -3,6 +3,7 @@
 [![Total Downloads](https://poser.pugx.org/magefan/module-auto-related-product/downloads)](https://packagist.org/packages/magefan/module-auto-related-product)
 [![Latest Stable Version](https://poser.pugx.org/magefan/module-auto-related-product/v/stable)](https://packagist.org/packages/magefan/module-auto-related-product)
 
+<a href="https://www.comebackalive.in.ua/donate"><img width="830" height="208" src="https://cm.magefan.com/blog/support-ukraine.png"></a>
 
 <img width="150" height="100" src="https://magefan.com/media/wysiwyg/made_in_ukraine.jpg">
 

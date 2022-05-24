@@ -72,13 +72,18 @@ class Layout
      */
     public function beforeRenderResult(SubjectLayout $subject, $response)
     {
+
         if (!$this->config->isEnabled()) {
             return null;
         }
 
         /* @var $layout \Magento\Framework\View\Layout */
         $layout = $subject->getLayout();
-        $currentLayout = $layout->getUpdate()->getHandles()[1];
+
+        $currentLayout = '';
+        if (isset($layout->getUpdate()->getHandles()[1])) {
+            $currentLayout = $layout->getUpdate()->getHandles()[1];
+        }
 
         $containers = [
             'content.top',
@@ -99,7 +104,6 @@ class Layout
         }
 
         $layoutElements = [];
-
         foreach ($parentsArray as $blockName => $positions) {
             if ($layout->getBlock($blockName)) {
                 $layoutElements[] = $blockName;
@@ -139,6 +143,7 @@ class Layout
                 if (!$rule) {
                     continue;
                 }
+
 
                 $after = str_contains($rule->getBlockPosition(), 'after');
                 $ruleBlockName = $rule->getRuleBlockIdentifier();

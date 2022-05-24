@@ -14,6 +14,7 @@ use Magefan\AutoRelatedProduct\Api\RelatedCollectionInterfaceFactory as RuleColl
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\View\Result\Layout as SubjectLayout;
 use Magefan\AutoRelatedProduct\Api\PositionsInterface;
+use Magento\Framework\App\RequestInterface;
 
 class Layout
 {
@@ -43,6 +44,11 @@ class Layout
     private $positionOptions;
 
     /**
+     * @var RequestInterface
+     */
+    private $request;
+
+    /**
      * @param ActionValidator $validator
      * @param Config $config
      * @param RuleCollectionFactory $ruleCollectionFactory
@@ -54,13 +60,15 @@ class Layout
         Config                     $config,
         RuleCollectionFactory      $ruleCollectionFactory,
         StoreManagerInterface      $storeManager,
-        PositionsInterface         $positionOptions
+        PositionsInterface         $positionOptions,
+        RequestInterface           $request
     ) {
         $this->positionOptions = $positionOptions;
         $this->validator = $validator;
         $this->config =$config;
         $this->ruleCollectionFactory = $ruleCollectionFactory;
         $this->storeManager = $storeManager;
+        $this->request = $request;
     }
 
     /**
@@ -79,10 +87,7 @@ class Layout
         /* @var $layout \Magento\Framework\View\Layout */
         $layout = $subject->getLayout();
 
-        $currentLayout = '';
-        if (isset($layout->getUpdate()->getHandles()[1])) {
-            $currentLayout = $layout->getUpdate()->getHandles()[1];
-        }
+        $currentLayout = (string)$this->request->getFullActionName();
 
         $containers = [
             'content.top',

@@ -72,7 +72,6 @@ class Layout
      */
     public function beforeRenderResult(SubjectLayout $subject, $response)
     {
-
         if (!$this->config->isEnabled()) {
             return null;
         }

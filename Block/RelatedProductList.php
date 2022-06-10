@@ -149,9 +149,30 @@ class RelatedProductList extends AbstractProduct
      */
     public function toHtml(): string
     {
-        return (!$this->config->isEnabled() || !$this->getRule() || $this->ruleValidator->isRestricted($this->getRule()))
-            ? ''
-            : parent::_toHtml();
+        if (!$this->config->isEnabled() || !$this->getRule() || $this->ruleValidator->isRestricted($this->getRule())) {
+            return '';
+        }
+        
+        $html = parent::_toHtml();
+        if (!$html) {
+            return '';
+        }
+
+        $html = str_replace((string)__('Related Products'), (string)__($this->getTitle()), $html);
+
+        if (!$this->canItemsAddToCart()) {
+            $ruleId = $this->getRule()->getId();
+            $html = str_replace(
+                ['block-actions', 'field choice related', ' tocart '],
+                ['block-actions hide-by-rule-' . $ruleId, 'field choice related hide-by-rule-' . $ruleId, ' tocart hide-by-rule-' . $ruleId],
+                $html
+            );
+
+            $html .= '<style>.hide-by-rule-' . $ruleId . '{display:none!important}<style>';
+        }
+
+        return $html;
+
     }
 
     /**

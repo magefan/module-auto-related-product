@@ -65,7 +65,7 @@ class RelatedProductList extends AbstractProduct
     /**
      * @var string
      */
-    protected $_template = 'Magefan_AutoRelatedProduct::product/list/related_product_items.phtml';
+    protected $_template = 'Magento_Catalog::product/list/items.phtml';
 
     /**
      * @param Context $context
@@ -273,10 +273,46 @@ class RelatedProductList extends AbstractProduct
     }
 
     /**
+     * Synonim to getItems
+     *
+     * @return Collection
+     */
+    public function getItemCollection()
+    {
+        return $this->getItems();
+    }
+
+    /**
+     * Check if there is any items
+     *
+     * @return bool
+     */
+    public function hasItems(): bool
+    {
+        return count($this->getItems()) ? true : false;
+    }
+
+    /**
      * @return array
      */
     public function getIdentities()
     {
         return [];
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->getBlockModelData('items_type', 'getItemsType') ?: 'related';
+    }
+
+    /**
+     * @return bool
+     */
+    public function canItemsAddToCart(): bool
+    {
+        return $this->getBlockModelData('display_add_to_cart', 'getDisplayAddToCart') ? true : false;
     }
 }

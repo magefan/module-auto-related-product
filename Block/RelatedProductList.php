@@ -168,7 +168,7 @@ class RelatedProductList extends AbstractProduct
                 $html
             );
 
-            $html .= '<style>.hide-by-rule-' . $ruleId . '{display:none!important}<style>';
+            $html .= '<style>.hide-by-rule-' . $ruleId . '{display:none!important}</style>';
         }
 
         return $html;

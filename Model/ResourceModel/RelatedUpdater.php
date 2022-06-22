@@ -12,6 +12,7 @@ use Magento\Catalog\Model\Product\Visibility;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magento\Framework\App\ResourceConnection;
 use Magento\CatalogRule\Model\RuleFactory;
+use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
 
 /**
  * Class RelatedUpdater
@@ -54,6 +55,11 @@ class RelatedUpdater
     private $connection;
 
     /**
+     * @var JsonSerializer
+     */
+    private $jsonSerializer;
+
+    /**
      * @param ResourceConnection $resourceConnection
      * @param CollectionFactory $productCollectionFactory
      * @param ConditionValidator $validator
@@ -65,7 +71,8 @@ class RelatedUpdater
         CollectionFactory $productCollectionFactory,
         Visibility $catalogProductVisibility,
         RuleCollectionFactory $ruleCollectionFactory,
-        RuleFactory $catalogRuleFactory
+        RuleFactory $catalogRuleFactory,
+        JsonSerializer $jsonSerializer
     ) {
         $this->resourceConnection = $resourceConnection;
         $this->productCollectionFactory = $productCollectionFactory;
@@ -73,6 +80,7 @@ class RelatedUpdater
         $this->ruleCollectionFactory = $ruleCollectionFactory;
         $this->catalogRuleFactory = $catalogRuleFactory;
         $this->connection = $resourceConnection->getConnection();
+        $this->jsonSerializer = $jsonSerializer;
     }
 
     /**
@@ -130,6 +138,21 @@ class RelatedUpdater
         $productCollection = $this->productCollectionFactory->create();
         $relatedProductIds = [];
 
+        $ruleConditions = $rule->getConditions() ?: '';
+        if (!$ruleConditions) {
+            return $relatedProductIds;
+        }
+
+        try {
+            $conditionsUnserialized = $this->jsonSerializer->unserialize($ruleConditions);
+        } catch (\InvalidArgumentException $e) {
+            return $relatedProductIds;
+        }
+
+        if (!isset($conditionsUnserialized['conditions'])) {
+            return $relatedProductIds;
+        }
+
         if ($rule->getConditionsSerialized()) {
             $catalogRule = $this->catalogRuleFactory->create();
             $catalogRule->setData('conditions_serialized', $rule->getConditionsSerialized());
@@ -141,6 +164,10 @@ class RelatedUpdater
                 if ($conditions->validate($product)) {
                     $relatedProductIds[] = $product->getId();
                 }
+            }
+
+            if (!$relatedProductIds) {
+                return [-1];
             }
         }
 

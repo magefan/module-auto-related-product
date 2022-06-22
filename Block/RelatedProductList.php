@@ -63,6 +63,11 @@ class RelatedProductList extends AbstractProduct
     protected $storeManager;
 
     /**
+     * @var \Magento\Catalog\Api\CategoryRepositoryInterface
+     */
+    protected $categoryRepository;
+
+    /**
      * @var string
      */
     protected $_template = 'Magento_Catalog::product/list/items.phtml';
@@ -89,7 +94,8 @@ class RelatedProductList extends AbstractProduct
         Manager $moduleManager,
         StoreManagerInterface $storeManager,
         Stock $stockFilter,
-        array $data = []
+        array $data = [],
+        \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository = null
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
         $this->ruleRepository = $ruleRepository;
@@ -99,6 +105,11 @@ class RelatedProductList extends AbstractProduct
         $this->catalogProductVisibility = $catalogProductVisibility;
         $this->storeManager = $storeManager;
         $this->stockFilter = $stockFilter;
+
+         $this->categoryRepository = $categoryRepository ?:\Magento\Framework\App\ObjectManager::getInstance()
+            ->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
+
+
         parent::__construct($context, $data);
     }
     /**
@@ -230,7 +241,41 @@ class RelatedProductList extends AbstractProduct
         if ($product = $this->getProduct()) {
             $this->_itemCollection->addFieldToFilter('entity_id', ['neq' => $product->getId()]);
             if ($this->getRule()->getIsFromOneCategory()) {
-                $this->_itemCollection->addCategoriesFilter(['in' => $product->getCategoryIds() ?: [-1]]);
+
+                $currentCategory = $this->_coreRegistry->registry('current_category');
+                if ($currentCategory) {
+                    $productCategoryId = $currentCategory->getId();
+
+                } else {
+                    $productCategoryId = -1;
+                    $categoryIds = $product->getCategoryIds();
+                    if ($categoryIds) {
+
+                        $productCategory = null;
+                        $level = -1;
+                        $rootCategoryId = $this->storeManager->getStore()->getRootCategoryId();
+
+                        foreach ($categoryIds as $categoryId) {
+                            try {
+                                $category = $this->categoryRepository->get($categoryId);
+                                if ($category->getIsActive()
+                                    && $category->getLevel() > $level
+                                    && in_array($rootCategoryId, $category->getPathIds())
+                                ) {
+                                    $level = $category->getLevel();
+                                    $productCategory = $category;
+                                }
+                            } catch (\Exception $e) {}
+                        }
+
+                        if ($productCategory) {
+                            $productCategoryId = $productCategory->getId();
+                        } 
+                    }
+                }
+
+                //$this->_itemCollection->addCategoriesFilter(['in' => $product->getCategoryIds() ?: [-1]]);
+                $this->_itemCollection->addCategoriesFilter(['eq' => $productCategoryId]);
             }
             if (($higher = $this->getRule()->getIsOnlyWithHigherPrice()) || $this->getRule()->getIsOnlyWithLowerPrice()){
                 $price = $product->getFinalPrice();

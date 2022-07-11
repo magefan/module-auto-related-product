@@ -171,14 +171,39 @@ class RelatedProductList extends AbstractProduct
 
         $html = str_replace((string)__('Related Products'), (string)__($this->getTitle()), $html);
 
+        $replaceFrom = $replaceTo = [];
+        $ruleId = $this->getRule()->getId();
+
+        if (!$this->canItemsAddToCart()
+            || 'catalog_product_view' != $this->getRequest()->getFullActionName()
+        ) {
+            $replaceFrom = array_merge(
+                $replaceFrom, 
+                ['block-actions', 'field choice related']
+            );
+            $replaceTo = array_merge(
+                $replaceTo, 
+                ['block-actions hide-by-rule-' . $ruleId, 'field choice related hide-by-rule-' . $ruleId]
+            );
+        }
+
         if (!$this->canItemsAddToCart()) {
-            $ruleId = $this->getRule()->getId();
-            $html = str_replace(
-                ['block-actions', 'field choice related', ' tocart '],
-                ['block-actions hide-by-rule-' . $ruleId, 'field choice related hide-by-rule-' . $ruleId, ' tocart hide-by-rule-' . $ruleId],
-                $html
+
+            $replaceFrom = array_merge(
+                $replaceFrom, 
+                [' tocart ']
+            );
+            $replaceTo = array_merge(
+                $replaceTo, 
+                [' tocart hide-by-rule-' . $ruleId]
             );
 
+            
+        }
+
+        if ($replaceFrom) {
+
+            $html = str_replace($replaceFrom, $replaceTo, $html);
             $html .= '<style>.hide-by-rule-' . $ruleId . '{display:none!important}</style>';
         }
 

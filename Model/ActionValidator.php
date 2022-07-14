@@ -132,7 +132,7 @@ class ActionValidator
             $address = $quote->getShippingAddress();
         }
 
-        $address->setTotalQty($address->getItemsQty());
+        $address->setTotalQty($quote->getItemsQty());
 
         $product = $actionRule->getProduct();
 

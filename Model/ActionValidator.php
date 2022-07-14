@@ -126,13 +126,13 @@ class ActionValidator
 
         $quote = $this->checkoutSession->getQuote();
 
-        if ($quote->getItemsQty() == $quote->getVirtualItemsQty()) {
+        if ($quote->getItemsQty() == $quote->getItemVirtualQty()) {
             $address = $quote->getBillingAddress();
         } else {
             $address = $quote->getShippingAddress();
         }
 
-        $address->setTotalQty($quote->getItemsQty());
+        $address->setTotalQty($address->getItemsQty());
 
         $product = $actionRule->getProduct();
 

@@ -126,7 +126,7 @@ class ActionValidator
 
         $quote = $this->checkoutSession->getQuote();
 
-        if ($quote->getItemsQty() == $quote->getVirtualItemsQty()) {
+        if ($quote->getItemsQty() == $quote->getItemVirtualQty()) {
             $address = $quote->getBillingAddress();
         } else {
             $address = $quote->getShippingAddress();

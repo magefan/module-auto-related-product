@@ -211,14 +211,14 @@
             <item name="config" xsi:type="array">
                 <item name="collapsible" xsi:type="boolean">true</item>
                 <item name="opened" xsi:type="boolean">true</item>
-                <item name="label" xsi:type="string">Display Modes (Works only for Product Pages)</item>
+                <item name="label" xsi:type="string">Display Modes</item>
             </item>
         </argument>
         <field name="from_one_category_only">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">From One Category Only</item>
+                    <item name="label" xsi:type="string" translate="true">From Same Category Only</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
                     <item name="source" xsi:type="string">rule</item>
@@ -229,6 +229,7 @@
                         <item name="false" xsi:type="number">0</item>
                     </item>
                     <item name="default" xsi:type="number">0</item>
+                    <item name="notice" xsi:type="string" translate="true">Works only for Product and Category pages.</item>
                 </item>
             </argument>
         </field>
@@ -247,6 +248,7 @@
                         <item name="false" xsi:type="number">0</item>
                     </item>
                     <item name="default" xsi:type="number">0</item>
+                    <item name="notice" xsi:type="string" translate="true">Works only for Product pages.</item>
                 </item>
             </argument>
         </field>
@@ -265,6 +267,7 @@
                         <item name="false" xsi:type="number">0</item>
                     </item>
                     <item name="default" xsi:type="number">0</item>
+                    <item name="notice" xsi:type="string" translate="true">Works only for Product pages.</item>
                 </item>
             </argument>
         </field>

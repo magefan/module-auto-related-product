@@ -263,45 +263,47 @@ class RelatedProductList extends AbstractProduct
             $this->_itemCollection->addFieldToFilter('entity_id', ['in' =>  $relatedIds]);
         }
 
-        if ($product = $this->getProduct()) {
-            $this->_itemCollection->addFieldToFilter('entity_id', ['neq' => $product->getId()]);
-            if ($this->getRule()->getIsFromOneCategory()) {
+        $product = $this->getProduct();
+        $currentCategory = $this->getCategory();
 
-                $currentCategory = $this->_coreRegistry->registry('current_category');
-                if ($currentCategory) {
-                    $productCategoryId = $currentCategory->getId();
+        if ($this->getRule()->getIsFromOneCategory()) {
+            if ($currentCategory) {
+                $productCategoryId = $currentCategory->getId();
+            } elseif ($product) {
+                $productCategoryId = -1;
+                $categoryIds = $product->getCategoryIds();
+                if ($categoryIds) {
 
-                } else {
-                    $productCategoryId = -1;
-                    $categoryIds = $product->getCategoryIds();
-                    if ($categoryIds) {
+                    $productCategory = null;
+                    $level = -1;
+                    $rootCategoryId = $this->storeManager->getStore()->getRootCategoryId();
 
-                        $productCategory = null;
-                        $level = -1;
-                        $rootCategoryId = $this->storeManager->getStore()->getRootCategoryId();
+                    foreach ($categoryIds as $categoryId) {
+                        try {
+                            $category = $this->categoryRepository->get($categoryId);
+                            if ($category->getIsActive()
+                                && $category->getLevel() > $level
+                                && in_array($rootCategoryId, $category->getPathIds())
+                            ) {
+                                $level = $category->getLevel();
+                                $productCategory = $category;
+                            }
+                        } catch (\Exception $e) {}
+                    }
 
-                        foreach ($categoryIds as $categoryId) {
-                            try {
-                                $category = $this->categoryRepository->get($categoryId);
-                                if ($category->getIsActive()
-                                    && $category->getLevel() > $level
-                                    && in_array($rootCategoryId, $category->getPathIds())
-                                ) {
-                                    $level = $category->getLevel();
-                                    $productCategory = $category;
-                                }
-                            } catch (\Exception $e) {}
-                        }
-
-                        if ($productCategory) {
-                            $productCategoryId = $productCategory->getId();
-                        } 
+                    if ($productCategory) {
+                        $productCategoryId = $productCategory->getId();
                     }
                 }
-
-                //$this->_itemCollection->addCategoriesFilter(['in' => $product->getCategoryIds() ?: [-1]]);
+            }
+            if ($product || $currentCategory) {
                 $this->_itemCollection->addCategoriesFilter(['eq' => $productCategoryId]);
             }
+        }
+
+
+        if ($product) {
+            $this->_itemCollection->addFieldToFilter('entity_id', ['neq' => $product->getId()]);
             if (($higher = $this->getRule()->getIsOnlyWithHigherPrice()) || $this->getRule()->getIsOnlyWithLowerPrice()){
                 $price = $product->getFinalPrice();
 
@@ -405,5 +407,18 @@ class RelatedProductList extends AbstractProduct
     public function canItemsAddToCart(): bool
     {
         return $this->getBlockModelData('display_add_to_cart', 'getDisplayAddToCart') ? true : false;
+    }
+
+    /**
+     * Retrieve currently viewed category object
+     *
+     * @return \Magento\Catalog\Model\Category
+     */
+    public function getCategory()
+    {
+        if (!$this->hasData('category')) {
+            $this->setData('category', $this->_coreRegistry->registry('current_category'));
+        }
+        return $this->getData('category');
     }
 }

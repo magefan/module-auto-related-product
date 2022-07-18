@@ -288,9 +288,10 @@ class Rule extends AbstractDb implements RelatedResourceModelInterface
     public function getRelatedIds($object): array
     {
         $result =$this->_lookupIds($object->getId(), 'magefan_autorp_index', 'related_ids');
-        if (empty($result)) {
+        if (empty($result) || empty($result[0])) {
             return [];
         }
+
         $result = explode(',', $result[0]);
         return $result;
     }

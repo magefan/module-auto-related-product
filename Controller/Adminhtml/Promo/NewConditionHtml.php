@@ -5,12 +5,10 @@
  */
 namespace Magefan\AutoRelatedProduct\Controller\Adminhtml\Promo;
 
-use Magento\Framework\App\Action\HttpGetActionInterface;
-use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Rule\Model\Condition\AbstractCondition;
 use Magento\CatalogRule\Controller\Adminhtml\Promo\Catalog as CatalogAction;
 
-class NewConditionHtml extends CatalogAction implements HttpPostActionInterface, HttpGetActionInterface
+class NewConditionHtml extends CatalogAction
 {
     /**
      * Authorization level of a basic admin session

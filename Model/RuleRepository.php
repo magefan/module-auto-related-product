@@ -130,17 +130,8 @@ class RuleRepository implements RuleRepositoryInterface
      */
     public function save(\Magefan\AutoRelatedProduct\Api\Data\RuleInterface $rule)
     {
-
-        $ruleData = $this->extensibleDataObjectConverter->toNestedArray(
-            $rule,
-            [],
-            \Magefan\AutoRelatedProduct\Api\Data\RuleInterface::class
-        );
-
-        $ruleModel = $this->ruleFactory->create()->setData($ruleData);
-
         try {
-            $this->resource->save($ruleModel);
+            $this->resource->save($rule);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(__(
                 'Could not save the rule: %1',
@@ -148,7 +139,7 @@ class RuleRepository implements RuleRepositoryInterface
             ));
         }
 
-        return $ruleModel;
+        return $rule;
     }
 
     /**

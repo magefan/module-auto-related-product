@@ -111,24 +111,6 @@ class Rule extends \Magento\Framework\Model\AbstractModel implements \Magefan\Au
     }
 
     /**
-     * @return \Magefan\AutoRelatedProduct\Api\Data\RuleExtensionInterface|null
-     */
-    public function getExtensionAttributes()
-    {
-        return $this->_getExtensionAttributes();
-    }
-
-    /**
-     * @param \Magefan\AutoRelatedProduct\Api\Data\RuleExtensionInterface $extensionAttributes
-     * @return Rule
-     */
-    public function setExtensionAttributes(
-        \Magefan\AutoRelatedProduct\Api\Data\RuleExtensionInterface $extensionAttributes
-    ) {
-        return $this->_setExtensionAttributes($extensionAttributes);
-    }
-
-    /**
      * @return array|mixed|null
      */
     public function getDescription()

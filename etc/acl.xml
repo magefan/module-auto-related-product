@@ -12,7 +12,13 @@
                 <resource id="Magento_Backend::marketing">
                     <resource id="Magefan_AutoRelatedProduct::elements" title="Automatic Related Products" translate="title" sortOrder="30">
                         <resource id="Magefan_AutoRelatedProduct::rule" title="Rules" translate="title" sortOrder="10" />
-                        <resource id="Magefan_AutoRelatedProduct::configuration" title="Configuration" translate="title" sortOrder="10" />
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Magefan_AutoRelatedProduct::config" title="Automatic Related Products Section" />
+                        </resource>
                     </resource>
                 </resource>
             </resource>

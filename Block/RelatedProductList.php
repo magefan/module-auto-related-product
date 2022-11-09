@@ -63,6 +63,11 @@ class RelatedProductList extends AbstractProduct
     protected $storeManager;
 
     /**
+     * @var Stock
+     */
+    protected $stockFilter;
+
+    /**
      * @var \Magento\Catalog\Api\CategoryRepositoryInterface
      */
     protected $categoryRepository;
@@ -71,6 +76,11 @@ class RelatedProductList extends AbstractProduct
      * @var string
      */
     protected $_template = 'Magento_Catalog::product/list/items.phtml';
+
+    /**
+     * @var string
+     */
+    protected $_hTemplate = 'Magento_Catalog::product/slider/product-slider-container.phtml';
 
     /**
      * @param Context $context
@@ -83,6 +93,7 @@ class RelatedProductList extends AbstractProduct
      * @param StoreManagerInterface $storeManager
      * @param Stock $stockFilter
      * @param array $data
+     * @param \Magento\Catalog\Api\CategoryRepositoryInterface|null $categoryRepository
      */
     public function __construct(
         Context $context,
@@ -112,6 +123,23 @@ class RelatedProductList extends AbstractProduct
 
         parent::__construct($context, $data);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTemplate()
+    {
+        $theme = $this->_design->getDesignTheme();
+        while ($theme) {
+            if ('Hyva/default' == $theme->getCode()) {
+                return $this->_hTemplate;
+            }
+            $theme = $theme->getParentTheme();
+        }
+
+        return parent::getTemplate();
+    }
+
     /**
      * @return string
      */

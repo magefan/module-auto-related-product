@@ -51,21 +51,6 @@ interface RuleInterface extends \Magento\Framework\Api\ExtensibleDataInterface
     public function setId($id);
 
     /**
-     * Retrieve existing extension attributes object or create a new one.
-     * @return \Magefan\AutoRelatedProduct\Api\Data\RuleExtensionInterface|null
-     */
-    public function getExtensionAttributes();
-
-    /**
-     * Set an extension attributes object.
-     * @param \Magefan\AutoRelatedProduct\Api\Data\RuleExtensionInterface $extensionAttributes
-     * @return $this
-     */
-    public function setExtensionAttributes(
-        \Magefan\AutoRelatedProduct\Api\Data\RuleExtensionInterface $extensionAttributes
-    );
-
-    /**
      * Get name
      * @return string|null
      */

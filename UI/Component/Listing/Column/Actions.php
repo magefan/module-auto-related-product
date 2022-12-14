@@ -61,9 +61,9 @@ class Actions extends Column
                     $item[$name]['delete'] = [
                         'href' => $this->urlBuilder->getUrl(self::URL_PATH_DELETE, ['id' => $item['id']]),
                         'label' => __('Delete'),
-                        'confirm' => [
-                            'title' => __('Delete ${ $.$data.title }'),
-                            'message' => __('Are you sure you wan\'t to delete a ${ $.$data.title } record?')
+                        'confirm' => [          
+                            'title' => __('Delete %1', $item['name']),
+                            'message' => __('Are you sure you wan\'t to delete a %1 record?', $item['name'])
                         ]
                     ];
                 }

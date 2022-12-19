@@ -14,21 +14,71 @@ use Magento\Catalog\Model\Product\Visibility;
 use Magento\CatalogInventory\Helper\Stock;
 use Magento\Framework\Event\ManagerInterface as EventManagerInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magefan\AutoRelatedProduct\Model\RuleRepository;
+use Magefan\AutoRelatedProduct\Api\RuleRepositoryInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magefan\AutoRelatedProduct\Model\ActionValidator;
+use Magefan\AutoRelatedProduct\Api\Data\RuleInterface;
 
 class RuleManager
 {
 
+    /**
+     * @var ProductCollectionFactory
+     */
     protected $productCollectionFactory;
+
+    /**
+     * @var CatalogConfig
+     */
     protected $catalogConfig;
+
+    /**
+     * @var Visibility
+     */
     protected $catalogProductVisibility;
+
+    /**
+     * @var Stock
+     */
+    protected $stockFilter;
+
+
+    /**
+     * @var EventManagerInterface
+     */
     protected $_eventManager;
+
+    /**
+     * @var RuleRepositoryInterface
+     */
     protected $ruleRepository;
+
+    /**
+     * @var StoreManagerInterface
+     */
     protected $storeManager;
+
+    /**
+     * @var \Magefan\AutoRelatedProduct\Model\ActionValidator
+     */
+    protected $ruleValidator;
+
+    /**
+     * @var \Magento\Catalog\Api\CategoryRepositoryInterface|mixed
+     */
     protected $categoryRepository;
 
+    /**
+     * @param ProductCollectionFactory $productCollectionFactory
+     * @param CatalogConfig $catalogConfig
+     * @param Visibility $catalogProductVisibility
+     * @param Stock $stockFilter
+     * @param EventManagerInterface $_eventManager
+     * @param RuleRepositoryInterface $ruleRepository
+     * @param StoreManagerInterface $storeManager
+     * @param \Magefan\AutoRelatedProduct\Model\ActionValidator $ruleValidator
+     * @param \Magento\Catalog\Api\CategoryRepositoryInterface|null $categoryRepository
+     */
     public function __construct
     (
         ProductCollectionFactory $productCollectionFactory,
@@ -36,11 +86,10 @@ class RuleManager
         Visibility $catalogProductVisibility,
         Stock $stockFilter,
         EventManagerInterface $_eventManager,
-        RuleRepository $ruleRepository,
+        RuleRepositoryInterface $ruleRepository,
         StoreManagerInterface $storeManager,
+        ActionValidator $ruleValidator,
         \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository = null,
-        ActionValidator $ruleValidator
-
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
         $this->catalogConfig = $catalogConfig;
@@ -50,12 +99,16 @@ class RuleManager
         $this->ruleRepository = $ruleRepository;
         $this->storeManager = $storeManager;
         $this->ruleValidator = $ruleValidator;
-
         $this->categoryRepository = $categoryRepository ?:\Magento\Framework\App\ObjectManager::getInstance()
             ->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
     }
 
-    public function getReletedProductsColletion($rule, array $params = [])
+    /**
+     * @param $rule
+     * @param array $params
+     * @return array|\Magento\Catalog\Model\ResourceModel\Product\Collection
+     */
+    public function getReletedProductsColletion(RuleInterface $rule, array $params = [])
     {
         if (!$rule) {
             return [];
@@ -100,14 +153,13 @@ class RuleManager
             }
         }
 
-        $this->addSortBy($rule->getData('sort_by'));
+        $this->addSortBy((int)$rule->getData('sort_by'));
 
         $this->_eventManager->dispatch('autorp_relatedproducts_block_load_collection_before', [
             'rule' => $rule,
             'collection' => $this->_itemCollection,
             'product' => $currentProduct
         ]);
-
 
         $this->_itemCollection->load();
 
@@ -118,7 +170,10 @@ class RuleManager
         return $this->_itemCollection;
     }
 
-    protected function addOutOfStockFilter($rule)
+    /**
+     * @param RuleInterface $rule
+     */
+    protected function addOutOfStockFilter(RuleInterface $rule): void
     {
         $this->_itemCollection->addMinimalPrice()
             ->addFinalPrice()
@@ -128,7 +183,13 @@ class RuleManager
         $this->stockFilter->addInStockFilterToCollection($this->_itemCollection);
     }
 
-    protected function addProductsFromTheSameCategoryFilter($currentCategory, $currentProduct, $rule)
+    /**
+     * @param $currentCategory
+     * @param $currentProduct
+     * @param RuleInterface $rule
+     * @throws NoSuchEntityException
+     */
+    protected function addProductsFromTheSameCategoryFilter($currentCategory, $currentProduct, RuleInterface $rule): void
     {
         $productCategoryId = false;
 
@@ -167,16 +228,24 @@ class RuleManager
         }
     }
 
-    protected function addPriceFilter($higher, $price)
+    /**
+     * @param $higher
+     * @param $price
+     */
+    protected function addPriceFilter($higher, $price): void
     {
         if (is_array($price)) {
             $price = array_shift($price);
         }
-        $where = $higher ? "price_index.final_price > ?" :  "price_index.final_price < ?";
+
+        $where = $higher ? "price_index.final_price > ?" : "price_index.final_price < ?";
         $this->_itemCollection->getSelect()->where($where, $price);
     }
 
-    protected function addSortBy($sortBy)
+    /**
+     * @param $sortBy.
+     */
+    protected function addSortBy(int $sortBy): void
     {
         switch ($sortBy) {
             case SortBy::RANDOM:
@@ -196,6 +265,11 @@ class RuleManager
         }
     }
 
+    /**
+     * @param int $ruleId
+     * @return false|RuleInterface
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     public function getRuleById(int $ruleId)
     {
         try {

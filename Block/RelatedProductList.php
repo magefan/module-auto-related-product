@@ -8,10 +8,8 @@ declare(strict_types=1);
 namespace Magefan\AutoRelatedProduct\Block;
 
 use Magento\Catalog\Block\Product\Context;
-use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
 use Magefan\AutoRelatedProduct\Api\ConfigInterface as Config;
 use Magento\Catalog\Block\Product\AbstractProduct;
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magefan\AutoRelatedProduct\Model\RuleManager;
 
 class RelatedProductList extends AbstractProduct
@@ -45,7 +43,6 @@ class RelatedProductList extends AbstractProduct
         Config $config,
         RuleManager $ruleManager,
         array $data = []
-
     ) {
         $this->config = $config;
         $this->ruleManager = $ruleManager;
@@ -111,7 +108,6 @@ class RelatedProductList extends AbstractProduct
 
     /**
      * @return string
-     * @throws NoSuchEntityException
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function toHtml(): string
@@ -250,23 +246,19 @@ class RelatedProductList extends AbstractProduct
 
     /**
      * @return array|mixed|null
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getRule()
     {
-        $rule = false;
+        $rule = $this->getData('rule');
 
-        if (null === $this->getData('rule')) {
-            if ($ruleId = (int)$this->getData('rule_id')) {
-                try {
-                    $rule = $this->ruleManager->getRuleById($ruleId);
+        $ruleId = ($rule && $rule->getId()) ? $rule->getId() : $this->getData('rule_id');
 
-                } catch (NoSuchEntityException $e) {
-                    $rule = false;
-                }
-            }
+        if ($ruleId) {
+            $rule = $this->ruleManager->getRuleById((int)$ruleId);
+
+            $this->setData('rule', $rule);
         }
-
-        $this->setData('rule', $rule);
 
         return $this->getData('rule');
     }

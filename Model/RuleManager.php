@@ -16,6 +16,7 @@ use Magento\Framework\Event\ManagerInterface as EventManagerInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magefan\AutoRelatedProduct\Model\RuleRepository;
 use Magento\Store\Model\StoreManagerInterface;
+use Magefan\AutoRelatedProduct\Model\ActionValidator;
 
 class RuleManager
 {
@@ -37,7 +38,8 @@ class RuleManager
         EventManagerInterface $_eventManager,
         RuleRepository $ruleRepository,
         StoreManagerInterface $storeManager,
-        \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository = null
+        \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository = null,
+        ActionValidator $ruleValidator
 
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
@@ -47,6 +49,7 @@ class RuleManager
         $this->_eventManager = $_eventManager;
         $this->ruleRepository = $ruleRepository;
         $this->storeManager = $storeManager;
+        $this->ruleValidator = $ruleValidator;
 
         $this->categoryRepository = $categoryRepository ?:\Magento\Framework\App\ObjectManager::getInstance()
             ->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
@@ -60,12 +63,22 @@ class RuleManager
 
         $currentProduct = $params['current_product'] ?? false;
         $currentCategory = $params['current_category'] ?? false;
+        $pageSize = $params['page_size'] ?? false;
+        $currentPage = $params['current_page'] ?? false;
+
+        if (!$pageSize) {
+            $pageSize = $rule->getData('number_of_products') ?: 10;
+        }
 
         $this->_itemCollection = $this->productCollectionFactory->create()
             ->addAttributeToSelect($this->catalogConfig->getProductAttributes())
             ->setVisibility($this->catalogProductVisibility->getVisibleInCatalogIds())
             ->addStoreFilter()
-            ->setPageSize($rule->getData('number_of_products') ?: 10);
+            ->setPageSize((int)$pageSize);
+
+        if ($currentPage) {
+            $this->_itemCollection->setCurPage((int)$currentPage);
+        }
 
         if (!$rule->getData('display_out_of_stock')) {
             $this->addOutOfStockFilter($rule);
@@ -95,12 +108,13 @@ class RuleManager
             'product' => $currentProduct
         ]);
 
-      /*  $this->_itemCollection->load();
+
+        $this->_itemCollection->load();
 
         foreach ($this->_itemCollection as $item) {
             $item->setDoNotUseCategoryId(true);
         }
-*/
+
         return $this->_itemCollection;
     }
 
@@ -187,12 +201,13 @@ class RuleManager
         try {
             $rule = $this->ruleRepository->get($ruleId);
 
-            if (!$rule->isVisibleOnStore($this->storeManager->getStore()->getId())) {
+            if (!$rule->isVisibleOnStore($this->storeManager->getStore()->getId()) || $this->ruleValidator->isRestricted($rule)) {
                 $rule = false;
             }
         } catch (NoSuchEntityException $e) {
             $rule = false;
         }
+
         return $rule;
     }
 }

@@ -13,7 +13,6 @@ use Magefan\AutoRelatedProduct\Api\ConfigInterface as Config;
 use Magento\Catalog\Block\Product\AbstractProduct;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magefan\AutoRelatedProduct\Model\RuleManager;
-use Magefan\AutoRelatedProduct\Model\ActionValidator;
 
 class RelatedProductList extends AbstractProduct
 {
@@ -45,14 +44,11 @@ class RelatedProductList extends AbstractProduct
         Context $context,
         Config $config,
         RuleManager $ruleManager,
-        ActionValidator $ruleValidator,
         array $data = []
 
     ) {
         $this->config = $config;
         $this->ruleManager = $ruleManager;
-        $this->ruleValidator = $ruleValidator;
-
         parent::__construct($context, $data);
     }
 
@@ -120,7 +116,7 @@ class RelatedProductList extends AbstractProduct
      */
     public function toHtml(): string
     {
-        if (!$this->config->isEnabled() || !$this->getRule() || $this->ruleValidator->isRestricted($this->getRule())) {
+        if (!$this->config->isEnabled() || !$this->getRule()) {
             return '';
         }
 
@@ -257,9 +253,9 @@ class RelatedProductList extends AbstractProduct
      */
     public function getRule()
     {
-        if (null === $this->getData('rule')) {
-            $rule = false;
+        $rule = false;
 
+        if (null === $this->getData('rule')) {
             if ($ruleId = (int)$this->getData('rule_id')) {
                 try {
                     $rule = $this->ruleManager->getRuleById($ruleId);
@@ -268,9 +264,9 @@ class RelatedProductList extends AbstractProduct
                     $rule = false;
                 }
             }
-
-            $this->setData('rule', $rule);
         }
+
+        $this->setData('rule', $rule);
 
         return $this->getData('rule');
     }

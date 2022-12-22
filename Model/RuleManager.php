@@ -89,7 +89,7 @@ class RuleManager
         RuleRepositoryInterface $ruleRepository,
         StoreManagerInterface $storeManager,
         ActionValidator $ruleValidator,
-        \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository = null,
+        \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository = null
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
         $this->catalogConfig = $catalogConfig;

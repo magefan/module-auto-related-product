@@ -20,7 +20,7 @@ You don’t have to monotonously add related products to each item on the catalo
   
   <a href="https://magefan.com/magento-2-automatic-related-products/pricing">
           <img
-            src="https://cm.magefan.com/catalog/product/a/u/auto-related-products-pricing.png"
+            src="https://cm.magefan.com/catalog/auto-related-products-pricing.png"
             alt="Magento 2 Automatic Related Products Pricing" />
         </a>
         
@@ -40,7 +40,7 @@ Adding related, cross-sell and up-sell products to your catalog items is a tedio
 You can boost the conversion rate and provide a better shopping experience with just a few clicks.
 
 <p align="center">
-  <img width="860" height="428" src="https://cm.magefan.com/catalog/product/w/h/who-viewed-also-viewed-product-blogck-magento.png">
+  <img width="860" height="428" src="https://cm.magefan.com/wysiwyg/products/people-who-viewed-this-also-viewed-that.png">
 </p>
 
 
@@ -54,7 +54,7 @@ To make the most out of your sales strategy and show products customers would re
 If you want to optimize and upsell products based on common features like category, material, size, etc, there is the “Same as” product condition. It boosts your related product management and enables you to configure even more closely-focused conditions. There is probably no limit to the number of other conditions you can use along with the “Same as” one. You can create as many rules as you need for the best experience and better sales.
 
 <p align="center">
-  <img width="860" height="428" src="https://cm.magefan.com/catalog/product/a/u/auto-related-product-rules-in-magento-2.png">
+  <img width="860" height="428" src="https://cm.magefan.com/catalog/magento-best-sellers.png">
 </p>
 
 * **Auto-related products block position**
@@ -62,7 +62,7 @@ If you want to optimize and upsell products based on common features like catego
 Where you display the related products on the page is as important as the conditions you display them under. Even if you set the right conditions, related, up-sell, and cross-sell products might not play their part if displayed at the far bottom of the page or at the very top. Auto Related Products for Magento 2 allows you to choose among 20 possible page positions to display related items for smart recommendations.
 
 <p align="center">
-  <img width="860" height="428" src="https://cm.magefan.com/catalog/product/r/e/related-product-rules-condition.png">
+  <img width="860" height="428" src="https://cm.magefan.com/wysiwyg/products/auto-related-products-block-magento.png">
 </p>
 
 * **Customer group-based rules**
@@ -78,7 +78,7 @@ Magento 2 automatic related products widget is one more exceptional feature of t
 Last but not least useful are the display settings that enable you to sort products in the related products block by price, date, name, or randomly. You can also define how many products to display, how to call the blocks, and whether to add the add to cart button. A variety of different options is available in the Automatic Related Products extension, so you can create as user-friendly conditions on your store as possible to increase sales.
 
 <p align="center">
-  <img width="860" height="428" src="https://cm.magefan.com/catalog/product/r/e/related-products-display-setting-in-magento.png">
+  <img width="860" height="428" src="https://cm.magefan.com/wysiwyg/products/related-product-block-position-in-magento.png">
 </p>
 
 ## Need More Features?

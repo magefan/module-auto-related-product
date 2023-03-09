@@ -18,4 +18,7 @@
     <type name="Magento\Catalog\Block\Product\View\Details">
         <plugin name="Magefan_AutoRelatedProduct_Plugin_Frontend_Magento_Catalog_Block_Product_View_Details" type="Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\Catalog\Block\Product\View\Details" sortOrder="10" disabled="false"/>
     </type>
+    <type name="Magento\Catalog\Model\ResourceModel\Product\Link\Product\Collection">
+        <plugin name="Magefan_AutoRelatedProduct_Plugin_Frontend_Magento_Catalog_Model_ResourceModel_Product_Link_Product_Collection" type="Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\Catalog\Model\ResourceModel\Product\Link\Product\Collection" sortOrder="10" disabled="false"/>
+    </type>
 </config>

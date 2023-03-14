@@ -100,5 +100,30 @@ class InstallData implements InstallDataInterface
                 'option' => ['values' => []]
             ]
         );
+
+        $setup->getConnection()->insert(
+            $setup->getTable('magefan_autorp_rule'),
+            [
+                'id' => 1,
+                'status' => 1,
+                'name' => 'Products from The Same Category',
+                'priority' => 20,
+                'store_ids' => 0,
+                'block_position' => 'product_into_related',
+                'merge_type' => 'Merge',
+                'from_one_category_only' => 1,
+                'block_title' => 'Related Products',
+                'sort_by' => 1,
+                'number_of_products' => 6
+            ]
+        );
+
+        $setup->getConnection()->insert(
+            $setup->getTable('magefan_autorp_rule_store'),
+            [
+                'rule_id' => 1,
+                'store_id' => 0,
+            ]
+        );
     }
 }

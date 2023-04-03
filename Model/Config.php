@@ -27,6 +27,11 @@ class Config implements \Magefan\AutoRelatedProduct\Api\ConfigInterface
     const XML_PATH_EXTENSION_ENABLED = 'autorp/general/enabled';
 
     /**
+     * Extension enabled config path
+     */
+    const XML_PATH_TEMPLATE = 'autorp/design/template';
+
+    /**
      * Config constructor.
      * @param ScopeConfigInterface $scopeConfig
      */
@@ -44,6 +49,16 @@ class Config implements \Magefan\AutoRelatedProduct\Api\ConfigInterface
     public function isEnabled($storeId = null): bool
     {
         return (bool)$this->getConfig(self::XML_PATH_EXTENSION_ENABLED, $storeId);
+    }
+
+    /**
+     * Retrieve template
+     *
+     * @return string
+     */
+    public function getTemplate($storeId = null): string
+    {
+        return (string)$this->getConfig(self::XML_PATH_TEMPLATE, $storeId);
     }
 
     /**

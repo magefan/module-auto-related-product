@@ -63,7 +63,7 @@ class RelatedProductList extends AbstractProduct
         }
 
         $rule = $this->getRule();
-        if ($rule && ($template = $rule->getTemplate())) {
+        if ($rule && ($template = (string)$rule->getTemplate())) {
             return $template;
         }
 

@@ -62,6 +62,11 @@ class RelatedProductList extends AbstractProduct
             $theme = $theme->getParentTheme();
         }
 
+        $rule = $this->getRule();
+        if ($rule && ($template = $rule->getTemplate())) {
+            return $template;
+        }
+
         return parent::getTemplate();
     }
 

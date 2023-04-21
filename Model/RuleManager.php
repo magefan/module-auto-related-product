@@ -67,6 +67,11 @@ class RuleManager
      * @var \Magento\Catalog\Api\CategoryRepositoryInterface|mixed
      */
     protected $categoryRepository;
+    
+    /**
+     * @var 
+     */
+    protected $_itemCollection;
 
     /**
      * @param ProductCollectionFactory $productCollectionFactory

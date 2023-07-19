@@ -158,7 +158,10 @@ class WhatConditions extends \Magento\Backend\Block\Widget\Form\Generic implemen
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix('rule_');
-        $renderer = $this->rendererFieldset->setTemplate(
+        $renderer = $this->getLayout()->createBlock(Fieldset::class);
+        $renderer = $renderer->setNameInLayout(
+            'mfautorp_what_conditions_serialized'
+        )->setTemplate(
             'Magento_CatalogRule::promo/fieldset.phtml'
         )->setNewChildUrl(
             $newChildUrl

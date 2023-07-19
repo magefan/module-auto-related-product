@@ -7,15 +7,15 @@ declare(strict_types=1);
 
 namespace Magefan\AutoRelatedProduct\Block\Adminhtml\Rule\Edit;
 
+use Magento\Backend\Block\Widget\Form\Renderer\Fieldset;
+
 /**
  * Work with conditions
 */
 class WhereConditions extends \Magento\Backend\Block\Widget\Form\Generic implements \Magento\Ui\Component\Layout\Tabs\TabInterface
 {
     /**
-     * Core registry
-     *
-     * @var \Magento\Backend\Block\Widget\Form\Renderer\Fieldset
+     * @var Fieldset
      */
     protected $rendererFieldset;
 
@@ -39,7 +39,7 @@ class WhereConditions extends \Magento\Backend\Block\Widget\Form\Generic impleme
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Data\FormFactory $formFactory
      * @param WhereConditions\Where $conditions
-     * @param \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $rendererFieldset
+     * @param Fieldset $rendererFieldset
      * @param \Magento\SalesRule\Model\RuleFactory $ruleFactory
      * @param array $data
      */
@@ -48,7 +48,7 @@ class WhereConditions extends \Magento\Backend\Block\Widget\Form\Generic impleme
         \Magento\Framework\Registry                          $registry,
         \Magento\Framework\Data\FormFactory                  $formFactory,
         WhereConditions\Where                                $conditions,
-        \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $rendererFieldset,
+        Fieldset $rendererFieldset,
         \Magento\SalesRule\Model\RuleFactory                 $ruleFactory,
         array                                                $data = []
     ) {
@@ -152,7 +152,10 @@ class WhereConditions extends \Magento\Backend\Block\Widget\Form\Generic impleme
         /** @var \Magento\Framework\Data\Form $form */
         $form = $this->_formFactory->create();
         $form->setHtmlIdPrefix('rule_where');
-        $renderer = $this->rendererFieldset->setTemplate(
+        $renderer = $this->getLayout()->createBlock(Fieldset::class);
+        $renderer = $renderer->setNameInLayout(
+            'mfautorp_where_actions_serialized'
+        )->setTemplate(
             'Magento_CatalogRule::promo/fieldset.phtml'
         )->setNewChildUrl(
             $newChildUrl

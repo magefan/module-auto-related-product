@@ -21,4 +21,7 @@
     <type name="Magento\Catalog\Model\ResourceModel\Product\Link\Product\Collection">
         <plugin name="Magefan_AutoRelatedProduct_Plugin_Frontend_Magento_Catalog_Model_ResourceModel_Product_Link_Product_Collection" type="Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\Catalog\Model\ResourceModel\Product\Link\Product\Collection" sortOrder="10" disabled="false"/>
     </type>
+    <type name="Magento\TargetRule\Block\Catalog\Product\ProductList\Related">
+        <plugin name="Magefan_AutoRelatedProduct_Plugin_Frontend_Magento_TargetRule_Block_Catalog_Product_ProductList_Related" type="Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\TargetRule\Block\Catalog\Product\ProductList\Related" sortOrder="1" disabled="false"/>
+    </type>
 </config>

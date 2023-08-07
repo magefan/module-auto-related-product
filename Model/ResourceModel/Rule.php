@@ -14,6 +14,8 @@ use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magefan\AutoRelatedProduct\Api\RelatedResourceModelInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Message\ManagerInterface as MessageManager;
+use Magento\Framework\UrlInterface;
 
 /**
  * Class Rule
@@ -36,19 +38,36 @@ class Rule extends AbstractDb implements RelatedResourceModelInterface
     private $request;
 
     /**
+     * @var MessageManager
+     */
+    private $messageManager;
+
+    /**
+     * @var UrlInterface
+     */
+    private $url;
+
+    /**
      * @param Context $context
      * @param SalesRuleFactory $salesRuleFactory
      * @param CatalogRuleFactory $catalogRuleFactory
+     * @param RequestInterface $request
+     * @param MessageManager $messageManager
+     * @param UrlInterface $url
      */
     public function __construct(
         Context $context,
         SalesRuleFactory $salesRuleFactory,
         CatalogRuleFactory $catalogRuleFactory,
-        RequestInterface $request
+        RequestInterface $request,
+        MessageManager $messageManager,
+        UrlInterface $url
     ) {
         $this->salesRuleFactory = $salesRuleFactory;
         $this->catalogRuleFactory = $catalogRuleFactory;
         $this->request = $request;
+        $this->messageManager = $messageManager;
+        $this->url = $url;
         parent::__construct($context);
     }
 
@@ -199,6 +218,15 @@ class Rule extends AbstractDb implements RelatedResourceModelInterface
             $catalogRule = $this->catalogRuleFactory->create();
             $catalogRule->loadPost(['conditions' => $object->getRule('conditions')]);
             $catalogRule->beforeSave();
+
+            if ($catalogRule->getConditionsSerialized() != $object->getConditionsSerialized()) {
+                $appyRulesLink = $this->url->getUrl('*/*/apply');
+
+                $this->messageManager->addNotice(
+                    __('You have modified conditions for "Products To Display", to apply new conditions <a href="%1" >click here</a>', $appyRulesLink)
+                );
+            }
+
             $object->setData(
                 'conditions_serialized',
                 $catalogRule->getConditionsSerialized()

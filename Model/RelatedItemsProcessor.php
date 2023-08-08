@@ -7,11 +7,10 @@ declare(strict_types=1);
 
 namespace Magefan\AutoRelatedProduct\Model;
 
-use Magefan\AutoRelatedProduct\Api\RelatedCollectionInterfaceFactory as RuleCollectionFactory;
+use Magefan\AutoRelatedProduct\Model\RuleManager;
 use Magefan\AutoRelatedProduct\Api\RelatedItemsProcessorInterface;
 use Magefan\AutoRelatedProduct\Model\Config\Source\MergeType;
 use Magento\Framework\View\Element\AbstractBlock;
-use Magento\Store\Model\StoreManagerInterface;
 
 class RelatedItemsProcessor implements RelatedItemsProcessorInterface
 {
@@ -21,67 +20,33 @@ class RelatedItemsProcessor implements RelatedItemsProcessorInterface
     protected $config;
 
     /**
-     * @var ActionValidator
+     * @var RuleManager
      */
-    protected $validator;
-
-    /**
-     * @var RuleCollectionFactory
-     */
-    protected $ruleCollectionFactory;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    protected $storeManager;
+    protected $ruleManager;
 
     /**
      * @param Config $config
-     * @param ActionValidator $validator
-     * @param RuleCollectionFactory $ruleCollectionFactory
+     * @param \Magefan\AutoRelatedProduct\Model\RuleManager $ruleManager
      */
     public function __construct(
-        Config                $config,
-        ActionValidator       $validator,
-        RuleCollectionFactory $ruleCollectionFactory,
-        StoreManagerInterface $storeManager
+        Config $config,
+        RuleManager $ruleManager
     ) {
         $this->config = $config;
-        $this->validator = $validator;
-        $this->ruleCollectionFactory=$ruleCollectionFactory;
-        $this->storeManager = $storeManager;
+        $this->ruleManager = $ruleManager;
     }
 
     /**
      * @param AbstractBlock $subject
      * @param $result
      * @param $blockPosition
-     * @return mixed
+     * @return \Magefan\AutoRelatedProduct\Block\Collection|mixed
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function execute(AbstractBlock $subject, $result, $blockPosition)
     {
-        if (!$this->config->isEnabled()) {
-            return $result;
-        }
-
-        $storeId = $this->storeManager->getStore()->getId();
-        $rules = $this->ruleCollectionFactory->create()
-            ->addActiveFilter()
-            ->addPositionFilter($blockPosition)
-            ->addStoreFilter($storeId)
-            ->setOrder('priority', 'ASC');
-        $rule = false;
-
-        foreach ($rules as $item) {
-            if (!$this->validator->isRestricted($item)) {
-                $rule = $item;
-                break;
-            }
-        }
-
-        if (!$rule) {
+        if (!$this->config->isEnabled() || !$rule = $this->ruleManager->getRuleForPosition($blockPosition)) {
             return $result;
         }
 

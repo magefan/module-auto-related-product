@@ -8,35 +8,18 @@ declare(strict_types=1);
 namespace Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\Framework\View\Result;
 
 use Magefan\AutoRelatedProduct\Block\RelatedProductList;
-use Magefan\AutoRelatedProduct\Model\ActionValidator;
 use Magefan\AutoRelatedProduct\Api\ConfigInterface as Config;
-use Magefan\AutoRelatedProduct\Api\RelatedCollectionInterfaceFactory as RuleCollectionFactory;
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\View\Result\Layout as SubjectLayout;
 use Magefan\AutoRelatedProduct\Api\PositionsInterface;
 use Magento\Framework\App\RequestInterface;
+use Magefan\AutoRelatedProduct\Model\RuleManager;
 
 class Layout
 {
     /**
-     * @var ActionValidator
-     */
-    private $validator;
-
-    /**
      * @var Config
      */
     private $config;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    protected $storeManager;
-
-    /**
-     * @var RuleCollectionFactory
-     */
-    private $ruleCollectionFactory;
 
     /**
      * @var PositionsInterface
@@ -49,26 +32,26 @@ class Layout
     private $request;
 
     /**
-     * @param ActionValidator $validator
+     * @var RuleManager
+     */
+    private $ruleManager;
+
+    /**
      * @param Config $config
-     * @param RuleCollectionFactory $ruleCollectionFactory
-     * @param StoreManagerInterface $storeManager
      * @param PositionsInterface $positionOptions
+     * @param RequestInterface $request
+     * @param RuleManager $ruleManager
      */
     public function __construct(
-        ActionValidator            $validator,
         Config                     $config,
-        RuleCollectionFactory      $ruleCollectionFactory,
-        StoreManagerInterface      $storeManager,
         PositionsInterface         $positionOptions,
-        RequestInterface           $request
+        RequestInterface           $request,
+        RuleManager                $ruleManager
     ) {
         $this->positionOptions = $positionOptions;
-        $this->validator = $validator;
-        $this->config =$config;
-        $this->ruleCollectionFactory = $ruleCollectionFactory;
-        $this->storeManager = $storeManager;
+        $this->config = $config;
         $this->request = $request;
+        $this->ruleManager = $ruleManager;
     }
 
     /**
@@ -129,25 +112,9 @@ class Layout
                     continue;
                 }
 
-                $rules = $this->ruleCollectionFactory->create()
-                    ->addActiveFilter()
-                    ->addStoreFilter($this->storeManager->getStore()->getId())
-                    ->addPositionFilter($position)
-                    ->setOrder('priority', 'ASC');
-
-                $rule = false;
-
-                foreach ($rules as $item) {
-                    if (!$this->validator->isRestricted($item)) {
-                        $rule = $item;
-                        break;
-                    }
-                }
-
-                if (!$rule) {
+                if (!$rule = $this->ruleManager->getRuleForPosition($position)) {
                     continue;
                 }
-
 
                 $after = str_contains($rule->getBlockPosition(), 'after');
                 $ruleBlockName = $rule->getRuleBlockIdentifier();

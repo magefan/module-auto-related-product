@@ -18,12 +18,16 @@ You don’t have to monotonously add related products to each item on the catalo
 
 ## Editions & Pricing
   
-  <a href="https://magefan.com/magento-2-automatic-related-products/pricing">
+<a href="https://magefan.com/magento-2-automatic-related-products/pricing">
           <img
-            src="https://cm.magefan.com/catalog/auto-related-products-pricing.png"
-            alt="Magento 2 Automatic Related Products Pricing" />
+            src="https://cm.magefan.com/wysiwyg/products/auto-related-products-pricing-magento.png"
+            alt="Pricing for Magento 2 Automatic Related Products Extension" />
         </a>
-        
+<a href="https://magefan.com/magento-2-automatic-related-products/pricing">
+          <img
+            src="https://cm.magefan.com/wysiwyg/products/magento-2-auto-related-products-extension-pricing.png"
+            alt="Pricing for Magento 2 Automatic Related Products Extension" />
+        </a>
   
 ## Benefits
 * More targeted related products

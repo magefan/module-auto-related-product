@@ -14,7 +14,7 @@
 
 You don’t have to monotonously add related products to each item on the catalog if you can use a smart algorithm that does it for you.
 
-<a href="https://magefan.com/magento-2-automatic-related-products"><img width="190" height="70" src="https://magefan.com/media/wysiwyg/download-now_1.png"></a>
+<a href="https://magefan.com/magento-2-automatic-related-products"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/download-magefan-extensions.png"></a><a href="https://magefan.com/magento-2-automatic-related-products#live-demo"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/magefan-live-demo.png"></a>
 
 ## Editions & Pricing
   

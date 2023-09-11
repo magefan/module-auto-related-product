@@ -206,6 +206,17 @@ class RuleManager
     {
         $productCategoryId = false;
 
+        if ($currentCategory && $currentCategory->getData('is_virtual_category') && $currentCategory->getVirtualRule()) {
+            $queryFilter = $currentCategory->getVirtualRule()->getCategorySearchQuery($currentCategory);
+
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $smileCollection = $objectManager->create(\Smile\ElasticsuiteCatalog\Model\ResourceModel\Product\Fulltext\Collection::class);
+            $smileCollection->addQueryFilter($queryFilter);
+            $categoryProductIds = $smileCollection->load()->getAllIds();
+            $this->_itemCollection->addFieldToFilter('entity_id', ['in' =>  $categoryProductIds]);
+            return;
+        }
+
         if ($currentCategory) {
             $productCategoryId = $currentCategory->getId();
         } elseif ($currentProduct) {

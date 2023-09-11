@@ -18,6 +18,7 @@ use Magefan\AutoRelatedProduct\Api\RuleRepositoryInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magefan\AutoRelatedProduct\Model\ActionValidator;
 use Magefan\AutoRelatedProduct\Api\Data\RuleInterface;
+use Magefan\AutoRelatedProduct\Api\RelatedCollectionInterfaceFactory as RuleCollectionFactory;
 
 class RuleManager
 {
@@ -67,11 +68,16 @@ class RuleManager
      * @var \Magento\Catalog\Api\CategoryRepositoryInterface|mixed
      */
     protected $categoryRepository;
-    
+
     /**
-     * @var 
+     * @var
      */
     protected $_itemCollection;
+
+    /**
+     * @var RuleCollectionFactory
+     */
+    protected $ruleCollectionFactory;
 
     /**
      * @param ProductCollectionFactory $productCollectionFactory
@@ -94,6 +100,7 @@ class RuleManager
         RuleRepositoryInterface $ruleRepository,
         StoreManagerInterface $storeManager,
         ActionValidator $ruleValidator,
+        RuleCollectionFactory $ruleCollectionFactory,
         \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository = null
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
@@ -104,6 +111,7 @@ class RuleManager
         $this->ruleRepository = $ruleRepository;
         $this->storeManager = $storeManager;
         $this->ruleValidator = $ruleValidator;
+        $this->ruleCollectionFactory = $ruleCollectionFactory;
         $this->categoryRepository = $categoryRepository ?:\Magento\Framework\App\ObjectManager::getInstance()
             ->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
     }
@@ -285,6 +293,34 @@ class RuleManager
             }
         } catch (NoSuchEntityException $e) {
             $rule = false;
+        }
+
+        return $rule;
+    }
+
+
+    /**
+     * @param string $blockPosition
+     * @return false|mixed
+     * @throws NoSuchEntityException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getRuleForPosition($blockPosition = '')
+    {
+        $rule = false;
+        $storeId = $this->storeManager->getStore()->getId();
+
+        $rules = $this->ruleCollectionFactory->create()
+            ->addActiveFilter()
+            ->addPositionFilter($blockPosition)
+            ->addStoreFilter($storeId)
+            ->setOrder('priority', 'ASC');
+
+        foreach ($rules as $item) {
+            if (!$this->ruleValidator->isRestricted($item)) {
+                $rule = $item;
+                break;
+            }
         }
 
         return $rule;

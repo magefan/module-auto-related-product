@@ -6,16 +6,10 @@
 
 namespace Magefan\AutoRelatedProduct\Observer\Frontend\Layout;
 
-use Arsal\CustomTab\Model\TabConfig;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Magefan\AutoRelatedProduct\Model\Rule;
-use Magefan\AutoRelatedProduct\Model\RuleRepository;
-use Magento\Framework\App\RequestInterface;
 use Magefan\AutoRelatedProduct\Api\ConfigInterface as Config;
-use Magefan\AutoRelatedProduct\Model\ActionValidator;
-use Magefan\AutoRelatedProduct\Api\RelatedCollectionInterfaceFactory as RuleCollectionFactory;
-use Magento\Store\Model\StoreManagerInterface;
+use Magefan\AutoRelatedProduct\Model\RuleManager;
 
 class GenerateBlocksAfter implements ObserverInterface
 {
@@ -30,41 +24,24 @@ class GenerateBlocksAfter implements ObserverInterface
     protected $config;
 
     /**
-     * @var ActionValidator
+     * @var RuleManager
      */
-    protected $validator;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    protected $storeManager;
-
-    /**
-     * @var RuleCollectionFactory
-     */
-    protected $ruleCollectionFactory;
+    protected $ruleManager;
 
     /**
      * @param Config $config
-     * @param ActionValidator $validator
-     * @param RuleCollectionFactory $ruleCollectionFactory
-     * @param StoreManagerInterface $storeManager
+     * @param RuleManager $ruleManager
      */
     public function __construct(
-        Config                $config,
-        ActionValidator       $validator,
-        RuleCollectionFactory $ruleCollectionFactory,
-        StoreManagerInterface $storeManager
+        Config $config,
+        RuleManager $ruleManager
     ) {
         $this->config = $config;
-        $this->validator=$validator;
-        $this->ruleCollectionFactory = $ruleCollectionFactory;
-        $this->storeManager = $storeManager;
+        $this->ruleManager = $ruleManager;
     }
 
     /**
      * @param Observer $observer
-     * @return void
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
@@ -74,32 +51,9 @@ class GenerateBlocksAfter implements ObserverInterface
             return;
         }
 
-        /* @var $layout \Magento\Framework\View\Layout */
-        $layout = $observer->getLayout();
+        $block = $observer->getLayout()->getBlock(self::PARENT_BlOCK_NAME);
 
-        $block = $layout->getBlock(self::PARENT_BlOCK_NAME);
-
-        if (!$block) {
-            return;
-        }
-
-        $storeId = $this->storeManager->getStore()->getId();
-        $rules = $this->ruleCollectionFactory->create()
-            ->addActiveFilter()
-            ->addStoreFilter($storeId)
-            ->addPositionFilter('product_content_tab')
-            ->setOrder('priority', 'ASC');
-
-        $rule = false;
-
-        foreach ($rules as $item) {
-            if (!$this->validator->isRestricted($item)) {
-                $rule = $item;
-                break;
-            }
-        }
-
-        if (!$rule) {
+        if (!$block || !$rule = $this->ruleManager->getRuleForPosition('product_content_tab')) {
             return;
         }
 
@@ -107,8 +61,8 @@ class GenerateBlocksAfter implements ObserverInterface
             'autorp_tab',
             \Magefan\AutoRelatedProduct\Block\RelatedProductList::class,
             [
-                'title' =>$rule->getData('block_title'),
-                'isTab'=>1,
+                'title' => $rule->getData('block_title'),
+                'isTab'=> 1,
                 'rule' => $rule
             ]
         );

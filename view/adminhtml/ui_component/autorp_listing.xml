@@ -198,6 +198,6 @@
                 </item>
             </argument>
         </column>
-        <actionsColumn name="actions" class="Magefan\AutoRelatedProduct\UI\Component\Listing\Column\Actions"/>
+        <actionsColumn name="actions" class="Magefan\AutoRelatedProduct\Ui\Component\Listing\Column\Actions"/>
     </columns>
 </listing>

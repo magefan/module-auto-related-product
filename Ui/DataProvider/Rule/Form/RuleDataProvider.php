@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magefan\AutoRelatedProduct\UI\DataProvider\Rule\Form;
+namespace Magefan\AutoRelatedProduct\Ui\DataProvider\Rule\Form;
 
 use Magefan\AutoRelatedProduct\Api\RelatedCollectionInterface as Collection;
 use Magento\Framework\Exception\NoSuchEntityException;

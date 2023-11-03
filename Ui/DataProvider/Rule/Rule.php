@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Magefan\AutoRelatedProduct\UI\DataProvider\Rule;
+namespace Magefan\AutoRelatedProduct\Ui\DataProvider\Rule;
 
 use Magefan\AutoRelatedProduct\Model\ResourceModel\Rule\Collection as GridCollection;
 use Magento\Framework\Api\Search\SearchResultInterface;

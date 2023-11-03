@@ -17,7 +17,7 @@
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">
-                <item name="autorp_listing_data_source" xsi:type="string">Magefan\AutoRelatedProduct\UI\DataProvider\Rule\Rule</item>
+                <item name="autorp_listing_data_source" xsi:type="string">Magefan\AutoRelatedProduct\Ui\DataProvider\Rule\Rule</item>
             </argument>
         </arguments>
     </type>

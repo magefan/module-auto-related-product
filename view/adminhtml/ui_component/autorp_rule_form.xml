@@ -28,7 +28,7 @@
     </argument>
     <dataSource name="autorp_rule_form_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
-            <argument name="class" xsi:type="string">Magefan\AutoRelatedProduct\UI\DataProvider\Rule\Form\RuleDataProvider</argument>
+            <argument name="class" xsi:type="string">Magefan\AutoRelatedProduct\Ui\DataProvider\Rule\Form\RuleDataProvider</argument>
             <argument name="name" xsi:type="string">autorp_rule_form_data_source</argument>
             <argument name="primaryFieldName" xsi:type="string">id</argument>
             <argument name="requestFieldName" xsi:type="string">id</argument>

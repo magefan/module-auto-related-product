@@ -90,6 +90,14 @@ class Layout
             }
         }
 
+
+        /* Fix for related producs before/after and custom theme */
+        $blockName = 'catalog.product.related';
+        if (isset($parentsArray[$blockName]) && !$layout->getBlock($blockName) && $layout->getBlock($blockName . '.theme')) {
+            $parentsArray[$blockName . '.theme'] = $parentsArray[$blockName];
+        }
+        /* End fix */
+
         $layoutElements = [];
         foreach ($parentsArray as $blockName => $positions) {
             if ($layout->getBlock($blockName)) {

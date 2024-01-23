@@ -11,8 +11,10 @@ use Magento\Catalog\Block\Product\Context;
 use Magefan\AutoRelatedProduct\Api\ConfigInterface as Config;
 use Magento\Catalog\Block\Product\AbstractProduct;
 use Magefan\AutoRelatedProduct\Model\RuleManager;
+use Magento\Framework\DataObject\IdentityInterface;
+use Magento\Catalog\Model\Product;
 
-class RelatedProductList extends AbstractProduct
+class RelatedProductList extends AbstractProduct implements IdentityInterface
 {
     /**
      * @var Collection
@@ -212,12 +214,20 @@ class RelatedProductList extends AbstractProduct
         return count($this->getItems()) ? true : false;
     }
 
-    /**
-     * @return array
-     */
     public function getIdentities()
     {
-        return [];
+        $identities = [Product::CACHE_TAG . '_' . $this->getProduct()->getId()];
+        if (count($this->getItems())) {
+            foreach ($this->getItems() as $item) {
+                foreach ($item->getIdentities() as $identity) {
+                    $identities[] = $identity;
+                }
+            }
+        } else {
+            $identities[] = Product::CACHE_TAG;
+        }
+
+        return $identities;
     }
 
     /**

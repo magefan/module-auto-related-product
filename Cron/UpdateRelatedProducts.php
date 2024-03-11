@@ -5,15 +5,15 @@
  */
 namespace Magefan\AutoRelatedProduct\Cron;
 
-use Magefan\AutoRelatedProduct\Model\ResourceModel\RelatedUpdater;
+use Magefan\AutoRelatedProduct\Model\AutoRelatedProductAction;
 use Magefan\AutoRelatedProduct\Api\ConfigInterface as Config;
 
 class UpdateRelatedProducts
 {
     /**
-     * @var RelatedUpdater
+     * @var AutoRelatedProductAction
      */
-    protected $relatedUpdater;
+    protected $autoRelatedProductAction;
 
     /**
      * @var Config
@@ -25,11 +25,11 @@ class UpdateRelatedProducts
      * @param RelatedUpdater $relatedUpdater
      */
     public function __construct(
-        RelatedUpdater $relatedUpdater,
+        AutoRelatedProductAction $autoRelatedProductAction,
         Config $config
     ) {
         $this->config = $config;
-        $this->relatedUpdater = $relatedUpdater;
+        $this->autoRelatedProductAction = $autoRelatedProductAction;
     }
 
     /**
@@ -38,7 +38,7 @@ class UpdateRelatedProducts
     public function execute()
     {
         if ($this->config->isEnabled()) {
-            $this->relatedUpdater->execute();
+            $this->autoRelatedProductAction->execute();
         }
     }
 }

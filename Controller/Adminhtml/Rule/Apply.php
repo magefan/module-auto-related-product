@@ -8,7 +8,7 @@ namespace Magefan\AutoRelatedProduct\Controller\Adminhtml\Rule;
 
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Backend\App\Action\Context;
-use Magefan\AutoRelatedProduct\Model\ResourceModel\RelatedUpdater;
+use Magefan\AutoRelatedProduct\Model\AutoRelatedProductAction;
 use Magefan\AutoRelatedProduct\Api\RelatedCollectionInterfaceFactory;
 use Magefan\AutoRelatedProduct\Api\ConfigInterface;
 
@@ -23,9 +23,9 @@ class Apply extends \Magento\Backend\App\Action
     const ADMIN_RESOURCE = 'Magefan_AutoRelatedProduct:rule';
 
     /**
-     * @var RelatedUpdater
+     * @var AutoRelatedProductAction
      */
-    protected $relatedUpdater;
+    protected $autoRelatedProductAction;
 
     /**
      * @var RelatedCollectionInterfaceFactory
@@ -45,13 +45,13 @@ class Apply extends \Magento\Backend\App\Action
      */
     public function __construct(
         Context $context,
-        RelatedUpdater $relatedUpdater,
+        AutoRelatedProductAction $autoRelatedProductAction,
         RelatedCollectionInterfaceFactory $ruleCollectionFactory,
         ConfigInterface $config
     ) {
         $this->config = $config;
         $this->ruleCollection = $ruleCollectionFactory;
-        $this->relatedUpdater = $relatedUpdater;
+        $this->autoRelatedProductAction = $autoRelatedProductAction;
         parent::__construct($context);
     }
 
@@ -83,7 +83,7 @@ class Apply extends \Magento\Backend\App\Action
                 $this->messageManager->addError(__('Cannot find any rule.'));
             }
             if ($this->config->isEnabled()) {
-                $this->relatedUpdater->execute();
+                $this->autoRelatedProductAction->execute();
                 $this->messageManager->addSuccess(__('Rules has been applied.'));
             } else {
                 $this->messageManager->addNotice(__('Please enable the extension to apply rules.'));

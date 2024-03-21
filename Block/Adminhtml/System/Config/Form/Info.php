@@ -20,7 +20,7 @@ class Info extends \Magefan\Community\Block\Adminhtml\System\Config\Form\Info
      */
     protected function getModuleUrl()
     {
-        return 'https://mage' . 'fan.com?utm_source=m2admin_atr_config&utm_medium=link&utm_campaign=regular';
+        return 'https://mage' . 'fan.com';
     }
 
     /**

@@ -9,7 +9,6 @@ namespace Magefan\AutoRelatedProduct\Model;
 
 use Magefan\AutoRelatedProduct\Api\RelatedCollectionInterfaceFactory as RuleCollectionFactory;
 use Magefan\Community\Model\Magento\Rule\Model\Condition\Sql\Builder;
-use Magefan\DynamicProductAttributes\Api\AddCustomValidationFiltersInterface;
 use Magento\CatalogRule\Model\RuleFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
@@ -97,7 +96,7 @@ class AutoRelatedProductAction
      * @param ModuleManager $moduleManager
      * @param GetParentProductIdsInterface $getParentProductIds
      * @param GetWebsitesMapInterface $getWebsitesMap
-     * @param AddCustomValidationFiltersInterface $validationFilter
+     * @param $validationFilter
      * @param EventManagerInterface $eventManager
      */
     public function __construct(
@@ -110,7 +109,7 @@ class AutoRelatedProductAction
         ModuleManager $moduleManager,
         GetParentProductIdsInterface $getParentProductIds,
         GetWebsitesMapInterface $getWebsitesMap,
-        AddCustomValidationFiltersInterface $validationFilter,
+        $validationFilter,
         EventManagerInterface $eventManager
     ) {
         $this->resourceConnection = $resourceConnection;

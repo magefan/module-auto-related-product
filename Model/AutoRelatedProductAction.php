@@ -79,7 +79,7 @@ class AutoRelatedProductAction
     /**
      * @var null
      */
-    private $validationFilter = null;
+    private $validationFilter;
 
     /**
      * @var EventManagerInterface
@@ -96,8 +96,8 @@ class AutoRelatedProductAction
      * @param ModuleManager $moduleManager
      * @param GetParentProductIdsInterface $getParentProductIds
      * @param GetWebsitesMapInterface $getWebsitesMap
-     * @param $validationFilter
      * @param EventManagerInterface $eventManager
+     * @param $validationFilter
      */
     public function __construct(
         ResourceConnection $resourceConnection,
@@ -109,8 +109,8 @@ class AutoRelatedProductAction
         ModuleManager $moduleManager,
         GetParentProductIdsInterface $getParentProductIds,
         GetWebsitesMapInterface $getWebsitesMap,
-        $validationFilter,
-        EventManagerInterface $eventManager
+        EventManagerInterface $eventManager,
+        $validationFilter = null
     ) {
         $this->resourceConnection = $resourceConnection;
         $this->connection = $resourceConnection->getConnection();

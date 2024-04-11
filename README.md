@@ -16,6 +16,11 @@ You don’t have to monotonously add related products to each item on the catalo
 
 <a href="https://magefan.com/magento-2-automatic-related-products"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/download-magefan-extensions.png"></a><a href="https://magefan.com/magento-2-automatic-related-products#live-demo"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/magefan-live-demo.png"></a>
 
+## Requirements
+  * Magento Community 2.3.0-2.4.x (CE, EE, ECE, B2B)
+  * [Magefan Community Extension](https://github.com/magefan/module-community) >= v2.1.20. Please install this extension first if you use installation via FTP.
+  * **Note** that the extension is free only for the Magento Community (Open Source) Edition. For Magento EE, ECE, and B2B you need to purchase the license.
+
 ## Editions & Pricing
   
 <a href="https://magefan.com/magento-2-automatic-related-products/pricing">

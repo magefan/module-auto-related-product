@@ -20,12 +20,7 @@ You don’t have to monotonously add related products to each item on the catalo
   
 <a href="https://magefan.com/magento-2-automatic-related-products/pricing">
           <img
-            src="https://cm.magefan.com/wysiwyg/products/auto-related-products-pricing-magento.png"
-            alt="Pricing for Magento 2 Automatic Related Products Extension" />
-        </a>
-<a href="https://magefan.com/magento-2-automatic-related-products/pricing">
-          <img
-            src="https://cm.magefan.com/wysiwyg/products/magento-2-auto-related-products-extension-pricing.png"
+            src="https://cm.magefan.com/wysiwyg/products/magento-related-product-rules-pricing.png"
             alt="Pricing for Magento 2 Automatic Related Products Extension" />
         </a>
   
@@ -37,7 +32,7 @@ You don’t have to monotonously add related products to each item on the catalo
 
 
 ## Features
-* **Smart product recommendations**
+### Smart product recommendations
 
 Adding related, cross-sell and up-sell products to your catalog items is a tedious and time-ineffective process that requires you to go from one product page to another. Much faster is to use the smart product recommendation tool like Automatic Related Products for Magento 2 by Magefan. This extension allows you to enable and add related product blocks for other products, categories, shopping cart, and even CMS pages automatically.
 
@@ -48,12 +43,12 @@ You can boost the conversion rate and provide a better shopping experience with 
 </p>
 
 
-* **Attribute-based related products conditions**
+### Attribute-based related products conditions
 
 To make the most out of your sales strategy and show products customers would really be interested in, you have to set up custom conditions to display them. The Auto-related Products Extension allows you to add cross-sell,up-sell, and related products based on page type and URL as well as multiple product and cart attributes.
 
 
-* **“Same as” product display condition**
+### “Same as” product display condition
 
 If you want to optimize and upsell products based on common features like category, material, size, etc, there is the “Same as” product condition. It boosts your related product management and enables you to configure even more closely-focused conditions. There is probably no limit to the number of other conditions you can use along with the “Same as” one. You can create as many rules as you need for the best experience and better sales.
 
@@ -61,7 +56,7 @@ If you want to optimize and upsell products based on common features like catego
   <img width="860" height="428" src="https://cm.magefan.com/catalog/magento-best-sellers.png">
 </p>
 
-* **Auto-related products block position**
+### Auto-related products block position
 
 Where you display the related products on the page is as important as the conditions you display them under. Even if you set the right conditions, related, up-sell, and cross-sell products might not play their part if displayed at the far bottom of the page or at the very top. Auto Related Products for Magento 2 allows you to choose among 20 possible page positions to display related items for smart recommendations.
 
@@ -69,21 +64,74 @@ Where you display the related products on the page is as important as the condit
   <img width="860" height="428" src="https://cm.magefan.com/wysiwyg/products/auto-related-products-block-magento.png">
 </p>
 
-* **Customer group-based rules**
+### Customer group-based rules
 
 Since related products alone are not going to do the trick, you have to be more specific about the customers you show them to. Targeting the right people with the right offers is a key to an effective sales campaign. That’s why Auto-related Products Extension for Magento has an option to define what customer group should the related product be displayed to. You can create similar rules and tweak them a little to fit certain customer group requirements and needs. 
 
-* **Automatic related products widget**
+### Automatic related products widget
 
 Magento 2 automatic related products widget is one more exceptional feature of the Auto Related Products module that exceeds the default Magento functional. It is one of those options that make displaying up-sell, cross-sell, and related products on any page of your store possible. You can create a rule and apply it with the widget on any CMS page of a website. Homepage, wishlist, customers account - promote more products on more pages for better conversion rates.
 
-* **Auto-related products block display**
+### Auto-related products block display
 
 Last but not least useful are the display settings that enable you to sort products in the related products block by price, date, name, or randomly. You can also define how many products to display, how to call the blocks, and whether to add the add to cart button. A variety of different options is available in the Automatic Related Products extension, so you can create as user-friendly conditions on your store as possible to increase sales.
 
 <p align="center">
   <img width="860" height="428" src="https://cm.magefan.com/wysiwyg/products/related-product-block-position-in-magento.png">
 </p>
+
+## Demo
+
+Try out our open demo and if you like our extension **please give us some star on Github ★**
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+        Storefront Demo
+      </td>
+      <td align="center" valign="middle">
+        Admin Panel Demo
+      </td align="center" valign="middle">
+    </tr>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="https://arp.demo.magefan.top/beaumont-summit-kit.html">
+          <img
+            src="https://magefan.com/static/version1520969775/frontend/Magefan/new/en_US/images/product-tab-demo-1.jpg"
+            alt="Magento 2 Auto Related Products Storefront Demo"
+            height="220"
+          >
+        </a>
+      </td>
+      <td align="center" valign="middle">
+        <a href="https://arp.demo.magefan.top/admin/autorp/rule/">
+          <img
+            src="https://magefan.com/static/version1520969775/frontend/Magefan/new/en_US/images/product-tab-demo-2.jpg"
+            alt="Magento 2 Auto Related Products Admin Panel Demo"
+            height="220"
+          >
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="https://arp.demo.magefan.top/beaumont-summit-kit.html">
+          view
+        </a>
+      </td>
+      <td align="center" valign="middle">
+        <a href="https://arp.demo.magefan.top/admin/autorp/rule/">
+          view
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+## Support
+If you have any issues, please [contact us](mailto:support@magefan.com)
+then if you still need help, open a bug report in GitHub's
+[issue tracker](https://github.com/magefan/module-auto-related-product/issues).
 
 ## Need More Features?
 Please contact us to get a quote
@@ -95,9 +143,9 @@ The code is licensed under [EULA](https://magefan.com/end-user-license-agreement
 ## Documentation
 
 **General**
-* [How to install Magento 2 Automatic Related Products Extension](https://magefan.com/magento-2-automatic-related-products/installation)
-* [How to update Magento 2 Automatic Related Products Extension](https://magefan.com/magento-2-automatic-related-products/updating)
-* [How to uninstall Magento 2 Automatic Related Products Extension](https://magefan.com/magento-2-automatic-related-products/uninstalling)
+* [How to install Magento 2 Automatic Related Products Extension?](https://magefan.com/magento-2-automatic-related-products/installation)
+* [How to update Magento 2 Automatic Related Products Extension?](https://magefan.com/magento-2-automatic-related-products/updating)
+* [How to uninstall Magento 2 Automatic Related Products Extension?](https://magefan.com/magento-2-automatic-related-products/uninstalling)
 
 ## [Magento 2 Extensions](https://magefan.com/magento-2-extensions) by Magefan
 
@@ -141,12 +189,12 @@ The code is licensed under [EULA](https://magefan.com/end-user-license-agreement
 
 ### [Magento 2 Marketing Automation Extensions](https://magefan.com/magento-2-extensions/magento-marketing-automation)
 
+* [Magento 2 Product Labels Extension](https://magefan.com/magento-2-product-labels)
 * [Magento 2 Dynamic Categories](https://magefan.com/magento-2-dynamic-categories)
 * [Magento 2 CMS Display Rules Extension](https://magefan.com/magento-2-cms-display-rules-extension)
 * [Magento 2 Price History](https://magefan.com/magento-2-price-history)
 * [Magento 2 Mautic Integration Extension](https://magefan.com/magento-2-mautic-extension)
 * [Magento 2 YouTube Widget Extension](https://magefan.com/magento2-youtube-extension)
-    
  
 ### [Magento 2 Cart Extensions](https://magefan.com/magento-2-extensions/cart-extensions)
 

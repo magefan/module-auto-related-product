@@ -124,7 +124,7 @@ class Layout
                     continue;
                 }
 
-                $after = str_contains($rule->getBlockPosition(), 'after');
+                $after = (strpos($rule->getBlockPosition(), 'after') !== false);
                 $ruleBlockName = $rule->getRuleBlockIdentifier();
                 $layout
                     ->addBlock(RelatedProductList::class, $ruleBlockName, $containerName)

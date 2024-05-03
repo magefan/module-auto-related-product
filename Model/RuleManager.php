@@ -161,9 +161,9 @@ class RuleManager
         if ($currentProduct) {
             $this->_itemCollection->addFieldToFilter('entity_id', ['neq' => $currentProduct->getId()]);
 
-            if (($higher = $rule->getIsOnlyWithHigherPrice()) || $rule->getIsOnlyWithLowerPrice()) {
+            /*if (($higher = $rule->getIsOnlyWithHigherPrice()) || $rule->getIsOnlyWithLowerPrice()) {
                 $this->addPriceFilter($higher, $currentProduct->getFinalPrice());
-            }
+            }*/
         }
 
         $this->addSortBy((int)$rule->getData('sort_by'));
@@ -179,7 +179,8 @@ class RuleManager
         foreach ($this->_itemCollection as $item) {
             $item->setDoNotUseCategoryId(true);
         }
-
+        var_dump($rule->getIsOnlyWithHigherPrice(), $rule->getIsOnlyWithLowerPrice(),'7777777777777777777777777777777777777777777777777777');
+var_dump($this->_itemCollection->getData(), "'<br><br><br>'");
         return $this->_itemCollection;
     }
 
@@ -245,6 +246,7 @@ class RuleManager
      * @param $higher
      * @param $price
      */
+
     protected function addPriceFilter($higher, $price): void
     {
         if (is_array($price)) {
@@ -263,17 +265,6 @@ class RuleManager
         switch ($sortBy) {
             case SortBy::RANDOM:
                 $this->_itemCollection->getSelect()->order('rand()');
-                break;
-            case SortBy::NAME:
-                $this->_itemCollection->addAttributeToSort('name', 'ASC');
-                break;
-            case SortBy::NEWEST:
-                $this->_itemCollection->addAttributeToSort('created_at', 'DESC');
-                break;
-            case SortBy::PRICE_DESC:
-                $this->_itemCollection->addAttributeToSort('price', 'DESC');
-            case SortBy::PRICE_ASC:
-                $this->_itemCollection->addAttributeToSort('price', 'ASC');
                 break;
         }
     }

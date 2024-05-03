@@ -123,6 +123,29 @@
                          </item>
                      </item>
                  </item>
+                 <item name="custom" xsi:type="array">
+                     <item name="label" xsi:type="string">Custom (Plus)</item>
+                     <item name="value" xsi:type="string">custom</item>
+                 </item>
+                 <item name="cart_page" xsi:type="array">
+                     <item name="label" xsi:type="string">Shopping Cart Page (Plus)</item>
+                     <item name="value" xsi:type="array">
+                         <item name="cart_before_crossSell" xsi:type="array">
+                             <item name="label" xsi:type="string">Before Native Cross-sells Block (Plus)</item>
+                             <item name="value" xsi:type="string">cart_before_crossSell</item>
+                             <item name="parent" xsi:type="string">checkout.cart.crosssell</item>
+                         </item>
+                         <item name="cart_after_crossSell" xsi:type="array">
+                             <item name="label" xsi:type="string">After Native Cross-sells Block (Plus)</item>
+                             <item name="value" xsi:type="string">cart_after_crossSell</item>
+                             <item name="parent" xsi:type="string">checkout.cart.crosssell</item>
+                         </item>
+                         <item name="cart_into_crossSell" xsi:type="array">
+                             <item name="label" xsi:type="string">Add into Native Cross-sells Block (Plus)</item>
+                             <item name="value" xsi:type="string">cart_into_crossSell</item>
+                         </item>
+                     </item>
+                 </item>
              </argument>
          </arguments>
     </type>

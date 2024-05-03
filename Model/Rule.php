@@ -232,10 +232,6 @@ class Rule extends \Magento\Framework\Model\AbstractModel implements \Magefan\Au
     {
         $indentifire = $this->getBlockPosition();
 
-        if ((0 !== $this->getIsFromOneCategory() || 0 !== $this->getIsOnlyWithHigherPrice()) && 'custom' != $this->getBlockPosition()) {
-            $indentifire .= '_' . '1';
-
-        }
         if ($this->getId()) {
             $indentifire .= '_' . $this->getId();
         }

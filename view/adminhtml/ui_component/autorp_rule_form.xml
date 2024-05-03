@@ -14,6 +14,7 @@
         </item>
         <item name="buttons" xsi:type="array">
             <item name="back" xsi:type="string">Magefan\Community\Block\Adminhtml\Edit\BackButton</item>
+            <item name="duplicate" xsi:type="string">Magefan\AutoRelatedProduct\Block\Adminhtml\System\Config\Form\ButtonInfo</item>
             <item name="delete" xsi:type="string">Magefan\Community\Block\Adminhtml\Edit\DeleteButton</item>
             <item name="reset" xsi:type="string">Magefan\Community\Block\Adminhtml\Edit\ResetButton</item>
             <item name="save" xsi:type="string">Magefan\Community\Block\Adminhtml\Edit\SaveButton</item>
@@ -138,6 +139,64 @@
                 </item>
             </argument>
         </field>
+        <field name="customer_group_ids" formElement="multiselect">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="label" xsi:type="string" translate="true">Customer Group (Plus)</item>
+                    <item name="dataScope" xsi:type="string">customer_group_ids</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+            </settings>
+            <formElements>
+                <multiselect>
+                    <settings>
+                        <options class="Magento\CatalogRule\Model\Rule\CustomerGroupsOptionsProvider"/>
+                    </settings>
+                </multiselect>
+            </formElements>
+        </field>
+        <field name="start_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Date From (Plus)</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="dataScope" xsi:type="string">start_date</item>
+                    <item name="sortOrder" xsi:type="number">55</item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">MM/dd/yyyy</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="finish_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="label" xsi:type="string" translate="true">Date To (Plus)</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="dataScope" xsi:type="string">finish_date</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">MM/dd/yyyy</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
     </fieldset>
     <fieldset name="where_to_display_product">
         <argument name="data" xsi:type="array">
@@ -151,7 +210,7 @@
                 <item name="options" xsi:type="object">Magefan\AutoRelatedProduct\Api\PositionsInterface</item>
                 <item name="config" xsi:type="array">
                     <item name="component" xsi:type="string">Magefan_AutoRelatedProduct/js/form/element/is-product-conditions</item>
-                    <item name="label" xsi:type="string" translate="true">Block Position</item>
+                    <item name="label" xsi:type="string" translate="true">Block Position (Plus)</item>
                     <item name="formElement" xsi:type="string">select</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="source" xsi:type="string">rule</item>
@@ -175,7 +234,7 @@
                 </item>
             </argument>
         </field>
-        <!--C1 -->
+        <!--C1-->
         <container name="actions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -186,6 +245,54 @@
                 <block name="actions_apply_to" class="Magefan\AutoRelatedProduct\Block\Adminhtml\Rule\Edit\WhereConditions" />
             </htmlContent>
         </container>
+        <container name="container_samples">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="label" xsi:type="string"></item>
+                </item>
+            </argument>
+            <htmlContent name="samples">
+                <block class="Magefan\AutoRelatedProductPlus\Block\Adminhtml\Rule\CustomPositionSamples" name="samples"/>
+            </htmlContent>
+        </container>
+        <container name="container_categories">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" />
+                    <item name="dataScope" xsi:type="string"></item>
+                    <item name="breakLine" xsi:type="boolean">false</item>
+                    <item name="formElement" xsi:type="string">container</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+            </argument>
+            <field name="add_product_to">
+                <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Magento\Catalog\Ui\Component\Product\Form\Categories\Options</item>
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Categories (Plus)</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="component" xsi:type="string">Magento_Catalog/js/components/new-category</item>
+                        <item name="elementTmpl" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                        <item name="dataScope" xsi:type="string">category_ids</item>
+                        <item name="filterOptions" xsi:type="boolean">true</item>
+                        <item name="chipsEnabled" xsi:type="boolean">true</item>
+                        <item name="showCheckbox" xsi:type="boolean">true</item>
+                        <item name="disableLabel" xsi:type="boolean">true</item>
+                        <item name="multiple" xsi:type="boolean">true</item>
+                        <item name="levelsVisibility" xsi:type="number">1</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                        <item name="required" xsi:type="boolean">false</item>
+                        <item name="listens" xsi:type="array">
+                            <item name="index=create_category:responseData" xsi:type="string">setParsed</item>
+                            <item name="newOption" xsi:type="string">toggleOptionSelected</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+
     </fieldset>
     <fieldset name="what_to_display">
         <argument name="data" xsi:type="array">
@@ -199,11 +306,113 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="sortOrder" xsi:type="number">130</item>
+                    <item name="component" xsi:type="string">Magefan_AutoRelatedProduct/js/lib/core/collection</item>
+                    <item name="className" xsi:type="string">autorp-what-to-display</item>
                 </item>
             </argument>
             <htmlContent name="html_content">
                 <block name="conditions_apply_to"  class="Magefan\AutoRelatedProduct\Block\Adminhtml\Rule\Edit\WhatConditions" />
             </htmlContent>
+        </container>
+        <container name="preview_button">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="boolean">false</item>
+                    <item name="formElement" xsi:type="string">container</item>
+                    <item name="componentType" xsi:type="string">container</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/button</item>
+                    <item name="title" xsi:type="string" translate="true">Preview Products (Plus)</item>
+                    <item name="sortOrder" xsi:type="number">134</item>
+                    <item name="actions" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="targetName" xsi:type="string">autorp_rule_form.autorp_rule_form.what_to_display.products_grid</item>
+                            <item name="actionName" xsi:type="string">visible</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="boolean">true</item>
+                            </item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="targetName" xsi:type="string">mfautorp_product_listing.mfautorp_product_listing_data_source</item>
+                            <item name="actionName" xsi:type="string">reload</item>
+                        </item>
+                        <item name="2" xsi:type="array">
+                            <item name="targetName" xsi:type="string">autorp_rule_form.autorp_rule_form.what_to_display.hide_preview_button</item>
+                            <item name="actionName" xsi:type="string">visible</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="boolean">true</item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </container>
+        <button name="hide_preview_button">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">135</item>
+                    <item name="buttonClasses" xsi:type="string">hide-preview-button</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="actions" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="targetName" xsi:type="string">autorp_rule_form.autorp_rule_form.what_to_display.products_grid</item>
+                            <item name="actionName" xsi:type="string">visible</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="boolean">false</item>
+                            </item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="targetName" xsi:type="string">autorp_rule_form.autorp_rule_form.what_to_display.hide_preview_button</item>
+                            <item name="actionName" xsi:type="string">visible</item>
+                            <item name="params" xsi:type="array">
+                                <item name="0" xsi:type="boolean">false</item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <displayAsLink>true</displayAsLink>
+                <title translate="true">Hide Products (Plus)</title>
+            </settings>
+        </button>
+
+        <container name="same_as_conditions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">150</item>
+                </item>
+            </argument>
+            <field name="apply_same_as_condition">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="label" xsi:type="string" translate="true">Apply Same As Condition (Plus)</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="prefer" xsi:type="string">toggle</item>
+                        <item name="source" xsi:type="string">rule</item>
+                        <item name="dataScope" xsi:type="string">apply_same_as_condition</item>
+                        <item name="sortOrder" xsi:type="number">10</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="number">1</item>
+                            <item name="false" xsi:type="number">0</item>
+                        </item>
+                        <item name="default" xsi:type="number">0</item>
+                        <!-- <item name="component" xsi:type="string">Magefan_AutoRelatedProductPlus/js/form/element/apply-same-as-condition</item>
+                         <item name="elementTmpl" xsi:type="string">Magefan_AutoRelatedProductPlus/form/element/apply-same-as-condition</item>-->
+                    </item>
+                </argument>
+                <settings>
+                    <tooltip>
+                        <description>
+                            <![CDATA[
+                                This is an additional condition type that will be combined with the regular conditions. It selects products that have the same attribute value as the current product.
+                                For e.g. can be displayed related products that have the same material, color, price, or category as on the current product page.
+                                Works only on the product page!
+                            ]]>
+                        </description>
+                    </tooltip>
+                </settings>
+            </field>
         </container>
     </fieldset>
     <fieldset name="display_modes">
@@ -218,7 +427,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">From Same Category Only</item>
+                    <item name="label" xsi:type="string" translate="true">From Same Category Only (Plus)</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
                     <item name="source" xsi:type="string">rule</item>
@@ -237,7 +446,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">Only With Higher Price</item>
+                    <item name="label" xsi:type="string" translate="true">Only With Higher Price (Plus)</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
                     <item name="source" xsi:type="string">rule</item>
@@ -256,7 +465,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">Only With Lower Price</item>
+                    <item name="label" xsi:type="string" translate="true">Only With Lower Price (Plus)</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
                     <item name="source" xsi:type="string">rule</item>
@@ -271,6 +480,45 @@
                 </item>
             </argument>
         </field>
+        <field name="who_bought_this_also_bought">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Who Bought This Also Bought (Plus)</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="dataScope" xsi:type="string">who_bought_this_also_bought</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">0</item>
+                    <item name="notice" xsi:type="string" translate="true">Works only for Product pages.</item>
+                </item>
+            </argument>
+        </field>
+        <field name="who_viewed_this_also_viewed">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Who Viewed This Also Viewed (Plus)</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="dataScope" xsi:type="string">who_viewed_this_also_viewed</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">0</item>
+                    </item>
+                    <item name="default" xsi:type="number">0</item>
+                    <item name="notice" xsi:type="string" translate="true">Works only for Product pages.</item>
+                </item>
+            </argument>
+        </field>
+
     </fieldset>
     <fieldset name="display_settings">
         <argument name="data" xsi:type="array">
@@ -296,7 +544,7 @@
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Magefan\AutoRelatedProduct\Model\Config\Source\SortBy</item>
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">Sort By</item>
+                    <item name="label" xsi:type="string" translate="true">Sort By (Plus)</item>
                     <item name="formElement" xsi:type="string">select</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="source" xsi:type="string">rule</item>
@@ -354,7 +602,18 @@
                 </item>
             </argument>
         </field>
+        <field name="template">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magefan\AutoRelatedProduct\Model\Config\Source\RelatedTemplate</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Template (Extra)</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="dataScope" xsi:type="string">template</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+        </field>
     </fieldset>
 </form>
-
-

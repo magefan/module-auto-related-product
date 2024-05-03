@@ -1,0 +1,111 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+?>
+
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$getModuleVersion = $objectManager->get(\Magefan\Community\Api\GetModuleVersionInterface::class);
+
+$currentPlan = 'Basic';
+
+if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
+   return;
+} elseif ($getModuleVersion->execute('Magefan_AutoRelatedProductPlus')) {
+    $currentPlan = 'Plus';
+}
+?>
+
+<script type="text/javascript">
+    var versionsManager = {
+        _currentPlan: '<?= /*@noEscape*/ $currentPlan ?>',
+        _selector: {
+            'Extra': [
+                //'[name="template"]',
+            ],
+            <?php if ($currentPlan != 'Plus') { ?>
+            'Plus': [
+                '[data-index="same_as_conditions_apply_to"]',
+                '[data-index="from_one_category_only"]',
+                '[name="only_with_lower_price"]',
+                '[name="only_with_higher_price"]',
+                '[name="who_bought_this_also_bought"]',
+                '[name="who_viewed_this_also_viewed"]',
+                '[name="customer_group_ids"]',
+                '[name="start_date"]',
+                '[name="finish_date"]',
+                '[data-index="preview_button"]',
+                '[data-index="hide_preview_button"]',
+                // '[name="block_position"]',
+                // '[name="sort_by"]',
+                '[name="apply_same_as_condition"]',
+                '[name="autorp_rule_formrule_same_as_conditions_fieldset_"]'
+            ]
+            <?php } ?>
+        },
+
+        initListener: function () {
+            const observer = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    for (let plan in versionsManager._selector) {
+                        let planFeatures = versionsManager._selector[plan];
+
+                        planFeatures.forEach(selector => {
+                            if (document.querySelector(selector)) {
+                                const element = document.querySelector(selector);
+                                element.addEventListener('click', function () {
+                                    if (versionsManager._currentPlan != plan) {
+                                        versionsManager.showAlert(plan)
+                                    }
+                                });
+
+                                // Remove the selector from _selector
+                                versionsManager._selector[plan] = versionsManager._selector[plan].filter(item => item !== selector);
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Start observing the document
+            observer.observe(document.body, { childList: true, subtree: true });
+        },
+
+        showAlert: function (extensionPlan) {
+            require(["jquery", "Magento_Ui/js/modal/alert"], function($, alert) {
+                if (extensionPlan === "Plus") {
+                    extensionPlan = "Plus or Extra";
+                }
+                alert({
+                    title: "You cannot use this option.",
+                    content: "This feature is available in <strong>" + extensionPlan + "</strong> plan only.",
+                    buttons: [{
+                        text: "Upgrade Plan Now",
+                        class: "action primary accept",
+                        click: function () {
+                            window.open("https://magefan.com");
+                        }
+                    }]
+                });
+            });
+        }
+    };
+    <?php if ($currentPlan != 'Pl00us') { ?>
+    require(['jquery', 'domReady!'], function ($) {
+        $(document).on('change', '[name="sort_by"], [name="block_position"]', function () {
+            if ($(this).find('option:selected').text().includes("(Plus)")) {
+                versionsManager.showAlert('Plus');
+            }
+        });
+        $(document).on('change', '[name="template"]', function () {
+            if ($(this).find('option:selected').text().includes("(Extra)")) {
+                versionsManager.showAlert('Extra');
+            }
+        });
+    });
+    <?php } ?>
+    versionsManager.initListener();
+
+</script>

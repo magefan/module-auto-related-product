@@ -161,9 +161,9 @@ class RuleManager
         if ($currentProduct) {
             $this->_itemCollection->addFieldToFilter('entity_id', ['neq' => $currentProduct->getId()]);
 
-            /*if (($higher = $rule->getIsOnlyWithHigherPrice()) || $rule->getIsOnlyWithLowerPrice()) {
+            if (($higher = $rule->getIsOnlyWithHigherPrice()) || $rule->getIsOnlyWithLowerPrice()) {
                 $this->addPriceFilter($higher, $currentProduct->getFinalPrice());
-            }*/
+            }
         }
 
         $this->addSortBy((int)$rule->getData('sort_by'));
@@ -244,14 +244,9 @@ class RuleManager
      * @param $price
      */
 
-    protected function addPriceFilter($higher, $price): void
+    public function addPriceFilter($higher, $price): void
     {
-        if (is_array($price)) {
-            $price = array_shift($price);
-        }
-
-        $where = $higher ? "price_index.final_price > ?" : "price_index.final_price < ?";
-        $this->_itemCollection->getSelect()->where($where, $price);
+        /*vidchay*/
     }
 
     /**

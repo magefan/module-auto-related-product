@@ -175,11 +175,9 @@ class RuleManager
         ]);
 
         $this->_itemCollection->load();
-
         foreach ($this->_itemCollection as $item) {
             $item->setDoNotUseCategoryId(true);
         }
-
         return $this->_itemCollection;
     }
 
@@ -245,14 +243,10 @@ class RuleManager
      * @param $higher
      * @param $price
      */
-    protected function addPriceFilter($higher, $price): void
-    {
-        if (is_array($price)) {
-            $price = array_shift($price);
-        }
 
-        $where = $higher ? "price_index.final_price > ?" : "price_index.final_price < ?";
-        $this->_itemCollection->getSelect()->where($where, $price);
+    public function addPriceFilter($higher, $price): void
+    {
+        /*vidchay*/
     }
 
     /**
@@ -263,17 +257,6 @@ class RuleManager
         switch ($sortBy) {
             case SortBy::RANDOM:
                 $this->_itemCollection->getSelect()->order('rand()');
-                break;
-            case SortBy::NAME:
-                $this->_itemCollection->addAttributeToSort('name', 'ASC');
-                break;
-            case SortBy::NEWEST:
-                $this->_itemCollection->addAttributeToSort('created_at', 'DESC');
-                break;
-            case SortBy::PRICE_DESC:
-                $this->_itemCollection->addAttributeToSort('price', 'DESC');
-            case SortBy::PRICE_ASC:
-                $this->_itemCollection->addAttributeToSort('price', 'ASC');
                 break;
         }
     }

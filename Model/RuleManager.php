@@ -175,12 +175,9 @@ class RuleManager
         ]);
 
         $this->_itemCollection->load();
-
         foreach ($this->_itemCollection as $item) {
             $item->setDoNotUseCategoryId(true);
         }
-        var_dump($rule->getIsOnlyWithHigherPrice(), $rule->getIsOnlyWithLowerPrice(),'7777777777777777777777777777777777777777777777777777');
-var_dump($this->_itemCollection->getData(), "'<br><br><br>'");
         return $this->_itemCollection;
     }
 

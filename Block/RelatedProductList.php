@@ -190,7 +190,6 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
                     ]
                 );
         }
-
         return $this->_itemCollection;
     }
 
@@ -201,7 +200,7 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
      */
     public function getItemCollection()
     {
-        return $this->getItems();
+         return $this->getItems();
     }
 
     /**
@@ -217,11 +216,11 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
     public function getIdentities()
     {
         $identities = [];
-        
+
         if ($this->getProduct()) {
             $identities = [Product::CACHE_TAG . '_' . $this->getProduct()->getId()];
         }
-        
+
         if (count($this->getItems())) {
             foreach ($this->getItems() as $item) {
                 foreach ($item->getIdentities() as $identity) {

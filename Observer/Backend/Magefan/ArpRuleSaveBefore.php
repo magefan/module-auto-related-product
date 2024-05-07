@@ -8,76 +8,40 @@ declare(strict_types=1);
 namespace Magefan\AutoRelatedProduct\Observer\Backend\Magefan;
 
 use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\CatalogRule\Model\RuleFactory;
 
 class ArpRuleSaveBefore implements ObserverInterface
 {
-    /**
-     * @var RequestInterface
-     */
-    protected $request;
+
+    protected $propertiesToUnset = [
+        'category_ids',
+        'apply_same_as_condition',
+        'same_as_conditions_apply_to',
+        'from_one_category_only',
+        'only_with_lower_price',
+        'only_with_higher_price',
+        'who_bought_this_also_bought',
+        'who_viewed_this_also_viewed',
+        'customer_group_ids',
+        'start_date',
+        'finish_date',
+        'sort_by'
+    ];
 
     /**
-     * @var RuleFactory
-     */
-    protected $catalogRuleFactory;
-
-    /**
-     * @param RequestInterface $request
-     * @param RuleFactory $catalogRuleFactory
-     */
-    public function __construct(
-        RequestInterface $request,
-        RuleFactory $catalogRuleFactory
-    ) {
-        $this->request=$request;
-        $this->catalogRuleFactory = $catalogRuleFactory;
-    }
-
-    /**
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Observer $observer
      * @return void
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(Observer $observer)
     {
-var_dump('gggggggggggggggggggggggg');
         $rule = $observer->getRule();
-//        $rule->unsetData('customer_group_ids');
-//        $rule->unsetData('category_ids');
-//        $rule->unsetData('apply_same_as_condition');
-//        $rule->unsetData('start_date');
-//        $rule->unsetData('finish_date');
-//var_dump($rule->getData());exit();
 
-         if (is_array($rule->getData('customer_group_ids'))) {
-             $rule->setData('customer_group_ids', implode(',', $rule->getData('customer_group_ids')));
-         }
-
-       if (is_array($rule->getData('category_ids'))) {
-            $arr = $rule->getData('category_ids');
-
-            if ($arr[0] == '') {
-                unset($arr[0]);
-            }
-
-            $rule->setData('category_ids', implode(',', $arr));
+        foreach ($this->propertiesToUnset as $property) {
+            $rule->unsetData($property);
         }
 
-        if (!$rule->getData('duplicated')) {
-            /* Same As Conditions */
-            if ($rule->getData('apply_same_as_condition') == 'true' && $rule->getRule('same_as_conditions')) {
-                $catalogRule = $this->catalogRuleFactory->create();
-                $catalogRule->loadPost(['conditions' => $rule->getRule('same_as_conditions')]);
-                $catalogRule->beforeSave();
-                $rule->setData('same_as_conditions_serialized', $catalogRule->getConditionsSerialized());
-            } else {
-                $rule->setData('same_as_conditions_serialized', null);
-            }
-
-            if ($this->request->getParam('category_ids') === null) {
-                $rule->setData('category_ids', '');
-            }
-        }
+        $rule->setData('template',\Magefan\AutoRelatedProduct\Model\Config\Source\RelatedTemplate::DEFAULT);
     }
 }

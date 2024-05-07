@@ -28,7 +28,7 @@ if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
             <?php if ($currentPlan != 'Plus') { ?>
             'Plus': [
                 '[data-index="same_as_conditions_apply_to"]',
-                '[data-index="from_one_category_only"]',
+                '[name="from_one_category_only"]',
                 '[name="only_with_lower_price"]',
                 '[name="only_with_higher_price"]',
                 '[name="who_bought_this_also_bought"]',
@@ -92,7 +92,7 @@ if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
             });
         }
     };
-    <?php if ($currentPlan != 'Pl00us') { ?>
+    <?php if ($currentPlan != 'Plus') { ?>
     require(['jquery', 'domReady!'], function ($) {
         $(document).on('change', '[name="sort_by"], [name="block_position"]', function () {
             if ($(this).find('option:selected').text().includes("(Plus)")) {

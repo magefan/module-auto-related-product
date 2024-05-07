@@ -323,26 +323,6 @@
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/button</item>
                     <item name="title" xsi:type="string" translate="true">Preview Products (Plus)</item>
                     <item name="sortOrder" xsi:type="number">134</item>
-                    <item name="actions" xsi:type="array">
-                        <item name="0" xsi:type="array">
-                            <item name="targetName" xsi:type="string">autorp_rule_form.autorp_rule_form.what_to_display.products_grid</item>
-                            <item name="actionName" xsi:type="string">visible</item>
-                            <item name="params" xsi:type="array">
-                                <item name="0" xsi:type="boolean">true</item>
-                            </item>
-                        </item>
-                        <item name="1" xsi:type="array">
-                            <item name="targetName" xsi:type="string">mfautorp_product_listing.mfautorp_product_listing_data_source</item>
-                            <item name="actionName" xsi:type="string">reload</item>
-                        </item>
-                        <item name="2" xsi:type="array">
-                            <item name="targetName" xsi:type="string">autorp_rule_form.autorp_rule_form.what_to_display.hide_preview_button</item>
-                            <item name="actionName" xsi:type="string">visible</item>
-                            <item name="params" xsi:type="array">
-                                <item name="0" xsi:type="boolean">true</item>
-                            </item>
-                        </item>
-                    </item>
                 </item>
             </argument>
         </container>
@@ -397,9 +377,7 @@
                             <item name="false" xsi:type="number">0</item>
                         </item>
                         <item name="default" xsi:type="number">0</item>
-                        <!-- <item name="component" xsi:type="string">Magefan_AutoRelatedProductPlus/js/form/element/apply-same-as-condition</item>
-                         <item name="elementTmpl" xsi:type="string">Magefan_AutoRelatedProductPlus/form/element/apply-same-as-condition</item>-->
-                    </item>
+                      </item>
                 </argument>
                 <settings>
                     <tooltip>

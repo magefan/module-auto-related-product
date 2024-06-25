@@ -65,11 +65,6 @@ class RuleManager
     protected $ruleValidator;
 
     /**
-     * @var \Magento\Catalog\Api\CategoryRepositoryInterface|mixed
-     */
-    protected $categoryRepository;
-
-    /**
      * @var
      */
     protected $_itemCollection;
@@ -80,6 +75,11 @@ class RuleManager
     protected $ruleCollectionFactory;
 
     /**
+     * @var
+     */
+    protected $getCategoryByProduct;
+
+    /**
      * @param ProductCollectionFactory $productCollectionFactory
      * @param CatalogConfig $catalogConfig
      * @param Visibility $catalogProductVisibility
@@ -88,7 +88,6 @@ class RuleManager
      * @param RuleRepositoryInterface $ruleRepository
      * @param StoreManagerInterface $storeManager
      * @param \Magefan\AutoRelatedProduct\Model\ActionValidator $ruleValidator
-     * @param \Magento\Catalog\Api\CategoryRepositoryInterface|null $categoryRepository
      */
     public function __construct
     (
@@ -101,7 +100,7 @@ class RuleManager
         StoreManagerInterface $storeManager,
         ActionValidator $ruleValidator,
         RuleCollectionFactory $ruleCollectionFactory,
-        \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository = null
+        \Magefan\Community\Api\GetCategoryByProductInterface $getCategoryByProduct = null
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
         $this->catalogConfig = $catalogConfig;
@@ -112,8 +111,8 @@ class RuleManager
         $this->storeManager = $storeManager;
         $this->ruleValidator = $ruleValidator;
         $this->ruleCollectionFactory = $ruleCollectionFactory;
-        $this->categoryRepository = $categoryRepository ?:\Magento\Framework\App\ObjectManager::getInstance()
-            ->get(\Magento\Catalog\Api\CategoryRepositoryInterface::class);
+        $this->getCategoryByProduct = $getCategoryByProduct ?:\Magento\Framework\App\ObjectManager::getInstance()
+            ->get(\Magefan\Community\Api\GetCategoryByProductInterface::class);
     }
 
     /**
@@ -204,40 +203,11 @@ class RuleManager
      */
     protected function addProductsFromTheSameCategoryFilter($currentCategory, $currentProduct, RuleInterface $rule): void
     {
-        $productCategoryId = false;
-
-        if ($currentCategory) {
-            $productCategoryId = $currentCategory->getId();
-        } elseif ($currentProduct) {
-            $categoryIds = $currentProduct->getCategoryIds();
-
-            if ($categoryIds) {
-
-                $productCategory = null;
-                $level = -1;
-                $rootCategoryId = $this->storeManager->getStore()->getRootCategoryId();
-
-                foreach ($categoryIds as $categoryId) {
-                    try {
-                        $category = $this->categoryRepository->get($categoryId);
-                        if ($category->getIsActive()
-                            && $category->getLevel() > $level
-                            && in_array($rootCategoryId, $category->getPathIds())
-                        ) {
-                            $level = $category->getLevel();
-                            $productCategory = $category;
-                        }
-                    } catch (\Exception $e) {}
-                }
-
-                if ($productCategory) {
-                    $productCategoryId = $productCategory->getId();
-                }
-            }
-        }
+        $category = $this->getCategoryByProduct->execute($currentProduct);
+        $productCategoryId = $category ? $category->getId() : false;
 
         if ($productCategoryId) {
-            $this->_itemCollection->addCategoriesFilter(['eq' => $productCategoryId]);
+            $this->_itemCollection->addCategoriesFilter(['in' => [$productCategoryId]]);
         }
     }
 

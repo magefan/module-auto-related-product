@@ -7,8 +7,10 @@
 use Magento\Catalog\ViewModel\Product\Listing\PreparePostData;
 use Magento\Framework\App\ActionInterface;
 
-/* @var $block \Magento\Catalog\Block\Product\AbstractProduct */
-/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+/** @var $block \Magento\Catalog\Block\Product\AbstractProduct
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ * @var $mfSecureRenderer \Magefan\Community\Api\SecureHtmlRendererInterface
+ */
 ?>
 
 <?php
@@ -36,6 +38,8 @@ if ($exist =  count($block->getItems())) {
     $description = false;
 }
 $_item = null;
+
+$script = '';
 ?>
 
 <?php if ($exist):?>
@@ -190,15 +194,14 @@ $_item = null;
             </div>
         </div>
         <?php if (!$block->isRedirectToCartEnabled() && $_item):?>
-            <script type="text/x-magento-init">
-            {
+            <?php $script .= '            {
                 "[data-role=tocart-form], .form.map.checkout": {
                     "catalogAddToCart": {
-                        "product_sku": "<?= $block->escapeJs($_item->getSku()) ?>"
+                        "product_sku": "' . $block->escapeJs($_item->getSku()) . ' ?>"
                     }
                 }
-            }
-            </script>
+            }'; ?>
+            <?= /* @noEscape */ $mfSecureRenderer->renderTag('script', [], $script, false) ?>
         <?php endif;?>
 
 

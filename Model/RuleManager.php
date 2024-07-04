@@ -234,17 +234,6 @@ class RuleManager
             case SortBy::RANDOM:
                 $this->_itemCollection->getSelect()->order('rand()');
                 break;
-            case SortBy::NAME:
-                $this->_itemCollection->addAttributeToSort('name', 'ASC');
-                break;
-            case SortBy::NEWEST:
-                $this->_itemCollection->addAttributeToSort('created_at', 'DESC');
-                break;
-            case SortBy::PRICE_DESC:
-                $this->_itemCollection->addAttributeToSort('price', 'DESC');
-            case SortBy::PRICE_ASC:
-                $this->_itemCollection->addAttributeToSort('price', 'ASC');
-                break;
         }
     }
 

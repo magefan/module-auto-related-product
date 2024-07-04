@@ -201,7 +201,7 @@ $script = '';
                     }
                 }
             }'; ?>
-            <?= /* @noEscape */ $mfSecureRenderer->renderTag('script', [], $script, false) ?>
+            <?= /* @noEscape */ $mfSecureRenderer->renderTag('script', ['type' => 'text/x-magento-init'], $script, false) ?>
         <?php endif;?>
 
 

@@ -3,6 +3,8 @@
  * Copyright © Magefan (support@magefan.com). All rights reserved.
  * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
  */
+
+/** @var \Magento\Framework\Escaper $escaper */
 ?>
 
 <?php
@@ -23,7 +25,7 @@ if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
         _currentPlan: '<?= /*@noEscape*/ $currentPlan ?>',
         _selector: {
             'Extra': [
-                //'[name="template"]',
+                '[name="template"]',
             ],
             <?php if ($currentPlan != 'Plus') { ?>
             'Plus': [
@@ -38,8 +40,8 @@ if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
                 '[name="finish_date"]',
                 '[data-index="preview_button"]',
                 '[data-index="hide_preview_button"]',
-                // '[name="block_position"]',
-                // '[name="sort_by"]',
+                '[name="block_position"]',
+                '[name="sort_by"]',
                 '[name="apply_same_as_condition"]',
                 '[name="autorp_rule_formrule_same_as_conditions_fieldset_"]'
             ]
@@ -55,11 +57,25 @@ if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
                         planFeatures.forEach(selector => {
                             if (document.querySelector(selector)) {
                                 const element = document.querySelector(selector);
-                                element.addEventListener('click', function () {
-                                    if (versionsManager._currentPlan != plan) {
-                                        versionsManager.showAlert(plan)
-                                    }
-                                });
+
+                                if (element.tagName == 'SELECT') {
+                                    element.addEventListener('change', function() {
+                                        var selectedOptionText = this.options[this.selectedIndex].text;
+                                        if (selectedOptionText.includes("("+ plan +")")) {
+                                            versionsManager.showAlert(plan);
+                                            this.selectedIndex = 0
+                                        }
+                                    });
+                                } else {
+                                    element.addEventListener('click', function (event) {
+                                        event.preventDefault();
+                                        event.stopPropagation();
+
+                                        if (versionsManager._currentPlan != plan) {
+                                            versionsManager.showAlert(plan)
+                                        }
+                                    });
+                                }
 
                                 // Remove the selector from _selector
                                 versionsManager._selector[plan] = versionsManager._selector[plan].filter(item => item !== selector);
@@ -79,10 +95,10 @@ if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
                     extensionPlan = "Plus or Extra";
                 }
                 alert({
-                    title: "You cannot use this option.",
-                    content: "This feature is available in <strong>" + extensionPlan + "</strong> plan only.",
+                    title: "<?= $escaper->escapeHtml(__('You cannot use this option.')) ?>",
+                    content: "<?= $escaper->escapeHtml(__('This feature is available in')) ?>" + " <strong>" + extensionPlan + "</strong> <?= __('plan only.') ?>",
                     buttons: [{
-                        text: "Upgrade Plan Now",
+                        text: "<?= $escaper->escapeHtml(__('Upgrade Plan Now')) ?>",
                         class: "action primary accept",
                         click: function () {
                             window.open("https://magefan.com");
@@ -92,20 +108,7 @@ if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
             });
         }
     };
-    <?php if ($currentPlan != 'Plus') { ?>
-    require(['jquery', 'domReady!'], function ($) {
-        $(document).on('change', '[name="sort_by"], [name="block_position"]', function () {
-            if ($(this).find('option:selected').text().includes("(Plus)")) {
-                versionsManager.showAlert('Plus');
-            }
-        });
-        $(document).on('change', '[name="template"]', function () {
-            if ($(this).find('option:selected').text().includes("(Extra)")) {
-                versionsManager.showAlert('Extra');
-            }
-        });
-    });
-    <?php } ?>
+
     versionsManager.initListener();
 
 </script>

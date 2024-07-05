@@ -422,14 +422,14 @@
             <item name="config" xsi:type="array">
                 <item name="collapsible" xsi:type="boolean">true</item>
                 <item name="opened" xsi:type="boolean">true</item>
-                <item name="label" xsi:type="string">Display Modes</item>
+                <item name="label" xsi:type="string">Display Modes (Plus)</item>
             </item>
         </argument>
         <field name="from_one_category_only">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">From Same Category Only (Plus)</item>
+                    <item name="label" xsi:type="string" translate="true">From Same Category Only</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
                     <item name="source" xsi:type="string">rule</item>
@@ -448,7 +448,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">Only With Higher Price (Plus)</item>
+                    <item name="label" xsi:type="string" translate="true">Only With Higher Price</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
                     <item name="source" xsi:type="string">rule</item>
@@ -467,7 +467,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">Only With Lower Price (Plus)</item>
+                    <item name="label" xsi:type="string" translate="true">Only With Lower Price</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
                     <item name="source" xsi:type="string">rule</item>
@@ -486,7 +486,7 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">boolean</item>
-                    <item name="label" xsi:type="string" translate="true">Who Bought This Also Bought (Plus)</item>
+                    <item name="label" xsi:type="string" translate="true">Who Bought This Also Bought</item>
                     <item name="formElement" xsi:type="string">checkbox</item>
                     <item name="prefer" xsi:type="string">toggle</item>
                     <item name="source" xsi:type="string">rule</item>

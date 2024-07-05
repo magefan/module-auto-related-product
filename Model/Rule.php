@@ -208,17 +208,17 @@ class Rule extends \Magento\Framework\Model\AbstractModel implements \Magefan\Au
      */
     public function getRuleBlockIdentifier(): string
     {
-        $indentifire = $this->getBlockPosition();
+        $identifier = $this->getBlockPosition();
 
         if ((0 !== $this->getData('from_one_category_only') || 0 !== $this->getData('only_with_higher_price')) && 'custom' != $this->getBlockPosition()) {
-            $indentifire .= '_' . '1';
+            $identifier .= '_' . '1';
 
         }
         if ($this->getId()) {
-            $indentifire .= '_' . $this->getId();
+            $identifier .= '_' . $this->getId();
         }
 
-        return $indentifire;
+        return $identifier;
     }
 
     /**

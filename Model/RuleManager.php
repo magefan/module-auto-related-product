@@ -153,16 +153,8 @@ class RuleManager
             $this->_itemCollection->addFieldToFilter('entity_id', ['in' =>  $relatedIds]);
         }
 
-        if ($rule->getIsFromOneCategory()) {
-            $this->addProductsFromTheSameCategoryFilter($currentCategory, $currentProduct, $rule);
-        }
-
         if ($currentProduct) {
             $this->_itemCollection->addFieldToFilter('entity_id', ['neq' => $currentProduct->getId()]);
-
-            if (($higher = $rule->getIsOnlyWithHigherPrice()) || $rule->getIsOnlyWithLowerPrice()) {
-                $this->addPriceFilter($higher, $currentProduct->getFinalPrice());
-            }
         }
 
         $this->addSortBy((int)$rule->getData('sort_by'));
@@ -170,7 +162,8 @@ class RuleManager
         $this->_eventManager->dispatch('autorp_relatedproducts_block_load_collection_before', [
             'rule' => $rule,
             'collection' => $this->_itemCollection,
-            'product' => $currentProduct
+            'product' => $currentProduct,
+            'category' => $currentCategory
         ]);
 
         $this->_itemCollection->load();
@@ -193,36 +186,6 @@ class RuleManager
             ->addUrlRewrite();
 
         $this->stockFilter->addInStockFilterToCollection($this->_itemCollection);
-    }
-
-    /**
-     * @param $currentCategory
-     * @param $currentProduct
-     * @param RuleInterface $rule
-     * @throws NoSuchEntityException
-     */
-    protected function addProductsFromTheSameCategoryFilter($currentCategory, $currentProduct, RuleInterface $rule): void
-    {
-        $category = $this->getCategoryByProduct->execute($currentProduct);
-        $productCategoryId = $category ? $category->getId() : false;
-
-        if ($productCategoryId) {
-            $this->_itemCollection->addCategoriesFilter(['in' => [$productCategoryId]]);
-        }
-    }
-
-    /**
-     * @param $higher
-     * @param $price
-     */
-    protected function addPriceFilter($higher, $price): void
-    {
-        if (is_array($price)) {
-            $price = array_shift($price);
-        }
-
-        $where = $higher ? "price_index.final_price > ?" : "price_index.final_price < ?";
-        $this->_itemCollection->getSelect()->where($where, $price);
     }
 
     /**

@@ -43,27 +43,3 @@
     }
 </style>
 
-<?php if (!$block->isDisplayModesAvailable() && $affectedRules = $block->getAffectedRules()) { ?>
-    <div class="messages">
-        <div class="message message-error">
-            <div data-ui-id="messages-message-error">
-                <p style="font-size: 16px">
-                    <?= $escaper->escapeHtml(__('Display Modes:')) ?> "From Same Category Only", "Only With Higher Price", "Only With Lower Price"
-                    <?= $escaper->escapeHtml(__('are not longer available in the basic version!')) ?>
-                </p>
-
-                <p style="font-size: 16px">
-                    <?= $escaper->escapeHtml(__('Please')) ?>
-                    <a href="https://magefan.com/magento-2-automatic-related-products/pricing" target="_blank">
-                        <?= $escaper->escapeHtml(__('upgrade')) ?>
-                    </a>
-                    <?= $escaper->escapeHtml(__(' to Plus or Extra version to be able to use this options.')) ?>
-                </p>
-                <br>
-                <p style="font-size: 16px">
-                    <?= $escaper->escapeHtml(__('Affected rule IDs: %1.', $affectedRules)) ?>
-                </p>
-            </div>
-        </div>
-    </div>
-<?php } ?>

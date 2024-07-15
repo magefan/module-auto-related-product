@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="magefan_autorp_rule" resource="default" engine="innodb" comment="Related Product Rules">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="text" name="name" nullable="false" comment="Name"/>
+    <column xsi:type="text" name="description" nullable="false" comment="Description"/>
+    <column xsi:type="smallint" name="status" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Status"/>
+    <column xsi:type="mediumtext" name="store_ids" nullable="true" comment="Store View Ids"/>
+    <column xsi:type="int" name="priority" padding="11" unsigned="false" nullable="true" identity="false" comment="Rule Priority"/>
+    <column xsi:type="varchar" name="block_position" nullable="true" length="100" comment="Position Where Display Product"/>
+    <column xsi:type="varchar" name="merge_type" nullable="true" length="10" comment="Type Of Merge Related Products"/>
+    <column xsi:type="mediumtext" name="conditions_serialized" nullable="true" comment="Conditions Serialized"/>
+    <column xsi:type="mediumtext" name="actions_serialized" nullable="true" comment="Actions Serialized"/>
+    <column xsi:type="mediumtext" name="block_title" nullable="true" comment="Block Title"/>
+    <column xsi:type="mediumtext" name="sort_by" nullable="true" comment="Sort Product By"/>
+    <column xsi:type="smallint" name="display_add_to_cart" padding="6" unsigned="false" nullable="true" identity="false" comment="Display Add To Cart"/>
+    <column xsi:type="int" name="number_of_products" padding="11" unsigned="false" nullable="true" identity="false" comment="Product Number"/>
+    <column xsi:type="smallint" name="display_out_of_stock" padding="6" unsigned="false" nullable="true" identity="false" comment="Display Out Of Stock Products"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <index referenceId="MAGEFAN_AUTORP_RULE_STATUS" indexType="btree">
+      <column name="status"/>
+    </index>
+    <index referenceId="MAGEFAN_AUTORP_RULE_BLOCK_POSITION" indexType="btree">
+      <column name="block_position"/>
+    </index>
+  </table>
+  <table name="magefan_autorp_rule_store" resource="default" engine="innodb" comment="Magefan Automatic Related Products To Store Linkage Table">
+    <column xsi:type="int" name="rule_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Rule ID"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Store ID"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="rule_id"/>
+      <column name="store_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="MAGEFAN_AUTORP_RULE_STORE_RULE_ID_MAGEFAN_AUTORP_RULE_ID" table="magefan_autorp_rule_store" column="rule_id" referenceTable="magefan_autorp_rule" referenceColumn="id" onDelete="CASCADE"/>
+    <constraint xsi:type="foreign" referenceId="MAGEFAN_AUTORP_RULE_STORE_STORE_ID_STORE_STORE_ID" table="magefan_autorp_rule_store" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE"/>
+    <index referenceId="MAGEFAN_AUTORP_RULE_STORE_STORE_ID" indexType="btree">
+      <column name="store_id"/>
+    </index>
+  </table>
+  <table name="magefan_autorp_index" resource="default" engine="innodb" comment="Related Product Index Table">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="int" name="rule_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Rule ID"/>
+    <column xsi:type="mediumtext" name="identifier" nullable="true" comment="Identifier"/>
+    <column xsi:type="mediumtext" name="related_ids" nullable="true" comment="Related Product IDs"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+      <column name="rule_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="MAGEFAN_AUTORP_INDEX_RULE_ID_MAGEFAN_AUTORP_RULE_ID" table="magefan_autorp_index" column="rule_id" referenceTable="magefan_autorp_rule" referenceColumn="id" onDelete="CASCADE"/>
+    <constraint xsi:type="unique" referenceId="MAGEFAN_AUTORP_INDEX_RULE_ID">
+      <column name="rule_id"/>
+    </constraint>
+  </table>
+</schema>

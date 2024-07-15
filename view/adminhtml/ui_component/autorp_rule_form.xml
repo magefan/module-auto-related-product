@@ -615,6 +615,68 @@
                     <item name="sortOrder" xsi:type="number">60</item>
                 </item>
             </argument>
+
+            <settings>
+                <switcherConfig>
+                    <rules>
+                        <rule name="0">
+                            <value>custom</value>
+                            <actions>
+                                <action name="0">
+                                    <target>autorp_rule_form.autorp_rule_form.display_settings.custom_template</target>
+                                    <callback>show</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="1">
+                            <value>Magento_Catalog::product/list/items.phtml</value>
+                            <actions>
+                                <action name="0">
+                                    <target>autorp_rule_form.autorp_rule_form.display_settings.custom_template</target>
+                                    <callback>hide</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="2">
+                            <value>Magefan_AutoRelatedProductExtra::product/list/compare.phtml</value>
+                            <actions>
+                                <action name="0">
+                                    <target>autorp_rule_form.autorp_rule_form.display_settings.custom_template</target>
+                                    <callback>hide</callback>
+                                </action>
+                            </actions>
+                        </rule>
+                        <rule name="3">
+                            <value>Magefan_AutoRelatedProductExtra::product/list/frequently-bought-together.phtml</value>
+                            <actions>
+                                <action name="0">
+                                    <target>autorp_rule_form.autorp_rule_form.display_settings.custom_template</target>
+                                    <callback>hide</callback>
+                                </action>
+                            </actions>
+                        </rule>
+
+                    </rules>
+                    <enabled>true</enabled>
+                </switcherConfig>
+            </settings>
+
+        </field>
+        <field name="custom_template">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+<!--                    <item name="label" xsi:type="string" translate="true">Custom Template</item>-->
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="sortOrder" xsi:type="number">61</item>
+                    <item name="dataScope" xsi:type="string">custom_template</item>
+                    <item name="source" xsi:type="string">rule</item>
+                    <item name="placeholder" xsi:type="string">Magento_Catalog::product/list/items.phtml</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
         </field>
     </fieldset>
 </form>

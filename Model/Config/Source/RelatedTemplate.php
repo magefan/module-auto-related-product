@@ -25,6 +25,14 @@ class RelatedTemplate implements \Magento\Framework\Option\ArrayInterface
      */
     const FBT = 'Magefan_AutoRelatedProductExtra::product/list/frequently-bought-together.phtml';
 
+    const CUSTOM = 'custom';
+
+    const DEFAULT_TEMPLATES = [
+        self::DEFAULT,
+        self::COMPARE,
+        self::FBT
+    ];
+
     /**
      * Options
      *
@@ -36,6 +44,7 @@ class RelatedTemplate implements \Magento\Framework\Option\ArrayInterface
             ['value' => self::DEFAULT, 'label' => __('Default Related Template')],
             ['value' => self::COMPARE, 'label' => __('Compare Template (Extra)')],
             ['value' => self::FBT, 'label' => __('Frequently Bought Together Template (Extra)')],
+            ['value' => self::CUSTOM, 'label' => __(' - Set Custom Template (Plus) - ')],
         ];
     }
 

@@ -12,6 +12,7 @@ use Magefan\AutoRelatedProduct\Api\ConfigInterface;
 use Magefan\Community\Api\GetModuleVersionInterface;
 use Magefan\AutoRelatedProduct\Api\RelatedCollectionInterfaceFactory;
 use Magento\Framework\Session\SessionManagerInterface;
+use Magefan\AutoRelatedProduct\Model\Config\Source\SortBy;
 
 class TmpInfo extends \Magento\Backend\Block\Template
 {
@@ -55,7 +56,7 @@ class TmpInfo extends \Magento\Backend\Block\Template
     /**
      * @return bool
      */
-    public function isDisplayModesAvailable(): bool
+    public function isSomeFeaturesRestricted(): bool
     {
         if ($this->getModuleVersion->execute('Magefan_AutoRelatedProductExtra') || $this->getModuleVersion->execute('Magefan_AutoRelatedProductPlus')) {
             return true;
@@ -67,7 +68,7 @@ class TmpInfo extends \Magento\Backend\Block\Template
     /**
      * @return string
      */
-    public function getAffectedRules(): string
+    public function getAffectedRulesByDisplayModes(): string
     {
         $rules = $this->ruleCollection->create()
             ->addFieldToFilter('status', 1);
@@ -99,13 +100,34 @@ class TmpInfo extends \Magento\Backend\Block\Template
     /**
      * @return string
      */
+    public function getAffectedRulesBySortBy(): string
+    {
+        $restrictedSortByOptionsIds = [
+            SortBy::NAME,
+            SortBy::NEWEST,
+            SortBy::PRICE_DESC,
+            SortBy::PRICE_ASC
+        ];
+
+        $rules = $this->ruleCollection->create()
+            ->addFieldToFilter('status', 1)
+            ->addFieldToFilter('sort_by', ['in' => $restrictedSortByOptionsIds]);
+
+        return implode(',', $rules->getAllIds());
+    }
+
+    /**
+     * @return string
+     */
     public function toHtml()
     {
         if (!$this->config->isEnabled() || $this->session->getIsNeedToShowAlert() === false) {
             return '';
         }
 
-        $this->session->setIsNeedToShowAlert(!$this->isDisplayModesAvailable() && $this->getAffectedRules());
+        $this->session->setIsNeedToShowAlert(
+            !$this->isSomeFeaturesRestricted() && ($this->getAffectedRulesByDisplayModes() || $this->getAffectedRulesBySortBy())
+        );
 
         return parent::_toHtml();
     }

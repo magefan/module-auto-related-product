@@ -150,7 +150,7 @@
             </argument>
             <settings>
                 <validation>
-                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
                 </validation>
                 <dataType>number</dataType>
             </settings>

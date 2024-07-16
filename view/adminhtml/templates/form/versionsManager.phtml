@@ -58,7 +58,10 @@ if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
                             if (document.querySelector(selector)) {
                                 const element = document.querySelector(selector);
 
-                                if (element.tagName == 'SELECT') {
+                                if (
+                                    element.tagName == 'SELECT'
+                                    && Array.from(element.options).some(option => option.text.includes("Plus") || option.text.includes("Extra"))
+                                ) {
                                     element.addEventListener('change', function() {
                                         var selectedOptionText = this.options[this.selectedIndex].text;
                                         if (selectedOptionText.includes("("+ plan +")")) {

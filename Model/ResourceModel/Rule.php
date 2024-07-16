@@ -213,6 +213,20 @@ class Rule extends AbstractDb implements RelatedResourceModelInterface
 
     protected function _beforeSave(AbstractModel $object)
     {
+        if (is_array($object->getData('customer_group_ids'))) {
+            $object->setData('customer_group_ids', implode(',', $object->getData('customer_group_ids')));
+        }
+
+        if (is_array($object->getData('category_ids'))) {
+            $arr = $object->getData('category_ids');
+
+            if ($arr[0] == '') {
+                unset($arr[0]);
+            }
+
+            $object->setData('category_ids', implode(',', $arr));
+        }
+
         /* Conditions */
         if ($object->getRule('conditions')) {
             $catalogRule = $this->catalogRuleFactory->create();

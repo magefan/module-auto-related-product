@@ -126,29 +126,7 @@ class Rule extends \Magento\Framework\Model\AbstractModel implements \Magefan\Au
         return $this->getData('status');
     }
 
-    /**
-     * @return int
-     */
-    public function getIsFromOneCategory() : int
-    {
-        return (int)$this->getData('from_one_category_only');
-    }
 
-    /**
-     * @return int
-     */
-    public function getIsOnlyWithHigherPrice() : int
-    {
-        return (int)$this->getData('only_with_higher_price');
-    }
-
-    /**
-     * @return int
-     */
-    public function getIsOnlyWithLowerPrice() : int
-    {
-        return (int)$this->getData('only_with_lower_price');
-    }
 
     /**
      * @return false|string|string[]|null
@@ -230,17 +208,17 @@ class Rule extends \Magento\Framework\Model\AbstractModel implements \Magefan\Au
      */
     public function getRuleBlockIdentifier(): string
     {
-        $indentifire = $this->getBlockPosition();
+        $identifier = $this->getBlockPosition();
 
-        if ((0 !== $this->getIsFromOneCategory() || 0 !== $this->getIsOnlyWithHigherPrice()) && 'custom' != $this->getBlockPosition()) {
-            $indentifire .= '_' . '1';
+        if ((0 !== $this->getData('from_one_category_only') || 0 !== $this->getData('only_with_higher_price')) && 'custom' != $this->getBlockPosition()) {
+            $identifier .= '_' . '1';
 
         }
         if ($this->getId()) {
-            $indentifire .= '_' . $this->getId();
+            $identifier .= '_' . $this->getId();
         }
 
-        return $indentifire;
+        return $identifier;
     }
 
     /**

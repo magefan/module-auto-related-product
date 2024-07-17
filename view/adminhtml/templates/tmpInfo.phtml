@@ -1,0 +1,61 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+?>
+<?php
+/**
+ * @var $block \Magefan\AutoRelatedProduct\Block\Adminhtml\TmpInfo
+ */
+?>
+
+<?php if (!$block->isSomeFeaturesRestricted() && $affectedRules = $block->getAffectedRulesByDisplayModes()) { ?>
+    <div class="messages" style="margin-top: 20px;">
+        <div class="message message-error">
+            <div data-ui-id="messages-message-error">
+                <p style="font-size: 16px">
+                    <?= $escaper->escapeHtml(__('Display Modes:')) ?> "From Same Category Only", "Only With Higher Price" <?= $escaper->escapeHtml(__('and')) ?> "Only With Lower Price"
+                    <?= $escaper->escapeHtml(__('are no longer available in the Magefan Auto Related Products Basic version.')) ?>
+                </p>
+
+                <p style="font-size: 16px">
+                    <?= $escaper->escapeHtml(__('Please')) ?>
+                    <a href="https://magefan.com/magento-2-automatic-related-products/pricing" target="_blank">
+                        <?= $escaper->escapeHtml(__('upgrade to Plus or Extra edition ')) ?>
+                    </a>
+                    <?= $escaper->escapeHtml(__(' or use an older extension version up to 2.4.0 to be able to use these options.')) ?>
+                </p>
+                <br>
+                <p style="font-size: 16px">
+                    <?= $escaper->escapeHtml(__('Affected rule IDs: %1.', $affectedRules)) ?>
+                </p>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<?php if (!$block->isSomeFeaturesRestricted() && $affectedRules = $block->getAffectedRulesBySortBy()) { ?>
+    <div class="messages" style="margin-top: 20px;">
+        <div class="message message-error">
+            <div data-ui-id="messages-message-error">
+                <p style="font-size: 16px">
+                    <?= $escaper->escapeHtml(__('Sort By:')) ?> "Name", "Newest", "Price (high to low)" <?= $escaper->escapeHtml(__('and')) ?> "Price (low to high)"
+                    <?= $escaper->escapeHtml(__('are no longer available in the Magefan Auto Related Products Basic version.')) ?>
+                </p>
+
+                <p style="font-size: 16px">
+                    <?= $escaper->escapeHtml(__('Please')) ?>
+                    <a href="https://magefan.com/magento-2-automatic-related-products/pricing" target="_blank">
+                        <?= $escaper->escapeHtml(__('upgrade to Plus or Extra edition ')) ?>
+                    </a>
+                    <?= $escaper->escapeHtml(__(' or use an older extension version up to 2.4.0 to be able to use these options.')) ?>
+                </p>
+                <br>
+                <p style="font-size: 16px">
+                    <?= $escaper->escapeHtml(__('Affected rule IDs: %1.', $affectedRules)) ?>
+                </p>
+            </div>
+        </div>
+    </div>
+<?php } ?>

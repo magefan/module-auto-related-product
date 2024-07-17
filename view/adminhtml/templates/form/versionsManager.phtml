@@ -1,0 +1,137 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ */
+
+/** @var \Magento\Framework\Escaper $escaper
+ *  $mfSecureRenderer \Magefan\Community\Api\SecureHtmlRendererInterface
+ */
+?>
+<?php $script = ''; ?>
+
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$getModuleVersion = $objectManager->get(\Magefan\Community\Api\GetModuleVersionInterface::class);
+
+$currentPlan = 'Basic';
+
+if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
+    return;
+} elseif ($getModuleVersion->execute('Magefan_AutoRelatedProductPlus')) {
+    $currentPlan = 'Plus';
+}
+?>
+
+<?php
+$script .= "
+    var versionsManager = {
+        _currentPlan: '" . $currentPlan . "',
+        _selector: {
+            'Extra': [
+                '[name=\"template\"]',
+            ],";
+
+        if ($currentPlan != 'Plus') {
+            $script .= "
+            'Plus': [
+                '[data-index=\"same_as_conditions_apply_to\"]',
+                '[name=\"from_one_category_only\"]',
+                '[name=\"only_with_lower_price\"]',
+                '[name=\"only_with_higher_price\"]',
+                '[name=\"who_bought_this_also_bought\"]',
+                '[name=\"who_viewed_this_also_viewed\"]',
+                '[name=\"customer_group_ids\"]',
+                '[name=\"start_date\"]',
+                '[name=\"finish_date\"]',
+                '[data-index=\"preview_button\"]',
+                '[data-index=\"hide_preview_button\"]',
+                '[name=\"block_position\"]',
+                '[name=\"sort_by\"]',
+                '[name=\"apply_same_as_condition\"]',
+                '[name=\"autorp_rule_formrule_same_as_conditions_fieldset_\"]',
+                '[data-index=\"add_product_to\"]',
+                '[name=\"template\"]'
+            ]";
+        }
+
+$script .= "
+        },
+
+        initListener: function () {
+            const observer = new MutationObserver(mutations => {
+                mutations.forEach(mutation => {
+                    for (let plan in versionsManager._selector) {
+                        let planFeatures = versionsManager._selector[plan];
+
+                        planFeatures.forEach(selector => {
+                            if (document.querySelector(selector)) {
+                                const element = document.querySelector(selector);
+
+                                if (
+                                    element.tagName == 'SELECT'
+                                    && Array.from(element.options).some(option => option.text.includes('Plus') || option.text.includes('Extra'))
+                                ) {
+                                    element.addEventListener('change', function() {
+                                        var selectedOptionText = this.options[this.selectedIndex].text;
+                                        if (selectedOptionText.includes('('+ plan +')')) {
+                                            versionsManager.showAlert(plan);
+                                            this.selectedIndex = 0;
+                                            this.dispatchEvent(new Event('change', { bubbles: true }));
+                                        }
+                                    });
+                                } else {
+                                    element.addEventListener('click', function (event) {
+                                        this.value = '';
+
+                                        if (this.tagName == 'SELECT') {
+                                            this.dispatchEvent(new Event('change', { bubbles: true }));
+                                        }
+
+                                        event.preventDefault();
+                                        event.stopPropagation();
+
+                                        if (versionsManager._currentPlan != plan) {
+                                            versionsManager.showAlert(plan)
+                                        }
+                                    });
+                                }
+
+                                // Remove the selector from _selector
+                                versionsManager._selector[plan] = versionsManager._selector[plan].filter(item => item !== selector);
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Start observing the document
+            observer.observe(document.body, { childList: true, subtree: true });
+        },
+
+        showAlert: function (extensionPlan) {
+            require(['jquery', 'Magento_Ui/js/modal/alert'], function($, alert) {
+                if (extensionPlan === 'Plus') {
+                    extensionPlan = 'Plus or Extra';
+                }
+                alert({
+                    title: '" . $escaper->escapeHtml(__('You cannot use this option.')) . "',
+                    content: '" . $escaper->escapeHtml(__('This feature is available in')) . "' + ' <strong>' + extensionPlan + '</strong> " . __('plan only.')  . "',
+                    buttons: [{
+                        text: '" . $escaper->escapeHtml(__('Upgrade Plan Now')) . "',
+                        class: 'action primary accept',
+                        click: function () {
+                            window.open('https://magefan.com');
+                        }
+                    }]
+                });
+            });
+        }
+    };
+
+    versionsManager.initListener();
+
+   ";
+?>
+
+<?= /* @noEscape */ $mfSecureRenderer->renderTag('script', [], $script, false) ?>

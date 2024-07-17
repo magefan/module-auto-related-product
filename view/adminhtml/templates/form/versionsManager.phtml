@@ -75,6 +75,11 @@ if ($getModuleVersion->execute('Magefan_AutoRelatedProductExtra')) {
                                 } else {
                                     element.addEventListener('click', function (event) {
                                         this.value = '';
+
+                                        if (this.tagName == 'SELECT') {
+                                            this.dispatchEvent(new Event('change', { bubbles: true }));
+                                        }
+
                                         event.preventDefault();
                                         event.stopPropagation();
 

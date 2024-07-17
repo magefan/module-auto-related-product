@@ -28,7 +28,7 @@ class DuplicateButton extends GenericButton implements ButtonProviderInterface
             $data = [
                 'label' => __('Duplicate (Plus)'),
                 'class' => 'duplicate',
-                'on_click' => 'versionsManager._currentPlan == "Basic" ? versionsManager.showAlert("Plus or Extra") : window.location=\'' . $this->getDuplicateUrl() . '\'',
+                'on_click' => '(typeof versionsManager !== "undefined" && versionsManager._currentPlan == "Basic") ? versionsManager.showAlert("Plus or Extra") : window.location=\'' . $this->getDuplicateUrl() . '\'',
                 'sort_order' => 40,
             ];
         }

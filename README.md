@@ -25,7 +25,7 @@ You don’t have to monotonously add related products to each item on the catalo
   
 <a href="https://magefan.com/magento-2-automatic-related-products/pricing">
           <img
-            src="https://cm.magefan.com/wysiwyg/products/magento-related-product-rules-pricing.png"
+            src="https://cm.magefan.com/wysiwyg/products/auto-related-extension-pricing.png"
             alt="Pricing for Magento 2 Automatic Related Products Extension" />
         </a>
   

@@ -64,12 +64,18 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
             $theme = $theme->getParentTheme();
         }
 
-        $rule = $this->getRule();
-        if ($rule && ($template = (string)$rule->getTemplate())) {
-            return $template;
-        }
+        return $this->getPassedTemplate() ?: $this->getTemplateFromRule() ?: parent::getTemplate();
+    }
 
-        return parent::getTemplate();
+    private function getPassedTemplate(): string
+    {
+        return $this->_data['template'] ?? '';
+    }
+
+    private function getTemplateFromRule(): string
+    {
+        $rule = $this->getRule();
+        return $rule ? (string)$rule->getTemplate() : '';
     }
 
     /**

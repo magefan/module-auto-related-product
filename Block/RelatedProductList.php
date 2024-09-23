@@ -67,11 +67,18 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
         return $this->getPassedTemplate() ?: $this->getTemplateFromRule() ?: parent::getTemplate();
     }
 
+    /**
+     * @return string
+     */
     private function getPassedTemplate(): string
     {
         return $this->_data['template'] ?? '';
     }
 
+    /**
+     * @return string
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     private function getTemplateFromRule(): string
     {
         $rule = $this->getRule();

@@ -248,7 +248,7 @@ class Rule extends AbstractDb implements RelatedResourceModelInterface
         }
 
         /* Actions */
-        if ($object->getRule('actions')) {
+        if ($object->getRule('actions') && $object->getData('block_position') != 'custom') {
             $salesRule = $this->salesRuleFactory->create();
             $salesRule->loadPost(['conditions' => $object->getRule('actions')]);
             $salesRule->beforeSave();
@@ -256,7 +256,10 @@ class Rule extends AbstractDb implements RelatedResourceModelInterface
                 'actions_serialized',
                 $salesRule->getConditionsSerialized()
             );
+        } else {
+            $object->setData('actions_serialized', null);
         }
+
         /* Store View IDs */
         if (is_array($object->getStoreIds())) {
             $object->setStoreIds(

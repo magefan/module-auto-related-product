@@ -199,12 +199,49 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
                     $this->getRule(),
                     [
                         'current_category' => $this->getCategory(),
-                        'current_product' => $this->getProduct()
+                        'current_product' => $this->getProduct(),
+                        'skip_ids' => $this->getSkipItems()
                     ]
                 );
         }
 
         return $this->_itemCollection;
+    }
+
+    /**
+     * Get skip product ids
+     *
+     * @return array
+     */
+    protected function getSkipItems()
+    {
+        if ('catalog_category_view' !== $this->getRequest()->getFullActionName()) {
+            return [];
+        }
+
+        $productListBlock = $this->getLayout()->getBlock('category.products.list');
+        if (!$productListBlock) {
+            return [];
+        }
+
+        $toolbar = $productListBlock->getToolbarBlock();
+        if (!$toolbar) {
+            return [];
+        }
+
+        $pagerBlock = $toolbar->getChildBlock('product_list_toolbar_pager');
+        if (!($pagerBlock instanceof \Magento\Theme\Block\Html\Pager)) {
+            return [];
+        }
+
+        $originCollection = $productListBlock->getLayer()->getProductCollection();
+        $collection = clone $originCollection;
+
+
+        $pagerBlock->setLimit((int)$toolbar->getLimit())
+            ->setCollection($collection);
+
+        return $collection->load()->getAllIds();
     }
 
     /**

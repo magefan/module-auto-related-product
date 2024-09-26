@@ -157,6 +157,10 @@ class RuleManager
             $this->_itemCollection->addFieldToFilter('entity_id', ['neq' => $currentProduct->getId()]);
         }
 
+        if (!empty($params['skip_ids']) && is_array($params['skip_ids'])) {
+            $this->_itemCollection->addFieldToFilter('entity_id', ['nin' => $params['skip_ids']]);
+        }
+
         $this->addSortBy((int)$rule->getData('sort_by'));
 
         $this->_eventManager->dispatch('autorp_relatedproducts_block_load_collection_before', [

@@ -133,7 +133,7 @@ class AutoRelatedProductAction
         }
     }
 
-    public function execute()
+    public function execute(array $ids = [])
     {
         $productIdsToCleanCache = [];
         $oldProductToRuleData = [];
@@ -141,8 +141,13 @@ class AutoRelatedProductAction
         $connection = $this->resourceConnection->getConnection();
         $tableNameArpIndex = $this->resourceConnection->getTableName('magefan_autorp_index');
 
-        $ruleCollection = $this->ruleCollectionFactory->create()
-            ->addFieldToFilter('status', 1);
+        if (!empty($ids) && is_array($ids)) {
+            $ruleCollection = $this->ruleCollectionFactory->create()
+                ->addFieldToFilter('id',['in' => $ids]);
+        } else {
+            $ruleCollection = $this->ruleCollectionFactory->create()
+                ->addFieldToFilter('status', 1);
+        }
 
         if ($ruleCollection) {
             $oldProductToRuleCollection = $this->connection->fetchAll($this->connection->select()->from($tableNameArpIndex));

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Mview/etc/mview.xsd">
+    <view id="magefan_autorelatedproduct_indexer" class="Magefan\AutoRelatedProduct\Model\Indexer\Rule" group="indexer">
+        <subscriptions>
+            <table name="magefan_autorp_rule" entity_column="id" />
+        </subscriptions>
+    </view>
+</config>

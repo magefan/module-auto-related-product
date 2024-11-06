@@ -64,12 +64,12 @@ class Rule implements \Magento\Framework\Indexer\ActionInterface, \Magento\Frame
      * @param IndexMutexInterface|null $indexMutex
      */
     public function __construct(
-        IndexerRegistry                 $indexerRegistry,
-        AutoRelatedProductAction $autoRelatedProductAction,
+        IndexerRegistry            $indexerRegistry,
+        AutoRelatedProductAction   $autoRelatedProductAction,
         RelatedCollectionInterface $relatedCollection,
-        RuleFactory                     $ruleFactory,
-        ProductRepositoryInterface            $productRepository,
-        ?IndexMutexInterface                                       $indexMutex = null
+        RuleFactory                $ruleFactory,
+        ProductRepositoryInterface $productRepository,
+        ?IndexMutexInterface       $indexMutex = null
     )
     {
         $this->indexerRegistry = $indexerRegistry;
@@ -87,11 +87,7 @@ class Rule implements \Magento\Framework\Indexer\ActionInterface, \Magento\Frame
      */
     public function execute($ids)
     {
-        $this->getIndexRuleByProduct($ids);
-        /*
-        * ????
-       $this->executeAction([])
-           */
+        $this->executeAction($ids);
     }
 
     /**
@@ -109,12 +105,7 @@ class Rule implements \Magento\Framework\Indexer\ActionInterface, \Magento\Frame
      */
     public function executeList(array $ids)
     {
-        var_dump('dgjksgj');exit();
-        $this->getIndexRuleByProduct($ids);
-        /*
-        * ????
-       $this->executeAction([])
-           */
+        $this->executeAction($ids);
     }
 
     /**
@@ -124,7 +115,7 @@ class Rule implements \Magento\Framework\Indexer\ActionInterface, \Magento\Frame
      */
     public function executeRow($id)
     {
-        $this->getIndexRuleByProduct([$id]);
+        $this->getIndexRuleByProduct($id);
     }
 
     /**
@@ -155,26 +146,25 @@ class Rule implements \Magento\Framework\Indexer\ActionInterface, \Magento\Frame
      * @return void
      * @throws NoSuchEntityException
      */
-    public function getIndexRuleByProduct(array $ids)
+    public function getIndexRuleByProduct($id)
     {
         $ruleIdFoIndex = [];
         $autoRelatedProductRules = $this->relatedCollection->addFieldToFilter('status', 1);
-        $ids = array_unique($ids);
-        foreach ($ids as $id) {
-            $product = $this->productRepository->getById($id);
 
-            foreach ($autoRelatedProductRules as $autoRelatedProductRule) {
-                if (in_array($autoRelatedProductRule->getId(), $ruleIdFoIndex)) {
-                    continue;
-                }
-                $rule = $this->ruleFactory->create();
-                $rule->setData('conditions_serialized', $autoRelatedProductRule->getConditions());
-                $rule->setData('store_ids', $autoRelatedProductRule->getStoreIds());
-                if ($rule->getConditions()->validate($product)) {
-                    $ruleIdFoIndex[] = $autoRelatedProductRule->getId();
-                }
+        $product = $this->productRepository->getById($id);
+
+        foreach ($autoRelatedProductRules as $autoRelatedProductRule) {
+            if (in_array($autoRelatedProductRule->getId(), $ruleIdFoIndex)) {
+                continue;
+            }
+            $rule = $this->ruleFactory->create();
+            $rule->setData('conditions_serialized', $autoRelatedProductRule->getConditions());
+            $rule->setData('store_ids', $autoRelatedProductRule->getStoreIds());
+            if ($rule->getConditions()->validate($product)) {
+                $ruleIdFoIndex[] = $autoRelatedProductRule->getId();
             }
         }
+
         $this->executeAction($ruleIdFoIndex);
     }
 }

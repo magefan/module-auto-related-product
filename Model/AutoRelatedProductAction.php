@@ -141,12 +141,11 @@ class AutoRelatedProductAction
         $connection = $this->resourceConnection->getConnection();
         $tableNameArpIndex = $this->resourceConnection->getTableName('magefan_autorp_index');
 
+        $ruleCollection = $this->ruleCollectionFactory->create()
+            ->addFieldToFilter('status', 1);
+
         if (!empty($ids) && is_array($ids)) {
-            $ruleCollection = $this->ruleCollectionFactory->create()
-                ->addFieldToFilter('id',['in' => $ids]);
-        } else {
-            $ruleCollection = $this->ruleCollectionFactory->create()
-                ->addFieldToFilter('status', 1);
+            $ruleCollection->addFieldToFilter('id', ['in' => $ids]);
         }
 
         if ($ruleCollection) {

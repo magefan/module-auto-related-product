@@ -206,14 +206,8 @@ class AutoRelatedProductAction
 
     /**
      * @param $rule
-     * @param null $params
      * @return array
      * @throws LocalizedException
-     */
-    /**
-     * @param $rule
-     * @param null $params
-     * @return array
      */
     public function getListProductIds($rule)
     {

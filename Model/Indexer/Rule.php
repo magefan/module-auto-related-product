@@ -13,6 +13,7 @@ use Magefan\AutoRelatedProduct\Model\AutoRelatedProductAction;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\CatalogRule\Model\RuleFactory;
 use Magento\Framework\App\ObjectManager;
+use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Indexer\CacheContext;
 use Magento\Framework\Indexer\IndexerRegistry;
@@ -56,11 +57,17 @@ class Rule implements \Magento\Framework\Indexer\ActionInterface, \Magento\Frame
     private $productRepository;
 
     /**
+     * @var ResourceConnection
+     */
+    private $resourceConnection;
+
+    /**
      * @param IndexerRegistry $indexerRegistry
      * @param AutoRelatedProductAction $autoRelatedProductAction
      * @param RelatedCollectionInterface $relatedCollection
      * @param RuleFactory $ruleFactory
      * @param ProductRepositoryInterface $productRepository
+     * @param ResourceConnection $resourceConnection
      * @param IndexMutexInterface|null $indexMutex
      */
     public function __construct(
@@ -69,6 +76,7 @@ class Rule implements \Magento\Framework\Indexer\ActionInterface, \Magento\Frame
         RelatedCollectionInterface $relatedCollection,
         RuleFactory                $ruleFactory,
         ProductRepositoryInterface $productRepository,
+        ResourceConnection $resourceConnection,
         ?IndexMutexInterface       $indexMutex = null
     )
     {
@@ -77,6 +85,7 @@ class Rule implements \Magento\Framework\Indexer\ActionInterface, \Magento\Frame
         $this->relatedCollection = $relatedCollection;
         $this->ruleFactory = $ruleFactory;
         $this->productRepository = $productRepository;
+        $this->resourceConnection = $resourceConnection;
         $this->indexMutex = $indexMutex ?? ObjectManager::getInstance()->get(IndexMutexInterface::class);
     }
 
@@ -142,29 +151,39 @@ class Rule implements \Magento\Framework\Indexer\ActionInterface, \Magento\Frame
     }
 
     /**
-     * @param array $ids
+     * @param $id
      * @return void
-     * @throws NoSuchEntityException
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getIndexRuleByProduct($id)
     {
-        $ruleIdFoIndex = [];
         $autoRelatedProductRules = $this->relatedCollection->addFieldToFilter('status', 1);
 
-        $product = $this->productRepository->getById($id);
-
         foreach ($autoRelatedProductRules as $autoRelatedProductRule) {
-            if (in_array($autoRelatedProductRule->getId(), $ruleIdFoIndex)) {
-                continue;
-            }
+
             $rule = $this->ruleFactory->create();
             $rule->setData('conditions_serialized', $autoRelatedProductRule->getConditions());
             $rule->setData('store_ids', $autoRelatedProductRule->getStoreIds());
-            if ($rule->getConditions()->validate($product)) {
-                $ruleIdFoIndex[] = $autoRelatedProductRule->getId();
-            }
-        }
+            $relatedProductId = $this->autoRelatedProductAction->getListProductIds($rule, $id);
 
-        $this->executeAction($ruleIdFoIndex);
+            $connection = $this->resourceConnection->getConnection();
+            $tableNameArpIndex = $this->resourceConnection->getTableName('magefan_autorp_index');
+
+            $oldIndexRule = $connection->select()->from($tableNameArpIndex)->where(
+                'rule_id = ?' , $autoRelatedProductRule->getId());
+            $oldRelatedIds = explode(',', $connection->fetchRow($oldIndexRule)['related_ids']);
+
+            if (in_array($relatedProductId[0],$oldRelatedIds)){
+                continue;
+            }
+
+            $relatedIds = array_merge($oldRelatedIds,$relatedProductId);
+            $relatedIds = array_unique($relatedIds);
+            $connection->update(
+                $tableNameArpIndex,
+                ['related_ids' => implode(',', $relatedIds)],
+                ['rule_id = ?' => $autoRelatedProductRule->getId()]
+            );
+        }
     }
 }

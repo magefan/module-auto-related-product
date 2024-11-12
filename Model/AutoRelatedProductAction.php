@@ -209,7 +209,7 @@ class AutoRelatedProductAction
      * @return array
      * @throws LocalizedException
      */
-    public function getListProductIds($rule)
+    public function getListProductIds($rule, $productId = null)
     {
         $this->productIds = [];
         $conditions = $rule->getConditions();
@@ -242,6 +242,10 @@ class AutoRelatedProductAction
 
                 if ($storeId) {
                     $productCollection->setStoreId($storeId);
+                }
+
+                if ($productId) {
+                    $productCollection->addFieldToFilter('entity_id', $productId);
                 }
 
                 $conditions = $rule->getConditions();

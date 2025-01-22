@@ -11,7 +11,7 @@ use Magefan\AutoRelatedProduct\Api\RelatedCollectionInterfaceFactory as RuleColl
 use Magefan\Community\Model\Magento\Rule\Model\Condition\Sql\Builder;
 use Magento\CatalogRule\Model\RuleFactory;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory;
+use Magefan\Community\Model\Magento\Product\CollectionOptimizedForSqlValidatorFactory as CollectionFactory;
 use Magento\Framework\App\ResourceConnection;
 use Magefan\Community\Api\GetParentProductIdsInterface;
 use Magefan\Community\Api\GetWebsitesMapInterface;

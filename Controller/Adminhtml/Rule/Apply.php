@@ -18,9 +18,9 @@ use Magefan\AutoRelatedProduct\Api\ConfigInterface;
 class Apply extends \Magento\Backend\App\Action
 {
     /**
-     * Authorization level of a  admin session
+     * Authorization level of admin session
      */
-    const ADMIN_RESOURCE = 'Magefan_AutoRelatedProduct:rule';
+    const ADMIN_RESOURCE = 'Magefan_AutoRelatedProduct::rule';
 
     /**
      * @var AutoRelatedProductAction

@@ -2,9 +2,9 @@
     "name": "magefan/module-auto-related-product",
     "description": "Extend native Magento Up-Sells, Cross-Sells, and Related products",
     "type": "magento2-module",
-    "version": "2.4.2",
+    "version": "2.4.3",
     "require": {
-        "magefan/module-community" : ">=2.2.7"
+        "magefan/module-community" : ">=2.2.9"
     },
     "autoload": {
         "psr-4": {

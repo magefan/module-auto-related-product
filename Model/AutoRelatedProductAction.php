@@ -133,7 +133,7 @@ class AutoRelatedProductAction
         }
     }
 
-    public function execute()
+    public function execute(array $ids = [])
     {
         $productIdsToCleanCache = [];
         $oldProductToRuleData = [];
@@ -143,6 +143,10 @@ class AutoRelatedProductAction
 
         $ruleCollection = $this->ruleCollectionFactory->create()
             ->addFieldToFilter('status', 1);
+
+        if (!empty($ids) && is_array($ids)) {
+            $ruleCollection->addFieldToFilter('id', ['in' => $ids]);
+        }
 
         if ($ruleCollection) {
             $oldProductToRuleCollection = $this->connection->fetchAll($this->connection->select()->from($tableNameArpIndex));
@@ -202,16 +206,10 @@ class AutoRelatedProductAction
 
     /**
      * @param $rule
-     * @param null $params
      * @return array
      * @throws LocalizedException
      */
-    /**
-     * @param $rule
-     * @param null $params
-     * @return array
-     */
-    public function getListProductIds($rule)
+    public function getListProductIds($rule, $productId = null)
     {
         $this->productIds = [];
         $conditions = $rule->getConditions();
@@ -244,6 +242,10 @@ class AutoRelatedProductAction
 
                 if ($storeId) {
                     $productCollection->setStoreId($storeId);
+                }
+
+                if ($productId) {
+                    $productCollection->addFieldToFilter('entity_id', $productId);
                 }
 
                 $conditions = $rule->getConditions();

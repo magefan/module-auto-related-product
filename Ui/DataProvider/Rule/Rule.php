@@ -65,7 +65,7 @@ class Rule extends GridCollection implements SearchResultInterface, RelatedColle
      * @param SearchCriteriaInterface|null $searchCriteria
      * @return $this|Rule
      */
-    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
+    public function setSearchCriteria(?SearchCriteriaInterface $searchCriteria = null)
     {
         return $this;
     }
@@ -91,7 +91,7 @@ class Rule extends GridCollection implements SearchResultInterface, RelatedColle
      * @param array|null $items
      * @return $this|Rule
      */
-    public function setItems(array $items = null)
+    public function setItems(?array $items = null)
     {
         return $this;
     }

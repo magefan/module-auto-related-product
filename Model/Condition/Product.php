@@ -32,7 +32,7 @@ class Product extends \Magento\CatalogRule\Model\Rule\Condition\Product
         \Magento\Eav\Model\ResourceModel\Entity\Attribute\Set\Collection $attrSetCollection,
         \Magento\Framework\Locale\FormatInterface $localeFormat,
         array $data = [],
-        ProductCategoryList $categoryList = null
+        ?ProductCategoryList $categoryList = null
     ) {
         parent::__construct($context, $backendData, $config, $productFactory, $productRepository, $productResource, $attrSetCollection, $localeFormat, $data, $categoryList);
     }

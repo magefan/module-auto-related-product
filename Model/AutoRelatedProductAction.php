@@ -133,7 +133,11 @@ class AutoRelatedProductAction
         }
     }
 
-    public function execute()
+    /**
+     * @param array $params
+     * @return void
+     */
+    public function execute(array $params = []): void
     {
         $productIdsToCleanCache = [];
         $oldProductToRuleData = [];
@@ -143,6 +147,11 @@ class AutoRelatedProductAction
 
         $ruleCollection = $this->ruleCollectionFactory->create()
             ->addFieldToFilter('status', 1);
+
+        if (isset($params['rule_ids'])) {
+            $ruleIds = (array)$params['rule_ids'];
+            $ruleCollection->addFieldToFilter('id', ['in' => $ruleIds]);
+        }
 
         if ($ruleCollection) {
             $oldProductToRuleCollection = $this->connection->fetchAll($this->connection->select()->from($tableNameArpIndex));

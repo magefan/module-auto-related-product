@@ -149,4 +149,12 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="mf_arp_apply_rules" xsi:type="object">Magefan\AutoRelatedProduct\Console\Command\ApplyRules</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

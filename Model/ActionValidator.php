@@ -72,7 +72,7 @@ class ActionValidator
         ProductRepositoryInterface $productRepository,
         RequestInterface $request,
         Registry $registry,
-        UrlInterface $urlInterface = null
+        ?UrlInterface $urlInterface = null
     ) {
         $this->date = $date;
         $this->checkoutSession = $checkoutSession;

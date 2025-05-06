@@ -100,7 +100,7 @@ class RuleManager
         StoreManagerInterface $storeManager,
         ActionValidator $ruleValidator,
         RuleCollectionFactory $ruleCollectionFactory,
-        \Magefan\Community\Api\GetCategoryByProductInterface $getCategoryByProduct = null
+        ?\Magefan\Community\Api\GetCategoryByProductInterface $getCategoryByProduct = null
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
         $this->catalogConfig = $catalogConfig;

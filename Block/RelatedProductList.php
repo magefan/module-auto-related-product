@@ -136,7 +136,19 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
             return '';
         }
 
+        // since m248 to avoid  Warning: Undefined array key 4 in vendor/magento/module-catalog/Pricing/Render/FinalPriceBox.php on line 161
+        $priceRender = $this->getLayout()->getBlock('product.price.render.default');
+        $isProductListValOriginal = $priceRender ? $priceRender->getData('is_product_list') : false;
+
+        if ($isProductListValOriginal) {
+            $priceRender->setData('is_product_list', false);
+        }
+
         $html = parent::_toHtml();
+
+        if ($isProductListValOriginal) {
+            $priceRender->setData('is_product_list', true);
+        }
 
         if (!$html) {
             return '';

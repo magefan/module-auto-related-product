@@ -155,6 +155,27 @@ class RuleManager
 
         if ($currentProduct) {
             $this->_itemCollection->addFieldToFilter('entity_id', ['neq' => $currentProduct->getId()]);
+
+            $childIds = [];
+            $currentProductType = $currentProduct->getTypeId();
+
+            if ($currentProductType === \Magento\GroupedProduct\Model\Product\Type\Grouped::TYPE_CODE || $currentProductType === \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE || $currentProductType === \Magento\Bundle\Model\Product\Type::TYPE_CODE) {
+                $productTypeInstance = $currentProduct->getTypeInstance();
+                $childrenIds = $productTypeInstance->getChildrenIds($currentProduct->getId());
+                foreach ($childrenIds as $childGroup) {
+                    foreach ($childGroup as $childId) {
+                        $childIds[] = $childId;
+                    }
+                }
+            }
+
+            if (!empty($childIds)) {
+                if (!empty($params['skip_ids']) && is_array($params['skip_ids'])) {
+                    $params['skip_ids'] = array_merge($params['skip_ids'], $childIds);
+                } elseif (empty($params['skip_ids'])) {
+                    $params['skip_ids'] = $childIds;
+                }
+            }
         }
 
         if (!empty($params['skip_ids']) && is_array($params['skip_ids'])) {

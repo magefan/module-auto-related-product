@@ -80,6 +80,15 @@ class RuleManager
     protected $getCategoryByProduct;
 
     /**
+     * @var string[]
+     */
+    protected $productTypes = [
+        'grouped',
+        'configurable',
+        'bundle'
+    ];
+
+    /**
      * @param ProductCollectionFactory $productCollectionFactory
      * @param CatalogConfig $catalogConfig
      * @param Visibility $catalogProductVisibility
@@ -88,6 +97,8 @@ class RuleManager
      * @param RuleRepositoryInterface $ruleRepository
      * @param StoreManagerInterface $storeManager
      * @param \Magefan\AutoRelatedProduct\Model\ActionValidator $ruleValidator
+     * @param RuleCollectionFactory $ruleCollectionFactory
+     * @param \Magefan\Community\Api\GetCategoryByProductInterface|null $getCategoryByProduct
      */
     public function __construct
     (
@@ -159,7 +170,7 @@ class RuleManager
             $childIds = [];
             $currentProductType = $currentProduct->getTypeId();
 
-            if ($currentProductType === \Magento\GroupedProduct\Model\Product\Type\Grouped::TYPE_CODE || $currentProductType === \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE || $currentProductType === \Magento\Bundle\Model\Product\Type::TYPE_CODE) {
+            if (in_array($currentProductType, $this->productTypes)) {
                 $productTypeInstance = $currentProduct->getTypeInstance();
                 $childrenIds = $productTypeInstance->getChildrenIds($currentProduct->getId());
                 foreach ($childrenIds as $childGroup) {

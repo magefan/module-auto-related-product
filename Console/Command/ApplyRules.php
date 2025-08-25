@@ -48,14 +48,14 @@ class ApplyRules extends Command
      * @param Config $config
      * @param Escaper $escaper
      * @param State $state
-     * @param $name
+     * @param string|null $name
      */
     public function __construct(
         AutoRelatedProductAction $autoRelatedProductAction,
         Config $config,
         Escaper $escaper,
         State $state,
-        $name = null
+        ?string $name = null
     ) {
         $this->config = $config;
         $this->autoRelatedProductAction = $autoRelatedProductAction;

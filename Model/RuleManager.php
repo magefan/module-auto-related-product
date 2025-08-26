@@ -80,6 +80,15 @@ class RuleManager
     protected $getCategoryByProduct;
 
     /**
+     * @var string[]
+     */
+    protected $productTypes = [
+        'grouped',
+        'configurable',
+        'bundle'
+    ];
+
+    /**
      * @param ProductCollectionFactory $productCollectionFactory
      * @param CatalogConfig $catalogConfig
      * @param Visibility $catalogProductVisibility
@@ -88,6 +97,8 @@ class RuleManager
      * @param RuleRepositoryInterface $ruleRepository
      * @param StoreManagerInterface $storeManager
      * @param \Magefan\AutoRelatedProduct\Model\ActionValidator $ruleValidator
+     * @param RuleCollectionFactory $ruleCollectionFactory
+     * @param \Magefan\Community\Api\GetCategoryByProductInterface|null $getCategoryByProduct
      */
     public function __construct
     (
@@ -155,6 +166,27 @@ class RuleManager
 
         if ($currentProduct) {
             $this->_itemCollection->addFieldToFilter('entity_id', ['neq' => $currentProduct->getId()]);
+
+            $childIds = [];
+            $currentProductType = $currentProduct->getTypeId();
+
+            if (in_array($currentProductType, $this->productTypes)) {
+                $productTypeInstance = $currentProduct->getTypeInstance();
+                $childrenIds = $productTypeInstance->getChildrenIds($currentProduct->getId());
+                foreach ($childrenIds as $childGroup) {
+                    foreach ($childGroup as $childId) {
+                        $childIds[] = $childId;
+                    }
+                }
+            }
+
+            if (!empty($childIds)) {
+                if (!empty($params['skip_ids']) && is_array($params['skip_ids'])) {
+                    $params['skip_ids'] = array_merge($params['skip_ids'], $childIds);
+                } elseif (empty($params['skip_ids'])) {
+                    $params['skip_ids'] = $childIds;
+                }
+            }
         }
 
         if (!empty($params['skip_ids']) && is_array($params['skip_ids'])) {

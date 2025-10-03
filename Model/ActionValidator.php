@@ -162,7 +162,7 @@ class ActionValidator
 
         if ($product && $product->getId()) {
             foreach ($product->getData() as $k => $v) {
-                if (!$address->getData($k)) {
+                if (!$address->getData($k) || in_array($k, ['entity_id'])) {
                     $address->setData($k, $v);
                 }
                 if ($k == 'quantity_and_stock_status') {

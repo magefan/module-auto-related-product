@@ -201,6 +201,10 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
      */
     public function getItems()
     {
+        if (!$this->getRule()) {
+            return [];
+        }
+
         /**
          * getIdentities() depends on _itemCollection populated, but it can be empty if the block is hidden
          * @see https://github.com/magento/magento2/issues/5897

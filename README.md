@@ -1,31 +1,54 @@
-# [Magento 2 Auto-Related Products Free](https://magefan.com/magento-2-automatic-related-products) by Magefan
+# [Magento 2 Automatic Related Products Free](https://magefan.com/magento-2-automatic-related-products) by Magefan
 
 [![Total Downloads](https://poser.pugx.org/magefan/module-auto-related-product/downloads)](https://packagist.org/packages/magefan/module-auto-related-product)
 [![Latest Stable Version](https://poser.pugx.org/magefan/module-auto-related-product/v/stable)](https://packagist.org/packages/magefan/module-auto-related-product)
 
 <img align="right" width="120" height="120" src="https://cm.magefan.com/mf_webp/jpg/media/catalog/product/cache/103e1b2520de2a36a364b0391bff6bdc/l/o/long-auto-related-products_1.webp">
 
-[Magento 2 Auto-related Products](https://magefan.com/magento-2-automatic-related-products) extension is a tool that allows you to not only improve your customers' overall experience but increase sales and drive more customers with tempting offers. This extension enables you to add related products, cross-sells, and up-sells automatically based on a variety of conditions. 
+[Magento 2 Automatic Related Products](https://magefan.com/magento-2-automatic-related-products) Extension is a tool that allows you to dynamically show related products, cross-sells, and upsells across product pages, cart pages, and other store areas. Instead of manually assigning product recommendations, the extension uses flexible conditions to automatically match and display relevant products based on categories, product & cart attributes, customer group, dates, or custom logic.
 
-You don’t have to monotonously add related products to each item on the catalog if you can use a smart algorithm that does it for you.
+This tool helps Magento stores improve product discovery, increase engagement, and boost overall revenue by showing the right products to the right customers.
 
-<img  align="right" width="120" height="70" src="https://magefan.com/media/wysiwyg/made_in_ukraine.jpg">
+Magento Community 2.3.0-2.4.x (CE, EE, ECE, B2B)
+
+> **Note:** Best for stores that need rule-based automated related products, upsells, and cross-sells.
+
+<a href="https://magefan.com/blog/join-our-donations"><img align="right" width="120" height="70" src="https://magefan.com/media/wysiwyg/made_in_ukraine.jpg"></a>
 
 <a href="https://magefan.com/magento-2-automatic-related-products"><img width="190" height="70" src="https://cm.magefan.com/wysiwyg/products/download-magefan-extensions.png"></a>
 
-## Useful Links
-  * [User Guide](https://magefan.com/magento-2-automatic-related-products/documentation)
-  * [Change Log](https://magefan.com/magento-2-automatic-related-products/change-log)
-  * [FAQs](https://magefan.com/magento-2-automatic-related-products#pattr-faq)
+---
+TL;DR:
+Magefan Automatic Related Products for Magento automatically displays relevant related, cross-sell, and upsell products based on conditions: customer grups, dates, product, cart attribtus, categories and any custom rules. It helps increase average order value and improves product recommendations without manual work.
 
-## 🇺🇦 Stand with Ukraine! [How can you help?](https://magefan.com/blog/join-our-donations)
+## Why Use Magento 2 Auto Related Products?
 
-## Requirements
-  * Magento Community 2.3.0-2.4.x (CE, EE, ECE, B2B)
-  * [Magefan Community Extension](https://github.com/magefan/module-community) >= v2.1.20. Please install this extension first if you use installation via FTP.
-  * **Note** that the extension is free only for the Magento Community (Open Source) Edition. For Magento EE, ECE, and B2B you need to purchase the license.
+Manually assigning related, upsell, and cross-sell products in Magento is difficult to manage if your catalog contains hundreds or thousands of products. Not only is it time-consuming, but it is also rarely consistent.
 
-## Editions & Pricing
+Instead of configuring recommendations product by product, you can use the Magento 2 Auto Related Products extension to display relevant related products dynamically across your entire store.
+
+A dedicated extension can help:
+
+* Automate product recommendations with rule-based logic
+* Increase average order value with relevant upsell and cross-sell offers
+* Save hours of manual work managing related products
+* Improve product discovery throughout the shopping journey
+
+Magefan Magento 2 Auto Related Products extension offers a smarter way to manage product recommendations and reduces the manual work you’d need to do otherwise.
+
+## Features of Magento 2 Auto Related Products
+* Automatically display related products, upsells, and cross-sells
+* Display related products based on product, page, and cart attributes
+* Show recommendations on product, category, cart, and other pages 
+* Apply default, compare, and bundle templates for the related product blocks
+* Use dynamic product attributes to create rules
+* Display multiple blocks on the same page
+* Show “Who Viewed This Item Also Viewed” and “Who Bought This Also Bought” products
+
+## Magento Auto Related Products Pricing
+Magento 2 Automatic Related Products Extension is available in multiple plans designed for stores with different management and automation needs. Each plan includes dynamic rule-based product recommendations, and flexible display conditions. 
+
+Choose the plan that fits your store size and recommendation strategy to improve product discovery and drive more sales automatically.
   
 <a href="https://magefan.com/magento-2-automatic-related-products/pricing">
           <img
@@ -33,14 +56,8 @@ You don’t have to monotonously add related products to each item on the catalo
             alt="Pricing for Magento 2 Automatic Related Products Extension" />
         </a>
   
-## Benefits
-* More targeted related products
-* Increased sales
-* Better product recommendations
-* Improved customer experience
 
-
-## Features
+## Benefits of the Automatic Related Products in Magento
 ### Smart product recommendations
 
 Adding related, cross-sell and up-sell products to your catalog items is a tedious and time-ineffective process that requires you to go from one product page to another. Much faster is to use the smart product recommendation tool like Automatic Related Products for Magento 2 by Magefan. This extension allows you to enable and add related product blocks for other products, categories, shopping cart, and even CMS pages automatically.
@@ -89,6 +106,27 @@ Last but not least useful are the display settings that enable you to sort produ
   <img width="860" height="428" src="https://cm.magefan.com/wysiwyg/products/related-product-block-position-in-magento.png">
 </p>
 
+## Frequently Asked Questions about Magento 2 Auto Related Products
+### What are Auto Related Products in Magento 2?
+
+Auto related products are product recommendations generated automatically using rules instead of manually assigning related items to each product.
+
+Magento Open Source doesn’t offer such functionality out of the box, but a dedicated extension can help dynamically display related products, upsells, and cross-sells based on product attributes, categories, cart conditions, or other rules.
+
+### Can I display related products on pages other than product pages?
+Yes. With the Magento 2 Auto Related Products Extension, you can display product recommendations on product, category, cart, and any other landing pages.
+
+### Is it possible to add more product attributes to the conditions?
+Yes. To add more product attributes to the conditions, go to Stores > Attributes > Products, open the corresponding attribute, switch to the Storefront Properties tab, and set the “Use for Promo Rule Conditions” option to Yes.
+
+### Why is the “Add to Cart” button not displayed in the related products block?
+The display of the related products blocks depends on the theme you use. Correspondingly, the “Add to Cart” button may not be defined for the related products in your theme, and you will need to adjust it accordingly.
+
+
+## Requirements
+  * [Magefan Community Extension](https://github.com/magefan/module-community) >= v2.1.20. Please install this extension first if you use installation via FTP.
+  * **Note** that the extension is free only for the Magento Community (Open Source) Edition. For Magento EE, ECE, and B2B you need to purchase the license.
+    
 ## Demo
 
 Try out our open demo and if you like our extension **please give us some star on Github ★**
@@ -153,7 +191,7 @@ The code is licensed under [EULA](https://magefan.com/end-user-license-agreement
 
 ### Magento 2 SEO Extensions
 
-* [Magento SEO](https://magefan.com/magento-2-seo-extension)
+* [Magento SEO Extension](https://magefan.com/magento-2-seo-extension)
 * [Magento 2 Rich Snippets](https://magefan.com/magento-2-rich-snippets)
 * [Magento 2 HTML Sitemap](https://magefan.com/magento-2-html-sitemap-extension)
 * [Magento 2 XML Sitemap](https://magefan.com/magento-2-xml-sitemap-extension)

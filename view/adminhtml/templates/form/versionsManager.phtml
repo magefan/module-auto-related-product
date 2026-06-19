@@ -115,7 +115,7 @@ $script .= "
                     extensionPlan = 'Plus or Extra';
                 }
                 alert({
-                    title: '" . $escaper->escapeHtml(__('You cannot use this option.')) . "',
+                    title: '" . $escaper->escapeHtml(__('Upgrade to use this option.')) . "',
                     content: '" . $escaper->escapeHtml(__('This feature is available in')) . "' + ' <strong>' + extensionPlan + '</strong> " . __('plan only.')  . "',
                     buttons: [{
                         text: '" . $escaper->escapeHtml(__('Upgrade Plan Now')) . "',

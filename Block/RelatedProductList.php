@@ -49,6 +49,11 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
         $this->config = $config;
         $this->ruleManager = $ruleManager;
         parent::__construct($context, $data);
+
+        $hyvaVersion = \Composer\InstalledVersions::getPrettyVersion('hyva-themes/magento2-default-theme');
+        if ($hyvaVersion && version_compare($hyvaVersion, '1.4.0', '>=')) {
+            $this->_hTemplate = 'Hyva_MagefanAutoRelatedProduct::product/list/hyva-items.phtml';
+        }
     }
 
     /**

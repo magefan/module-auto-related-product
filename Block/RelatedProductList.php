@@ -13,6 +13,7 @@ use Magento\Catalog\Block\Product\AbstractProduct;
 use Magefan\AutoRelatedProduct\Model\RuleManager;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Catalog\Model\Product;
+use Magefan\Community\Api\HyvaThemeDetectionInterface;
 
 class RelatedProductList extends AbstractProduct implements IdentityInterface
 {
@@ -40,14 +41,23 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
 
     protected $ruleValidator;
 
+    /**
+     * @var HyvaThemeDetectionInterface
+     */
+    protected $hyvaThemeDetection;
+
     public function __construct(
         Context $context,
         Config $config,
         RuleManager $ruleManager,
-        array $data = []
+        array $data = [],
+        ?HyvaThemeDetectionInterface $hyvaThemeDetection = null
     ) {
         $this->config = $config;
         $this->ruleManager = $ruleManager;
+        $this->hyvaThemeDetection = $hyvaThemeDetection ?: \Magento\Framework\App\ObjectManager::getInstance()->get(
+            HyvaThemeDetectionInterface::class
+        );
         parent::__construct($context, $data);
     }
 
@@ -56,12 +66,12 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
      */
     public function getTemplate()
     {
-        $theme = $this->_design->getDesignTheme();
-        while ($theme) {
-            if ('Hyva/default' == $theme->getCode()) {
-                return $this->_hTemplate;
+        if ($this->hyvaThemeDetection->execute()) {
+            $hyvaVersion = \Composer\InstalledVersions::getPrettyVersion('hyva-themes/magento2-default-theme');
+            if ($hyvaVersion && version_compare($hyvaVersion, '1.4.0', '>=')) {
+                $this->_hTemplate = 'Hyva_MagefanAutoRelatedProduct::product/list/hyva-items.phtml';
             }
-            $theme = $theme->getParentTheme();
+            return $this->_hTemplate;
         }
 
         return $this->getPassedTemplate() ?: $this->getTemplateFromRule() ?: parent::getTemplate();

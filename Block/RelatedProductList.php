@@ -14,6 +14,7 @@ use Magefan\AutoRelatedProduct\Model\RuleManager;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Catalog\Model\Product;
 use Magefan\Community\Api\HyvaThemeDetectionInterface;
+use Magefan\AutoRelatedProduct\Model\Config\Source\RelatedTemplate;
 
 class RelatedProductList extends AbstractProduct implements IdentityInterface
 {
@@ -66,7 +67,13 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
      */
     public function getTemplate()
     {
+        $customTemplate = $this->getPassedTemplate() ?: $this->getTemplateFromRule();
+
         if ($this->hyvaThemeDetection->execute()) {
+            if ($customTemplate && !in_array($customTemplate, RelatedTemplate::DEFAULT_TEMPLATES, true)) {
+                return $customTemplate;
+            }
+
             $hyvaVersion = \Composer\InstalledVersions::getPrettyVersion('hyva-themes/magento2-default-theme');
             if ($hyvaVersion && version_compare($hyvaVersion, '1.4.0', '>=')) {
                 $this->_hTemplate = 'Hyva_MagefanAutoRelatedProduct::product/list/hyva-items.phtml';
@@ -74,7 +81,7 @@ class RelatedProductList extends AbstractProduct implements IdentityInterface
             return $this->_hTemplate;
         }
 
-        return $this->getPassedTemplate() ?: $this->getTemplateFromRule() ?: parent::getTemplate();
+        return $customTemplate ?: parent::getTemplate();
     }
 
     /**

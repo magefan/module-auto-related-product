@@ -4,7 +4,7 @@
     "type": "magento2-module",
     "version": "2.4.7",
     "require": {
-        "magefan/module-community" : ">=2.4.5"
+        "magefan/module-community" : ">=2.4.6"
     },
     "autoload": {
         "psr-4": {

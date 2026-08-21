@@ -82,6 +82,14 @@ $script .= "
                                     });
                                 } else {
                                     element.addEventListener('click', function (event) {
+                                        var isTurningOffCheckbox = this.tagName == 'INPUT'
+                                            && this.type == 'checkbox'
+                                            && this.checked === false;
+
+                                        if (isTurningOffCheckbox) {
+                                            return;
+                                        }
+
                                         this.value = '';
 
                                         if (this.tagName == 'SELECT') {

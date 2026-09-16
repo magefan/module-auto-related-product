@@ -209,7 +209,7 @@
                 <item name="options" xsi:type="object">Magefan\AutoRelatedProduct\Api\PositionsInterface</item>
                 <item name="config" xsi:type="array">
                     <item name="component" xsi:type="string">Magefan_AutoRelatedProduct/js/form/element/is-product-conditions</item>
-                    <item name="label" xsi:type="string" translate="true">Block Position (Plus)</item>
+                    <item name="label" xsi:type="string" translate="true">Block Position</item>
                     <item name="formElement" xsi:type="string">select</item>
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="source" xsi:type="string">rule</item>

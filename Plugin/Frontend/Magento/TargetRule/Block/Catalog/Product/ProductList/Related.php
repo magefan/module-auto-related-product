@@ -7,6 +7,7 @@
 namespace Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\TargetRule\Block\Catalog\Product\ProductList;
 
 use Magefan\AutoRelatedProduct\Api\RelatedItemsProcessorInterface;
+use Magefan\AutoRelatedProduct\Model\NativeBlockTitleProcessor;
 
 class Related
 {
@@ -16,13 +17,21 @@ class Related
     private $relatedItemsProcessor;
 
     /**
+     * @var NativeBlockTitleProcessor
+     */
+    private $nativeBlockTitleProcessor;
+
+    /**
      * @param RelatedItemsProcessorInterface $relatedItemsProcessor
+     * @param NativeBlockTitleProcessor $nativeBlockTitleProcessor
      */
     public function __construct(
-        RelatedItemsProcessorInterface $relatedItemsProcessor
+        RelatedItemsProcessorInterface $relatedItemsProcessor,
+        NativeBlockTitleProcessor $nativeBlockTitleProcessor
     )
     {
         $this->relatedItemsProcessor = $relatedItemsProcessor;
+        $this->nativeBlockTitleProcessor = $nativeBlockTitleProcessor;
     }
 
     /**
@@ -35,5 +44,15 @@ class Related
     public function afterGetAllItems($subject, $result)
     {
         return $this->relatedItemsProcessor->execute($subject, $result, 'product_into_related');
+    }
+
+    /**
+     * @param $subject
+     * @param $result
+     * @return mixed
+     */
+    public function afterToHtml($subject, $result)
+    {
+        return $this->nativeBlockTitleProcessor->execute($subject, $result);
     }
 }

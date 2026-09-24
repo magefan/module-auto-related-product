@@ -7,6 +7,7 @@
 namespace Magefan\AutoRelatedProduct\Plugin\Frontend\Magento\Catalog\Block\Product\ProductList;
 
 use Magefan\AutoRelatedProduct\Api\RelatedItemsProcessorInterface;
+use Magefan\AutoRelatedProduct\Model\NativeBlockTitleProcessor;
 
 class Upsell
 {
@@ -16,12 +17,20 @@ class Upsell
     private $relatedItemsProcessor;
 
     /**
+     * @var NativeBlockTitleProcessor
+     */
+    private $nativeBlockTitleProcessor;
+
+    /**
      * @param RelatedItemsProcessorInterface $relatedItemsProcessor
+     * @param NativeBlockTitleProcessor $nativeBlockTitleProcessor
      */
     public function __construct(
-        RelatedItemsProcessorInterface $relatedItemsProcessor
+        RelatedItemsProcessorInterface $relatedItemsProcessor,
+        NativeBlockTitleProcessor $nativeBlockTitleProcessor
     ) {
         $this->relatedItemsProcessor = $relatedItemsProcessor;
+        $this->nativeBlockTitleProcessor = $nativeBlockTitleProcessor;
     }
 
     /**
@@ -34,5 +43,15 @@ class Upsell
     public function afterGetItemCollection($subject, $result)
     {
         return $this->relatedItemsProcessor->execute($subject, $result, 'product_into_upsell');
+    }
+
+    /**
+     * @param $subject
+     * @param $result
+     * @return mixed
+     */
+    public function afterToHtml($subject, $result)
+    {
+        return $this->nativeBlockTitleProcessor->execute($subject, $result);
     }
 }

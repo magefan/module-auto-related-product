@@ -50,6 +50,8 @@ class RelatedItemsProcessor implements RelatedItemsProcessorInterface
             return $result;
         }
 
+        $subject->setData('mfautorp_title', (string)$rule->getBlockTitle());
+
         if ($rule->getMergeType() == MergeType::MERGE) {
             $resultCount = count($result);
             $limit = $rule->getNumberOfProducts();
